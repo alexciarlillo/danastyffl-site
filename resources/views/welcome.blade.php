@@ -9,11 +9,11 @@
         <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     </head>
     <body>
-        <div class="container">
-            <div class="row">
+        <div class="container" id="app">
+            <div class="row mt-2">
                 <div class="col-10 offset-1">
 
-                    <div class="row mt-1">
+                    <div class="row">
                         <div class="col-12">
                             <h1 class="title display-2 text-center">DaNasty FFL</h1>
                         </div>
@@ -27,8 +27,15 @@
                             </p>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <league-standings></league-standings>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </body>
+    <script src="{{ mix('/js/app.js') }}"></script>
 </html>
