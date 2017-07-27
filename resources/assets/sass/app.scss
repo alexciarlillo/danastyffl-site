@@ -1,9 +1,23 @@
 
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
+@import url('https://fonts.googleapis.com/css?family=Graduate|Lato|Trade+Winds');
 // Variables
 @import "variables";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "~bootstrap/scss/bootstrap";
+@import "~font-awesome/scss/font-awesome";
+
+body {
+  font-family: Lato;
+  color: $gray;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: Graduate;
+}
+
+h1.title {
+  font-family: 'Trade Winds';
+  color: $redder-state;
+}
