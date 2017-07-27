@@ -9,3 +9,11 @@ require('./bootstrap');
 require('jquery');
 require('tether');
 require('bootstrap');
+
+window.Vue = require('vue');
+
+Vue.component('league-standings', require('./components/Standings.vue'));
+
+const app = new Vue({
+  el: '#app'
+});
