@@ -13,10 +13,8 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-Route::get('/login', function () {
-    return view('login');
-});
-
-Route::post('/login', 'APIController@login');
+Route::get('/login', 'SessionsController@create');
+Route::post('/login', 'SessionsController@store');
+Route::post('/logout', 'SessionsController@destroy');

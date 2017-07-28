@@ -25,11 +25,11 @@
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username">MFL Username</label>
-                                    <input type="text" class="form-control" id="username" name="username">
+                                    <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">MFL Password</label>
-                                    <input type="password" class="form-control" id="password" name="password">
+                                    <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
 
                                 <button type="submit" class="btn btn-secondary">Submit</button>
