@@ -21,7 +21,8 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <form method="POST" action="/api/login">
+                            <form method="POST" action="/login">
+                                {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username">MFL Username</label>
                                     <input type="text" class="form-control" id="username" name="username">
