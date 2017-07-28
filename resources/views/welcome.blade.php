@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     </head>
     <body>
-        <div class="container" id="app">
+        <div class="container">
             <div class="row mt-2">
                 <div class="col-10 offset-1">
 
@@ -19,20 +19,19 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <h3 class="text-center">About</h3>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </p>
+                    <div class="row mt-4 mb-4">
+                        <div class="col-4 offset-4">
+                            <a class="btn btn-secondary btn-block" href="https://{{ config('mfl.league_host') }}/2017/home/{{ config('mfl.league_id')}}">Go to MFL</a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <league-standings></league-standings>
-                        </div>
-                    </div>
+        <div class="container">
+            <div class="row mt-2">
+                <div class="col-10 offset-1">
+                    <div id="app"></div>
                 </div>
             </div>
         </div>

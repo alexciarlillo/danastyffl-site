@@ -12,8 +12,10 @@ require('bootstrap');
 
 window.Vue = require('vue');
 
-Vue.component('league-standings', require('./components/Standings.vue'));
+import App from './components/App.vue';
 
 const app = new Vue({
-  el: '#app'
+  el: '#app',
+  template: '<App/>',
+  components: {App},
 });
