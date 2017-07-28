@@ -61,4 +61,11 @@ class APIController extends Controller
 
         return response($data)->header('Content-Type', 'application/json');
     }
+
+    public function login(Request $request) {
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        dd($username);
+    }
 }
