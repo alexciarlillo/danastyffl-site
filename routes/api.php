@@ -15,3 +15,4 @@ use Illuminate\Http\Request;
 
 Route::middleware('api')->get('/league', 'APIController@league');
 Route::middleware('api')->get('/standings', 'APIController@standings');
+Route::middleware('api')->post('/login', 'APIController@login');
