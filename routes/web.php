@@ -15,6 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/login', 'SessionsController@create');
-Route::post('/login', 'SessionsController@store');
-Route::post('/logout', 'SessionsController@destroy');
+Route::get('/login', 'Auth\AuthController@login');
+Route::post('/login', 'Auth\AuthController@postLogin');
+Route::post('/logout', 'Auth\AuthController@logout');
