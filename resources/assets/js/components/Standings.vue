@@ -1,8 +1,8 @@
 <template>
   <div class="standings">
-    <h4 class="text-center">2017 Standings</h4>
+    <h3 class="text-center">2017 Standings</h3>
     <div class="table-responsive">
-      <table class="table" v-if="standings">
+      <table class="table table-sm" v-if="standings">
         <thead>
           <tr>
             <th>Team</th>
