@@ -1,25 +1,27 @@
 <template>
   <div class="standings">
     <h4 class="text-center">2017 Standings</h4>
-    <table class="table table-responsive" v-if="standings">
-      <thead>
-        <tr>
-          <th>Team</th>
-          <th>W-L-T</th>
-          <th>PCT</th>
-          <th>Points For</th>
-        </tr>
-      </thead>
+    <div class="table-responsive">
+      <table class="table" v-if="standings">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>W-L-T</th>
+            <th>PCT</th>
+            <th>Points For</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr v-for="team in standings.franchise">
-          <td>{{ getTeamName(team.id) }}</td>
-          <td>{{ team.h2hw }}-{{ team.h2hl }}-{{ team.h2ht }}</td>
-          <td>{{ team.h2hw / (team.h2hw + team.h2hl) }}
-          <td>{{ team.pf }}</td>
-        </tr>
-      </tbody>
-    </table>
+        <tbody>
+          <tr v-for="team in standings.franchise">
+            <td>{{ getTeamName(team.id) }}</td>
+            <td>{{ team.h2hw }}-{{ team.h2hl }}-{{ team.h2ht }}</td>
+            <td>{{ team.h2hw / (team.h2hw + team.h2hl) }}
+            <td>{{ team.pf }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
