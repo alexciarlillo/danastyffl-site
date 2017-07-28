@@ -1,7 +1,7 @@
 <template>
   <div class="standings">
     <h4 class="text-center">2017 Standings</h4>
-    <table class="table" v-if="standings">
+    <table class="table table-responsive" v-if="standings">
       <thead>
         <tr>
           <th>Team</th>

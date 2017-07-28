@@ -1,6 +1,6 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Graduate|Lato|Trade+Winds');
+@import url('//fonts.googleapis.com/css?family=Graduate|Lato|Trade+Winds');
 // Variables
 @import "variables";
 
@@ -9,15 +9,15 @@
 @import "~font-awesome/scss/font-awesome";
 
 body {
-  font-family: Lato;
+  font-family: Lato, sans-serif;
   color: $gray;
 }
 
 h1,h2,h3,h4,h5,h6 {
-  font-family: Graduate;
+  font-family: Graduate, cursive;
 }
 
 h1.title {
-  font-family: 'Trade Winds';
+  font-family: 'Trade Winds', cursive;
   color: $redder-state;
 }

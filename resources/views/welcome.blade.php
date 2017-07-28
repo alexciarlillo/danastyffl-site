@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="row mt-4 mb-4">
-                        <div class="col-4 offset-4">
+                        <div class="col-10 offset-1 col-md-4 offset-md-4">
                             <a class="btn btn-secondary btn-block" href="https://{{ config('mfl.league_host') }}/2017/home/{{ config('mfl.league_id')}}">Go to MFL</a>
                         </div>
                     </div>
