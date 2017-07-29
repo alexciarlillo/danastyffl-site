@@ -34774,7 +34774,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.getTeamName(team.id)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(team.h2hw) + "-" + _vm._s(team.h2hl) + "-" + _vm._s(team.h2ht))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(team.h2hw / (team.h2hw + team.h2hl)) + "\n          ")]), _c('td', [_vm._v(_vm._s(team.pf))])])
   }))]) : _vm._e()])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Team")]), _vm._v(" "), _c('th', [_vm._v("W-L-T")]), _vm._v(" "), _c('th', [_vm._v("PCT")]), _vm._v(" "), _c('th', [_vm._v("Points For")])])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Team")]), _vm._v(" "), _c('th', [_vm._v("W-L-T")]), _vm._v(" "), _c('th', [_vm._v("PCT")]), _vm._v(" "), _c('th', [_vm._v("PF")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

@@ -8,7 +8,7 @@
             <th>Team</th>
             <th>W-L-T</th>
             <th>PCT</th>
-            <th>Points For</th>
+            <th>PF</th>
           </tr>
         </thead>
 
