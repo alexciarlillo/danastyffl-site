@@ -3,22 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Monolog\Handler\FlowdockHandler;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\AuthenticatesUser;
 
 class AuthController extends Controller
 {
+    use ValidatesRequests;
+
     public function login() {
         return view('auth.login');
     }
 
-    public function postLogin() {
-        // Validate Request
-
-        // Submit to MLF
-
-        // Create a session token
-
-        // Redirect home
+    public function postLogin(AuthenticatesUser $auth) {
+        $auth->authorize();
     }
 
     public function logout() {
