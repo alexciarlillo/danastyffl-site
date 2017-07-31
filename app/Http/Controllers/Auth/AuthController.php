@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use App\AuthenticatesUser;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -14,8 +15,10 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function postLogin(AuthenticatesUser $auth) {
-        $auth->authorize();
+    public function postLogin(Request $request) {
+        if (Auth::attempt(['username' => $request->input('username'), 'password' => $request->input('password')])) {
+            return redirect()->route('home');
+        }
     }
 
     public function logout() {

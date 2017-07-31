@@ -42,7 +42,7 @@ class AuthenticatesUser {
         ]]);
 
         $response = new \SimpleXMLElement($data->getBody());
-        dd((string)$response[0]);
+        dd((string)$response['MFL_USER_ID']);
         //response($data)->header('Content-Type', 'application/json');
         return $this;
     }
