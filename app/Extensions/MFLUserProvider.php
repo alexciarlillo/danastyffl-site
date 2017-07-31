@@ -35,7 +35,7 @@ class MFLUserProvider implements UserProvider {
 
         if(is_array($leagues)) {
             $player_leagues = array_filter($leagues, function($l) {
-                if( stristr($l->url, '30493') ) {
+                if( stristr($l->url, config('mfl.league_id')) ) {
                     return true;
                 } else {
                     return false;
@@ -45,7 +45,7 @@ class MFLUserProvider implements UserProvider {
             if(!empty($player_leagues))
                 $league = $player_leagues[0];
         } else {
-            if( stristr($leagues->url, '30493') ) {
+            if( stristr($leagues->url, config('mfl.league_id')) ) {
                 $league = $leagues;
             }
         }
@@ -84,7 +84,7 @@ class MFLUserProvider implements UserProvider {
         if( (string)$response[0] == "OK") {
                 $name = $credentials['username'];
                 $id = (string)$response['MFL_USER_ID'];
-                return new MFLUser(['username' => $name, 'id' => $id]);
+                return new MFLUser(['id' => $id]);
         }
 
         return null;
