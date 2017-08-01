@@ -11,16 +11,16 @@
                     <div class="collapse navbar-collapse">
                         <div class="navbar-text">
                             @if(Auth::check())
-                                <h1>{{ Auth::user() }}</h1>
+                                <h1>{{ Auth::user()->getTeamName() }}</h1>
                             @endif
                         </div>
 
                         <div class="navbar-nav ml-auto">
                             <li class="nav-item mr-1">
                                 @if(Auth::check())
-                                    <a class="nav-link btn btn-secondary" href="/logout">Logout</a>
+                                    <a class="nav-link btn btn-secondary" href="{{ URL::route('logout') }}">Logout</a>
                                 @else
-                                    <a class="nav-link btn btn-secondary" href="/login">Login</a>
+                                    <a class="nav-link btn btn-secondary" href="{{ URL::route('login') }}">Login</a>
                                 @endif
                             </li>
                             <li class="nav-item">

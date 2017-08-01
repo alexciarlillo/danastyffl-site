@@ -22,8 +22,7 @@ class AuthController extends Controller
     }
 
     public function logout() {
-        // Destroy session token
-
-        // Redirect home
+        Auth::logout();
+        return redirect()->route('home');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Extensions;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class MFLUser implements Authenticatable {
@@ -76,5 +78,56 @@ class MFLUser implements Authenticatable {
     {
         // Return the name of the column / attribute used to store the "remember me" token
         return 'remember_token';
+    }
+
+    public function getTeamName() {
+
+        $identifier = $this->getAuthIdentifier();
+
+        $client = new Client([
+            'base_uri' => "https://api.myfantasyleague.com/2017/"
+        ]);
+
+        $cookieJar = CookieJar::fromArray([
+            'MFL_USER_ID' => $identifier
+        ], '.myfantasyleague.com');
+
+        $data = $client->get('export',
+        [
+            'query' => [
+                'TYPE' => 'myleagues',
+                'FRANCHISE_NAMES' => 1,
+                'JSON'     => 1
+            ],
+            'cookies' => $cookieJar
+        ]);
+
+        $response = json_decode($data->getBody()->getContents());
+
+        $leagues = $response->leagues->league;
+        $league = null;
+
+        if(is_array($leagues)) {
+            $player_leagues = array_filter($leagues, function($l) {
+                if( stristr($l->url, config('mfl.league_id')) ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            if(!empty($player_leagues))
+                $league = $player_leagues[0];
+        } else {
+            if( stristr($leagues->url, config('mfl.league_id')) ) {
+                $league = $leagues;
+            }
+        }
+
+        if($league) {
+            return $league->franchise_name;
+        }
+
+        return null;
     }
 }

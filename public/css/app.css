@@ -13312,6 +13312,7 @@ h1.title {
 }
 
 .header .navbar-text h1 {
+  font-weight: 700;
   color: #cccccc;
 }
 

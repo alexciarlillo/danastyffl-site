@@ -9,52 +9,7 @@ class MFLUserProvider implements UserProvider {
 
     public function retrieveById($identifier)
 	{
-
-        $client = new Client([
-            'base_uri' => "https://api.myfantasyleague.com/2017/"
-        ]);
-
-        $cookieJar = CookieJar::fromArray([
-            'MFL_USER_ID' => $identifier
-        ], '.myfantasyleague.com');
-
-        $data = $client->get('export',
-        [
-            'query' => [
-                'TYPE' => 'myleagues',
-                'FRANCHISE_NAMES' => 1,
-                'JSON'     => 1
-            ],
-            'cookies' => $cookieJar
-        ]);
-
-        $response = json_decode($data->getBody()->getContents());
-
-        $leagues = $response->leagues->league;
-        $league = null;
-
-        if(is_array($leagues)) {
-            $player_leagues = array_filter($leagues, function($l) {
-                if( stristr($l->url, config('mfl.league_id')) ) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-
-            if(!empty($player_leagues))
-                $league = $player_leagues[0];
-        } else {
-            if( stristr($leagues->url, config('mfl.league_id')) ) {
-                $league = $leagues;
-            }
-        }
-
-        if($league) {
-            return $league->franchise_name;
-        }
-
-        return null;
+        return new MFLUser(['id' => $identifier]);
 	}
 
 	public function retrieveByToken($identifier, $token)
