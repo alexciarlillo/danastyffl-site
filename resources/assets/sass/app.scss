@@ -55,6 +55,10 @@ h1.title {
   top: 0;
 }
 
-
+.header {
+  .navbar-text h1 {
+    color: $gray;
+  }
+}
 .content {
 }
