@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/mfl', function() {
+    return redirect()
+})
+
 Route::get('/login', 'Auth\AuthController@login')->name('login');
 Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@logout')->name('logout');

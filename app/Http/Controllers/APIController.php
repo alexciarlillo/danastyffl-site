@@ -3,23 +3,16 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 
 class APIController extends Controller
 {
-    public function league() {
+    public function league()
+    {
         $cacheTime = Carbon::now()->addMinutes(10);
 
-        $host = Cache::remember('mfl_league_host', $cacheTime, function() {
-            return config('mfl.league_host');
-        });
-
-        $year = Cache::remember('mfl_league_year', $cacheTime, function() {
-            return config('mfl.league_year');
-        });
-
+        $host = config('mfl.league_host');
+        $year = config('mfl.league_year');
 
         $client = new Client([
             'base_uri' => "https://$host/$year/"
@@ -33,20 +26,13 @@ class APIController extends Controller
         ]])->getBody()->getContents();
 
         return response($data)->header('Content-Type', 'application/json');
-
     }
 
-    public function standings() {
-        $cacheTime = Carbon::now()->addMinutes(10);
+    public function standings()
+    {
+        $host = config('mfl.league_host');
 
-        $host = Cache::remember('mfl_league_host', $cacheTime, function() {
-            return config('mfl.league_host');
-        });
-
-        $year = Cache::remember('mfl_league_year', $cacheTime, function() {
-            return config('mfl.league_year');
-        });
-
+        $year = config('mfl.league_year');
 
         $client = new Client([
             'base_uri' => "https://$host/$year/"
