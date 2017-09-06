@@ -10,12 +10,39 @@ require('jquery');
 require('tether');
 require('bootstrap');
 
+import VueRouter from 'vue-router';
+
 window.Vue = require('vue');
 
+Vue.use(VueRouter);
+
 import App from './components/App.vue';
+import Standings from './components/Standings.vue';
+import Scores from './components/Scores.vue';
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        {
+            path: '/',
+            component: App,
+            children: [
+                {
+                    path: 'standings',
+                    component: Standings
+                },
+                {
+                    path: 'scores',
+                    component: Scores
+                }
+            ]
+        }
+    ]
+});
 
 const app = new Vue({
   el: '#app',
+  router,
   template: '<App/>',
-  components: {App},
+  components: { App }
 });

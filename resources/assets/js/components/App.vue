@@ -1,21 +1,15 @@
 <template>
   <div v-if="league">
-    <Standings :league="league" />
+    <router-view :league="league"></router-view>
   </div>
 </template>
 
 <script>
-  import Standings from './Standings';
-
   export default {
     name: 'App',
-
-    components: {Standings},
-
     data: () => ({
       league: false
     }),
-
     created() {
       axios.get('/api/league')
       .then(response => {

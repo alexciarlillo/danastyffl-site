@@ -12,12 +12,16 @@
 */
 
 Route::get('/', function () {
-    return redirect('standings');
+    return view('index');
 });
 
 Route::get('/standings', function () {
-    return view('standings');
-})->name('standings');
+    return view('index');
+});
+
+Route::get('/scores', function () {
+    return view('index');
+});
 
 Route::get('/mfl', function () {
     return redirect('https://' . config('mfl.league_host') . '/' . config('mfl.league_year') . '/home/' . config('mfl.league_id'));
