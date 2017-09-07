@@ -43,6 +43,15 @@ class APIController extends Controller
         return response($scores)->header('Content-Type', 'application/json');
     }
 
+    public function players()
+    {
+        $players = Cache::remember('players', 3600, function () {
+            return $this->getPlayers();
+        });
+
+        return response($players)->header('Content-Type', 'application/json');
+    }
+
     private function getLeague()
     {
         return $this->client->get('export', ['query' => [
@@ -72,7 +81,20 @@ class APIController extends Controller
                 'L' => $this->leagueId,
                 'APIKEY' => $this->apiKey,
                 'JSON' => 1,
-                'TYPE' => 'liveScoring'
+                'TYPE' => 'liveScoring',
+                'DETAILS' => 1
+            ]
+        ])->getBody()->getContents();
+    }
+
+    private function getPlayers()
+    {
+        return $this->client->get('export', ['query' =>
+            [
+                'L' => $this->leagueId,
+                'APIKEY' => $this->apiKey,
+                'JSON' => 1,
+                'TYPE' => 'players'
             ]
         ])->getBody()->getContents();
     }

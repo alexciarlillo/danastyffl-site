@@ -15,3 +15,4 @@
 Route::middleware('api')->get('/league', 'APIController@league');
 Route::middleware('api')->get('/standings', 'APIController@standings');
 Route::middleware('api')->get('/scores', 'APIController@scores');
+Route::middleware('api')->get('/players', 'APIController@players');
