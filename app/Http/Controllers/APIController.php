@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
 
 class APIController extends Controller
 {
@@ -20,19 +21,41 @@ class APIController extends Controller
 
     public function league()
     {
-        $data = $this->client->get('export', ['query' => [
+        $league = Cache::remember('league', 60, function () {
+            return $this->getLeague();
+        });
+        return response($league)->header('Content-Type', 'application/json');
+    }
+
+    public function standings()
+    {
+        $standings = Cache::remember('standings', 60, function () {
+            return $this->getStandings();
+        });
+        return response($standings)->header('Content-Type', 'application/json');
+    }
+
+    public function scores()
+    {
+        $scores = Cache::remember('scores', 1, function () {
+            return $this->getScores();
+        });
+        return response($scores)->header('Content-Type', 'application/json');
+    }
+
+    private function getLeague()
+    {
+        return $this->client->get('export', ['query' => [
             'L' => $this->leagueId,
             'APIKEY' => $this->apiKey,
             'JSON' => 1,
             'TYPE' => 'league'
         ]])->getBody()->getContents();
-
-        return response($data)->header('Content-Type', 'application/json');
     }
 
-    public function standings()
+    private function getStandings()
     {
-        $data = $this->client->get('export', ['query' =>
+        return $this->client->get('export', ['query' =>
             [
                 'L' => $this->leagueId,
                 'APIKEY' => $this->apiKey,
@@ -40,13 +63,13 @@ class APIController extends Controller
                 'TYPE' => 'leagueStandings'
             ]
         ])->getBody()->getContents();
-
-        return response($data)->header('Content-Type', 'application/json');
     }
 
-    public function scores()
+
+
+    private function getScores()
     {
-        $data = $this->client->get('export', ['query' =>
+        return $this->client->get('export', ['query' =>
             [
                 'L' => $this->leagueId,
                 'APIKEY' => $this->apiKey,
@@ -54,7 +77,5 @@ class APIController extends Controller
                 'TYPE' => 'liveScoring'
             ]
         ])->getBody()->getContents();
-
-        return response($data)->header('Content-Type', 'application/json');
     }
 }
