@@ -65,8 +65,6 @@ class APIController extends Controller
         ])->getBody()->getContents();
     }
 
-
-
     private function getScores()
     {
         return $this->client->get('export', ['query' =>
