@@ -1,6 +1,6 @@
 export default {
     methods: {
-        getLeagueTeamName: function(league, id) {
+        getFranchiseName: function(league, id) {
           let team = league.franchises.franchise.filter( function(f) {
             return f.id == id;
           });

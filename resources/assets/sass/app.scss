@@ -14,6 +14,14 @@ body {
   color: $gray;
 }
 
+input, select, .custom-select, .custom-select:focus, .card {
+  color: $black-eye;
+}
+
+.custom-select {
+  word-wrap: break-word;
+}
+
 h1,h2,h3,h4,h5,h6 {
   font-family: Graduate, cursive;
   font-weight: 400;
@@ -62,4 +70,11 @@ h1.title {
   }
 }
 .content {
+}
+
+
+.scores-table {
+  tr > td:last-child {
+    text-align: right;
+  }
 }

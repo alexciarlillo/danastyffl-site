@@ -13262,6 +13262,18 @@ body {
   color: #cccccc;
 }
 
+input,
+select,
+.custom-select,
+.custom-select:focus,
+.card {
+  color: #292C37;
+}
+
+.custom-select {
+  word-wrap: break-word;
+}
+
 h1,
 h2,
 h3,
@@ -13314,5 +13326,9 @@ h1.title {
 .header .navbar-text h1 {
   font-weight: 700;
   color: #cccccc;
+}
+
+.scores-table tr > td:last-child {
+  text-align: right;
 }
 
