@@ -14,7 +14,7 @@
 
         <tbody>
           <tr v-for="team in standings.franchise">
-            <td>{{ getTeamName(team.id) }}</td>
+            <td>{{ getLeagueTeamName(league, team.id) }}</td>
             <td>{{ team.h2hw }}-{{ team.h2hl }}-{{ team.h2ht }}</td>
             <td>{{ team.h2hw / (team.h2hw + team.h2hl) }}
             <td>{{ team.pf }}</td>
@@ -26,10 +26,12 @@
 </template>
 
 <script>
+    import league from '../mixins/league.js';
+
     export default {
         name: 'Standings',
-
         props: ['league'],
+        mixins: [league],
 
         data: () => ({
           standings: false,
@@ -43,16 +45,6 @@
           .catch(e => {
             console.log(e);
           });
-        },
-
-        methods: {
-          getTeamName: function(id) {
-            let team = this.league.franchises.franchise.filter( function(f) {
-              return f.id == id;
-            });
-
-            return team[0].name;
-          }
         }
     }
 </script>
