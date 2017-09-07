@@ -5,8 +5,8 @@
                 <h4>{{ team.id }}</h4>
 
                 <ul>
-                    <li v-for="player in team.players">
-                       {{ player.id }} {{ player.status }} {{ player.score }}
+                    <li v-for="player in team.players.player">
+                       {{ player.id }}
                     </li>
                 </ul>
             </template>

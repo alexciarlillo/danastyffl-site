@@ -1631,7 +1631,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   name: 'App',
   data: function data() {
     return {
-      league: false
+      league: false,
+      players: false
     };
   },
   created: function created() {
@@ -1639,6 +1640,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     axios.get('/api/league').then(function (response) {
       _this.league = response.data.league;
+    }).catch(function (e) {
+      console.log(e);
+    });
+
+    axios.get('/api/players').then(function (response) {
+      _this.players = response.data.players;
     }).catch(function (e) {
       console.log(e);
     });
@@ -34853,7 +34860,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.league) ? _c('div', [_c('router-view', {
+  return (_vm.league && _vm.players) ? _c('div', [_c('router-view', {
     attrs: {
       "league": _vm.league
     }
@@ -34878,8 +34885,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "card-block"
   }, [_vm._l((_vm.teams), function(team) {
-    return [_c('h4', [_vm._v(_vm._s(team.id))]), _vm._v(" "), _c('ul', _vm._l((team.players), function(player) {
-      return _c('li', [_vm._v("\n                   " + _vm._s(player.id) + " " + _vm._s(player.status) + " " + _vm._s(player.score) + "\n                ")])
+    return [_c('h4', [_vm._v(_vm._s(team.id))]), _vm._v(" "), _c('ul', _vm._l((team.players.player), function(player) {
+      return _c('li', [_vm._v("\n                   " + _vm._s(player.id) + "\n                ")])
     }))]
   })], 2)])
 },staticRenderFns: []}
