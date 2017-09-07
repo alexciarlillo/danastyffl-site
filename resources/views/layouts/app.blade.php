@@ -23,7 +23,7 @@
     <body>
         <div class="hero-banner"></div>
         <div class="hero-cover"></div>
-        
+
         @include('layouts.header')
 
         <div class="container content">

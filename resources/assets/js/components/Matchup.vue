@@ -1,15 +1,17 @@
 <template>
-    <div class="card">
-        <div class="card-block">
-            <template v-for="team in teams">
-                <h4>{{ getLeagueTeamName(league, team.id) }}</h4>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-block">
+                <template v-for="team in teams">
+                    <h4>{{ getLeagueTeamName(league, team.id) }}</h4>
 
-                <ul>
-                    <li v-for="player in team.players.player">
-                       {{ getPlayerName(players, player.id) }}
-                    </li>
-                </ul>
-            </template>
+                    <ul>
+                        <li v-for="player in team.players.player">
+                           {{ getPlayerName(players, player.id) }}
+                        </li>
+                    </ul>
+                </template>
+            </div>
         </div>
     </div>
 </template>

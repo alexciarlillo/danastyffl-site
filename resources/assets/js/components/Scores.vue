@@ -1,9 +1,9 @@
 <template>
     <div class="scores">
         <h3 class="text-center">Weekly Scores</h3>
-        <template v-for="matchup in scores.matchup">
+        <div class="row" v-for="matchup in scores.matchup">
             <Matchup :teams="matchup.franchise" :league="league" :players="players"></Matchup>
-        </template>
+        </div>
     </div>
 </template>
 
