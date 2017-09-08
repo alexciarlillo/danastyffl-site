@@ -7,8 +7,6 @@
       <h5 class="text-center">Loading Scoring Data</h5>
     </div>
     <div class="scores" v-if="scores">
-        <h3 class="text-center">Week {{ week }} Scores</h3>
-
         <div class="row mb-2">
           <div class="col-12">
             <form class="form-inline justify-content-between">
