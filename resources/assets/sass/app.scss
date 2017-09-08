@@ -14,7 +14,11 @@ body {
   color: $gray;
 }
 
-input, select, .custom-select, .custom-select:focus, .card {
+input, select, .custom-select, .custom-select:focus {
+  color: $black-eye;
+}
+
+.scores .card {
   color: $black-eye;
 }
 
@@ -27,7 +31,7 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: 400;
 }
 
-h1.title, .navbar-inverse .navbar-brand {
+h1.title, .navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand.active, .navbar-inverse .navbar-brand:active {
   font-family: 'Trade Winds', cursive;
   font-weight: 400;
   color: $redder-state;
@@ -54,6 +58,7 @@ h1.title {
   left: 0;
   z-index: -1;
   filter: grayscale(100%);
+  opacity: 0.1;
 }
 
 .hero-cover {
