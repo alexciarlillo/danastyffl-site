@@ -21,49 +21,114 @@ class APIController extends Controller
 
     public function league()
     {
-        $league = Cache::remember('league', 60, function () {
-            return $this->getLeague();
-        });
-        return response($league)->json([
-            'success' => true,
-            'payload' => json_decode($league)
-        ]);
+        $league = null;
+
+        if (Cache::has('mfl.league')) {
+            $league = Cache::get('mfl.league');
+        } else {
+            $response = $this->getLeague();
+
+            if ($response->getStatusCode() == 200) {
+                $league = $response->getBody()->getContents();
+                Cache::put('mfl.league', $league, 60);
+            }
+        }
+
+        if ($league) {
+            return response()->json([
+                'success' => true,
+                'payload' => json_decode($league)
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => 'Unable to fetch MFL league data.'
+            ]);
+        }
     }
 
     public function standings()
     {
-        $standings = Cache::remember('standings', 60, function () {
-            return $this->getStandings();
-        });
+        $standings = null;
 
-        return response()->json([
-            'success' => true,
-            'payload' => json_decode($standings)
-        ]);
+        if (Cache::has('mfl.standings')) {
+            $standings = Cache::get('mfl.standings');
+        } else {
+            $response = $this->getStandings();
+
+            if ($response->getStatusCode() == 200) {
+                $standings = $response->getBody()->getContents();
+                Cache::put('mfl.standings', $standings, 60);
+            }
+        }
+
+        if ($standings) {
+            return response()->json([
+                'success' => true,
+                'payload' => json_decode($standings)
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => 'Unable to fetch MFL standings data.'
+            ]);
+        }
     }
 
     public function scores()
     {
-        $scores = Cache::remember('scores', 1, function () {
-            return $this->getScores();
-        });
+        $scores = null;
 
-        return response()->json({
-            'success' => true,
-            'payload' => json_decode($scores)
-        });
+        if (Cache::has('mfl.scores')) {
+            $scores = Cache::get('mfl.scores');
+        } else {
+            $response = $this->getScores();
+
+            if ($response->getStatusCode() == 200) {
+                $scores = $response->getBody()->getContents();
+                Cache::put('mfl.scores', $scores, 1);
+            }
+        }
+
+        if ($scores) {
+            return response()->json([
+                'success' => true,
+                'payload' => json_decode($scores)
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => 'Unable to fetch MFL scores data.'
+            ]);
+        }
     }
 
     public function players()
     {
-        $players = Cache::remember('players', 3600, function () {
-            return $this->getPlayers();
-        });
+        $players = null;
 
-        return response()->json({
-            'success' => true,
-            'payload' => json_decode($players)
-        });
+        if (Cache::has('mfl.players')) {
+            $players = Cache::get('mfl.players');
+        } else {
+            $response = $this->getPlayers();
+
+            if ($response->getStatusCode() == 200) {
+                $players = $response->getBody()->getContents();
+                Cache::put('mfl.players', $players, 1);
+            }
+        }
+
+        if ($players) {
+            return response()->json([
+                'success' => true,
+                'payload' => json_decode($players)
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => 'Unable to fetch MFL players data.'
+            ]);
+        }
     }
 
     private function getLeague()
@@ -73,7 +138,7 @@ class APIController extends Controller
             'APIKEY' => $this->apiKey,
             'JSON' => 1,
             'TYPE' => 'league'
-        ]])->getBody()->getContents();
+        ]]);
     }
 
     private function getStandings()
@@ -85,7 +150,7 @@ class APIController extends Controller
                 'JSON' => 1,
                 'TYPE' => 'leagueStandings'
             ]
-        ])->getBody()->getContents();
+        ]);
     }
 
     private function getScores()
@@ -98,7 +163,7 @@ class APIController extends Controller
                 'TYPE' => 'liveScoring',
                 'DETAILS' => 1
             ]
-        ])->getBody()->getContents();
+        ]);
     }
 
     private function getPlayers()
@@ -110,6 +175,6 @@ class APIController extends Controller
                 'JSON' => 1,
                 'TYPE' => 'players'
             ]
-        ])->getBody()->getContents();
+        ]);
     }
 }
