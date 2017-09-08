@@ -84,9 +84,21 @@ h1.title {
   }
 }
 
+.matchups {
+  margin-right: -($grid-gutter-width-base/2);
+  margin-left: -($grid-gutter-width-base/2);
+}
 
-.scores-table {
-  tr > td:last-child {
-    text-align: right;
+.matchup {
+  background-color: $gray;
+  color: $black-eye;
+  width: 100%;
+  padding: .125rem;
+  h4 {
+    font-size: 1.25rem;
   }
+}
+
+.score-box {
+  padding: .125rem;
 }

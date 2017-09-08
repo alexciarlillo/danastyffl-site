@@ -6,7 +6,7 @@
       </div>
       <h5 class="text-center">Loading Scoring Data</h5>
     </div>
-    <div class="scores" v-if="scores">
+    <div class="scoring" v-if="scores">
         <div class="row mb-2">
           <div class="col-12">
             <form class="form-inline justify-content-between">
@@ -36,11 +36,7 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-12">
-            <Matchup :teams="scores.matchup[selected].franchise" :league="league" :players="players"></Matchup>
-          </div>
-        </div>
+        <Matchup :teams="scores.matchup[selected].franchise" :league="league" :players="players"></Matchup>
     </div>
   </div>
 </template>
