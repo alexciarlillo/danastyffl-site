@@ -13,15 +13,15 @@
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('home');
 
 Route::get('/standings', function () {
     return view('index');
-});
+})->name('standings');
 
 Route::get('/scores', function () {
     return view('index');
-});
+})->name('scores');
 
 Route::get('/mfl', function () {
     return redirect('https://' . config('mfl.league_host') . '/' . config('mfl.league_year') . '/home/' . config('mfl.league_id'));
