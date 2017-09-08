@@ -1,4 +1,11 @@
 <template>
+  <div>
+    <div v-if="loading">
+      <div class="d-flex justify-content-center mt-4">
+        <vue-loading spinner="wave"></vue-loading>
+      </div>
+      <h5 class="text-center">Loading Scoring Data</h5>
+    </div>
     <div class="scores" v-if="scores">
         <h3 class="text-center">Week {{ week }} Scores</h3>
 
@@ -37,17 +44,21 @@
           </div>
         </div>
     </div>
+  </div>
 </template>
 
 <script>
     import Matchup from './Matchup.vue';
     import league from '../mixins/league.js';
+    import VueLoading from 'vue-simple-loading';
+
 
     export default {
         name: 'Scores',
         props: ['league', 'players'],
-        components: {Matchup},
+        components: {Matchup, VueLoading},
         mixins: [league],
+
         data: () => ({
           scores: null,
           selected: 0,
