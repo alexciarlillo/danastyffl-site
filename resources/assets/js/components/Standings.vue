@@ -14,7 +14,7 @@
 
         <tbody>
           <tr v-for="team in standings.franchise">
-            <td>{{ getLeagueTeamName(league, team.id) }}</td>
+            <td>{{ getFranchiseName(league, team.id) }}</td>
             <td>{{ team.h2hw }}-{{ team.h2hl }}-{{ team.h2ht }}</td>
             <td>{{ team.h2hw / (team.h2hw + team.h2hl) }}
             <td>{{ team.pf }}</td>
