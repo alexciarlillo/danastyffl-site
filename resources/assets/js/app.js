@@ -20,16 +20,17 @@ import App from './components/App.vue';
 import Standings from './components/Standings.vue';
 import Scores from './components/Scores.vue';
 
+
 const router = new VueRouter({
     mode: 'history',
     linkActiveClass: 'active',
     routes: [
         {
             path: '/standings',
-            component: Standings,
+            component: Standings
         },
         {
-            path: '/scores',
+            path: '/scores/:week?',
             component: Scores
         }
     ]

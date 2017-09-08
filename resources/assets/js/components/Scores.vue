@@ -26,7 +26,7 @@
 
                 <div class="form-group">
                   <label class="mr-2">Week:</label>
-                  <select class="custom-select week-select" v-model="week">
+                  <select class="custom-select week-select" v-model="week" @change="changeWeek()">
                     <template v-for="week in weeks">
                       <option :value="week">
                         {{ week }}
@@ -62,12 +62,15 @@
         data: () => ({
           scores: null,
           selected: 0,
-          week: 1,
           error: null,
-          loading: false
+          loading: false,
+          week: null
         }),
 
         created() {
+          if (this.$route.params.week) {
+            this.week = this.$route.params.week;
+          }
           this.fetchScoreData();
         },
 
@@ -76,11 +79,17 @@
             this.error = this.scores = null;
             this.loading = true;
 
-            axios.get('/api/scores')
+            let weekString = '';
+            if(this.week) {
+              weekString = `/${this.week}`;
+            }
+
+            axios.get('/api/scores' + weekString)
               .then(response => {
                 this.loading = false;
                 if(response.data.success) {
                   this.scores = response.data.payload.liveScoring;
+                  this.week = this.scores.week;
                 } else {
                   this.error = response.data.error;
                 }
@@ -88,6 +97,10 @@
               .catch(e => {
                 console.log(e);
               });
+          },
+
+          changeWeek: function() {
+            this.$router.push({ path: `/scores/${this.week}`});
           }
         },
 
@@ -95,6 +108,10 @@
           weeks: function() {
             return _.range(this.league.nflPoolStartWeek, this.league.nflPoolEndWeek);
           }
-        }
+        },
+
+        watch: {
+          '$route': 'fetchScoreData'
+        },
     }
 </script>

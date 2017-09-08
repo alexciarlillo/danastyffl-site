@@ -41,7 +41,7 @@
     export default {
         name: 'Standings',
 
-        props: ['league'],
+        props: ['league', 'year'],
         components: {VueLoading},
         mixins: [league],
 
