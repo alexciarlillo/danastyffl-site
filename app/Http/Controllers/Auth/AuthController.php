@@ -11,17 +11,20 @@ class AuthController extends Controller
 {
     use ValidatesRequests;
 
-    public function login() {
+    public function login()
+    {
         return view('auth.login');
     }
 
-    public function postLogin(Request $request) {
+    public function postLogin(Request $request)
+    {
         if (Auth::attempt(['username' => $request->input('username'), 'password' => $request->input('password')])) {
             return redirect()->route('home');
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('home');
     }

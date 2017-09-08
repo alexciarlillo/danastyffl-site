@@ -6,7 +6,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Contracts\Auth\Authenticatable;
 
-class MFLUser implements Authenticatable {
+class MFLUser implements Authenticatable
+{
 
     /**
      * All of the user's attributes.
@@ -80,8 +81,8 @@ class MFLUser implements Authenticatable {
         return 'remember_token';
     }
 
-    public function getTeamName() {
-
+    public function getTeamName()
+    {
         $identifier = $this->getAuthIdentifier();
 
         $client = new Client([
@@ -92,39 +93,42 @@ class MFLUser implements Authenticatable {
             'MFL_USER_ID' => $identifier
         ], '.myfantasyleague.com');
 
-        $data = $client->get('export',
-        [
-            'query' => [
-                'TYPE' => 'myleagues',
-                'FRANCHISE_NAMES' => 1,
-                'JSON'     => 1
-            ],
-            'cookies' => $cookieJar
-        ]);
+        $data = $client->get(
+            'export',
+            [
+                'query' => [
+                    'TYPE' => 'myleagues',
+                    'FRANCHISE_NAMES' => 1,
+                    'JSON'     => 1
+                ],
+                'cookies' => $cookieJar
+            ]
+        );
 
         $response = json_decode($data->getBody()->getContents());
 
         $leagues = $response->leagues->league;
         $league = null;
 
-        if(is_array($leagues)) {
-            $player_leagues = array_filter($leagues, function($l) {
-                if( stristr($l->url, config('mfl.league_id')) ) {
+        if (is_array($leagues)) {
+            $player_leagues = array_filter($leagues, function ($l) {
+                if (stristr($l->url, config('mfl.league_id'))) {
                     return true;
                 } else {
                     return false;
                 }
             });
 
-            if(!empty($player_leagues))
+            if (!empty($player_leagues)) {
                 $league = $player_leagues[0];
+            }
         } else {
-            if( stristr($leagues->url, config('mfl.league_id')) ) {
+            if (stristr($leagues->url, config('mfl.league_id'))) {
                 $league = $leagues;
             }
         }
 
-        if($league) {
+        if ($league) {
             return $league->franchise_name;
         }
 
