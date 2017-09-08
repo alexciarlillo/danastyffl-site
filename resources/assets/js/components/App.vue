@@ -1,8 +1,10 @@
 <template>
-  <div class="container">
+  <div>
     <NavBar/>
-    <div v-if="league && players">
-      <router-view :league="league" :players="players"></router-view>
+    <div class="container">
+      <div v-if="league && players">
+        <router-view :league="league" :players="players"></router-view>
+      </div>
     </div>
   </div>
 </template>
