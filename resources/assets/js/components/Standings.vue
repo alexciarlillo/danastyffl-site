@@ -40,17 +40,16 @@
         }),
 
         created() {
-          this.fetchData();
+          this.fetchStandingsData();
         },
 
         methods: {
-          fetchData: function() {
+          fetchStandingsData: function() {
             this.error = this.standings = null;
             this.loading = true;
 
             axios.get('/api/standings')
               .then(response => {
-                console.log(response);
                 this.loading = false;
                 if(response.data.success) {
                   this.standings = response.data.payload.leagueStandings;

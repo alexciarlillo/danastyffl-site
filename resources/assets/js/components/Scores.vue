@@ -49,19 +49,35 @@
         components: {Matchup},
         mixins: [league],
         data: () => ({
-          scores: false,
+          scores: null,
           selected: 0,
-          week: 1
+          week: 1,
+          error: null,
+          loading: false
         }),
 
         created() {
-          axios.get('/api/scores')
-          .then(response => {
-            this.scores = response.data.liveScoring;
-          })
-          .catch(e => {
-            console.log(e);
-          });
+          this.fetchScoreData();
+        },
+
+        methods: {
+          fetchScoreData: function() {
+            this.error = this.scores = null;
+            this.loading = true;
+
+            axios.get('/api/scores')
+              .then(response => {
+                this.loading = false;
+                if(response.data.success) {
+                  this.scores = response.data.payload.liveScoring;
+                } else {
+                  this.error = response.data.error;
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              });
+          }
         },
 
         computed: {
