@@ -75,18 +75,27 @@ class APIController extends Controller
         }
     }
 
-    public function scores()
+    public function scores($week = null)
     {
         $scores = null;
+        $error = 'Unable to fetch MFL scores data.';
 
-        if (Cache::has('mfl.scores')) {
-            $scores = Cache::get('mfl.scores');
+        if ($week) {
+            $cacheKey = "mfl.scores.${week}";
         } else {
-            $response = $this->getScores();
+            $cacheKey = "mfl.scores.current";
+        }
+
+        if (Cache::has($cacheKey)) {
+            $scores = Cache::get($cacheKey);
+        } else {
+            $response = $this->getScores($week);
 
             if ($response->getStatusCode() == 200) {
                 $scores = $response->getBody()->getContents();
-                Cache::put('mfl.scores', $scores, 1);
+                Cache::put($cacheKey, $scores, 1);
+            } else {
+                $error = $response->getReasonPhrase();
             }
         }
 
@@ -98,7 +107,7 @@ class APIController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'error' => 'Unable to fetch MFL scores data.'
+                'error' => $error
             ]);
         }
     }
@@ -153,17 +162,21 @@ class APIController extends Controller
         ]);
     }
 
-    private function getScores()
+    private function getScores($week)
     {
-        return $this->client->get('export', ['query' =>
-            [
-                'L' => $this->leagueId,
-                'APIKEY' => $this->apiKey,
-                'JSON' => 1,
-                'TYPE' => 'liveScoring',
-                'DETAILS' => 1
-            ]
-        ]);
+        $query = [
+            'L' => $this->leagueId,
+            'APIKEY' => $this->apiKey,
+            'JSON' => 1,
+            'TYPE' => 'liveScoring',
+            'DETAILS' => 1
+        ];
+
+        if ($week) {
+            $query['W'] = $week;
+        }
+
+        return $this->client->get('export', ['query' => $query]);
     }
 
     private function getPlayers()
