@@ -27,10 +27,13 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: 400;
 }
 
-h1.title {
+h1.title, .navbar-inverse .navbar-brand {
   font-family: 'Trade Winds', cursive;
   font-weight: 400;
   color: $redder-state;
+}
+
+h1.title {
   font-size: 3rem;
 
   @include media-breakpoint-up(md) {
@@ -69,7 +72,11 @@ h1.title {
     color: $gray;
   }
 }
-.content {
+
+.navbar {
+  &.bg-inverse {
+    color: $black-eye;
+  }
 }
 
 

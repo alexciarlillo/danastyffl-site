@@ -12,8 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('index');
-})->name('home');
+    return redirect('standings');
+});
 
 Route::get('/standings', function () {
     return view('index');

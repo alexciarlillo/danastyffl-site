@@ -22,20 +22,15 @@ import Scores from './components/Scores.vue';
 
 const router = new VueRouter({
     mode: 'history',
+    linkActiveClass: 'active',
     routes: [
         {
-            path: '/',
-            component: App,
-            children: [
-                {
-                    path: 'standings',
-                    component: Standings
-                },
-                {
-                    path: 'scores',
-                    component: Scores
-                }
-            ]
+            path: '/standings',
+            component: Standings,
+        },
+        {
+            path: '/scores',
+            component: Scores
         }
     ]
 });

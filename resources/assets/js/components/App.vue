@@ -1,16 +1,22 @@
 <template>
-  <div v-if="league && players">
-    <router-view :league="league" :players="players"></router-view>
+  <div class="container">
+    <NavBar/>
+    <div v-if="league && players">
+      <router-view :league="league" :players="players"></router-view>
+    </div>
   </div>
 </template>
 
 <script>
+  import NavBar from './NavBar.vue';
+
   export default {
     name: 'App',
     data: () => ({
       league: false,
       players: false
     }),
+    components: {NavBar},
     created() {
       axios.get('/api/league')
         .then(response => {

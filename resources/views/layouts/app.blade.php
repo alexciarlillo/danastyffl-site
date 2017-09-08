@@ -24,15 +24,7 @@
         <div class="hero-banner"></div>
         <div class="hero-cover"></div>
 
-        @include('layouts.header')
-
-        <div class="container content">
-            <div class="row mt-2">
-                <div class="col-12 col-md-10 offset-md-1">
-                    @yield('content')
-                </div>
-            </div>
-        </div>
+        @yield('content')
 
         <!-- Scripts -->
         <script src="{{ mix('/js/app.js') }}"></script>
