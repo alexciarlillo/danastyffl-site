@@ -24,7 +24,10 @@ class APIController extends Controller
         $league = Cache::remember('league', 60, function () {
             return $this->getLeague();
         });
-        return response($league)->header('Content-Type', 'application/json');
+        return response($league)->json([
+            'success' => true,
+            'payload' => json_decode($league)
+        ]);
     }
 
     public function standings()
@@ -32,7 +35,11 @@ class APIController extends Controller
         $standings = Cache::remember('standings', 60, function () {
             return $this->getStandings();
         });
-        return response($standings)->header('Content-Type', 'application/json');
+
+        return response()->json([
+            'success' => true,
+            'payload' => json_decode($standings)
+        ]);
     }
 
     public function scores()
@@ -40,7 +47,11 @@ class APIController extends Controller
         $scores = Cache::remember('scores', 1, function () {
             return $this->getScores();
         });
-        return response($scores)->header('Content-Type', 'application/json');
+
+        return response()->json({
+            'success' => true,
+            'payload' => json_decode($scores)
+        });
     }
 
     public function players()
@@ -49,7 +60,10 @@ class APIController extends Controller
             return $this->getPlayers();
         });
 
-        return response($players)->header('Content-Type', 'application/json');
+        return response()->json({
+            'success' => true,
+            'payload' => json_decode($players)
+        });
     }
 
     private function getLeague()

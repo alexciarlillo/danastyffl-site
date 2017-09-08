@@ -34,17 +34,35 @@
         mixins: [league],
 
         data: () => ({
-          standings: false,
+          standings: null,
+          error: null,
+          loading: false
         }),
 
         created() {
-          axios.get('/api/standings')
-          .then(response => {
-            this.standings = response.data.leagueStandings;
-          })
-          .catch(e => {
-            console.log(e);
-          });
+          this.fetchData();
+        },
+
+        methods: {
+          fetchData: function() {
+            this.error = this.standings = null;
+            this.loading = true;
+
+            axios.get('/api/standings')
+              .then(response => {
+                console.log(response);
+                this.loading = false;
+                if(response.data.success) {
+                  this.standings = response.data.payload.leagueStandings;
+                } else {
+                  this.error = response.data.error;
+                }
+
+              })
+              .catch(e => {
+                console.log(e);
+              });
+          }
         }
     }
 </script>
