@@ -37,7 +37,7 @@ export default {
         },
 
         getScoringTotal: function(players) {
-            let score = _.reduce(players, function(sum, player) {
+            let score = _.reduce(this.getPlayerStarters(players), function(sum, player) {
                 return parseFloat(sum) + parseFloat(player.score);
             }, 0);
 
