@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 require('jquery');
-require('tether');
+window.Tether = require('tether');
 require('bootstrap');
 
 import VueRouter from 'vue-router';
