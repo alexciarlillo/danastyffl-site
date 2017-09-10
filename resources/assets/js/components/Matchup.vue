@@ -11,7 +11,7 @@
                 <h2>{{ homeFranchise.score }}</h2>
             </div>
         </div>
-        <div class="d-flex flex-row scores">
+        <div class="d-flex flex-row scores" v-bind:style="{ paddingTop: topPadding + 'px' }">
             <div class="franchise-scores">
                 <template v-for="player in getPlayerStarters(awayFranchise.players.player)">
                     <PlayerScore :player="player" :players="players"></PlayerScore>
@@ -25,6 +25,7 @@
                 <div class="wr">WR</div>
                 <div class="wr">WR</div>
                 <div class="wr">WR</div>
+                <div class="te">TE</div>
                 <div class="flex">FLX</div>
                 <div class="dst">DST</div>
             </div>
@@ -48,8 +49,11 @@
         props: ['teams', 'league', 'players'],
         mixins: [league, player],
         components: {PlayerScore},
-        created() {
-            console.log(this.teams);
+        data: () => ({
+            topPadding: 50
+        }),
+        mounted() {
+            this.topPadding = $('.header').height();
         },
         computed: {
             homeFranchise: function() {

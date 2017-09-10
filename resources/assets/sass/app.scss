@@ -100,11 +100,6 @@ h1.title {
 
   .scores {
     background-color: $gray;
-
-    @include media-breakpoint-down(sm) {
-      margin-top: 60px;
-    }
-
   }
 }
 
