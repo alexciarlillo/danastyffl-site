@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <NavBar/>
+  <div class="app">
+    <header class="fixed-top">
+      <NavBar></NavBar>
+    </header>
     <div class="container">
       <div v-if="loading">
         <div class="d-flex justify-content-center mt-4">
@@ -19,6 +21,7 @@
   import NavBar from './NavBar.vue';
   import VueLoading from 'vue-simple-loading';
 
+
   export default {
     name: 'App',
 
@@ -34,6 +37,7 @@
     created() {
       this.fetchLeagueData();
       this.fetchPlayerData();
+
     },
 
     methods: {

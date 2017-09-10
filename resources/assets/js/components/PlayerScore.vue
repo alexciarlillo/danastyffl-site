@@ -1,8 +1,8 @@
 <template>
-    <div class="score-box d-flex justify-content-between">
-        <div class="player-info">
-            <div class="name"><strong>{{ getPlayerName(players, player.id) }}</strong></div>
-            <div class="team">{{ getPlayerTeam(players, player.id) }}</div>
+    <div class="player d-flex justify-content-between">
+        <div class="info">
+            <span class="name">{{ getShortPlayerName(players, player.id) }}</span>
+            <span class="team">{{ getPlayerTeam(players, player.id) }}</span>
         </div>
         <div class="score">{{ player.score }}</div>
     </div>

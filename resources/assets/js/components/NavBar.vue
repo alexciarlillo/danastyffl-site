@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary mb-4">
+  <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

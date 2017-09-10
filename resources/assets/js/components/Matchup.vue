@@ -1,15 +1,17 @@
 <template>
-    <div class="d-flex flex-row matchups">
-        <div class="matchup" v-for="team in teams">
-            <h4>{{ getFranchiseName(league, team.id) }}</h4>
-            <div class="scores">
-              <template v-for="player in getPlayerStarters(team.players.player)">
-                <PlayerScore :player="player" :players="players"/>
-              </template>
-              <div>
-                <span><strong>Total</strong></span>
-                <span><strong>{{ getScoringTotal(team.players.player) }}</strong></span>
-              </div>
+    <div class="matchup">
+        <div class="d-flex flex-row header">
+            <div class="franchise-header" v-for="team in teams">
+                <h1>{{ getFranchiseName(league, team.id) }}</h1>
+                <h2>{{ team.score }}</h2>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row scores">
+            <div class="franchise-scores" v-for="team in teams">
+                <template v-for="player in getPlayerStarters(team.players.player)">
+                    <PlayerScore :player="player" :players="players"></PlayerScore>
+                </template>
             </div>
         </div>
     </div>

@@ -11,7 +11,7 @@
         <title>{{ config('app.name', 'DaNasty FFL') }}</title>
 
         <!-- Styles -->
-        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+        {{-- <link href="{{ mix('css/app.css') }}" rel="stylesheet"> --}}
 
         <!-- Scripts -->
         <script>

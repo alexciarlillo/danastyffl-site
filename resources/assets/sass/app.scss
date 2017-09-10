@@ -14,6 +14,13 @@ body {
   color: $gray;
 }
 
+.container {
+  @include media-breakpoint-down(sm) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 input, select, .custom-select, .custom-select:focus {
   color: $black-eye;
 }
@@ -61,44 +68,89 @@ h1.title {
   opacity: 0.1;
 }
 
-.hero-cover {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background-color: $black-eye;
-  mix-blend-mode: multiply;
-  left: 0;
-  top: 0;
-}
-
-.header {
-  .navbar-text h1 {
-    font-weight: 700;
-    color: $gray;
-  }
-}
-
-.navbar {
-  &.bg-inverse {
-    color: $black-eye;
-  }
-}
-
-.matchups {
-  margin-right: -($grid-gutter-width-base/2);
-  margin-left: -($grid-gutter-width-base/2);
+.nav-wrapper {
+    @include media-breakpoint-down(sm) {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1030;
+    }
 }
 
 .matchup {
-  background-color: $gray;
   color: $black-eye;
-  width: 100%;
-  padding: .125rem;
-  h4 {
-    font-size: 1.25rem;
+  background-color: $red;
+  padding-top: 55px;
+
+  @include media-breakpoint-down(sm) {
+    padding-top: 55px;
+  }
+
+  .header {
+    justify-content: space-evenly;
+    background-color: $black;
+    color: $gray;
+    padding-top: 1rem;
+
+    @include media-breakpoint-down(sm) {
+      position: fixed;
+      top: 55px;
+      right: 0;
+      left: 0;
+      z-index: 1020;
+    }
+  }
+
+  .scores {
+    background-color: $gray;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 60px;
+    }
+
   }
 }
 
-.score-box {
-  padding: .125rem;
+.franchise-header {
+    text-align: center;
+    width: 100%;
+
+    h1 {
+      font-size: 1.25rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+  }
+
+.franchise-scores {
+  width: 100%;
+
+  .player {
+    padding: 1.25rem .5rem;
+
+    border-top: 1px solid darken($gray, 20%);
+
+    &:first-child, &:last-child {
+      border-bottom: 1 px solid darken($gray, 20%);
+    }
+  }
+
+  .info {
+    font-size: 0.8rem;
+
+    .name {
+      font-weight: 700;
+    }
+
+    .team {
+      font-size: 0.75rem;
+    }
+  }
+
+  .score {
+    font-size: 0.8rem;
+  }
 }
