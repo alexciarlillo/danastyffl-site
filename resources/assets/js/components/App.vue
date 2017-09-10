@@ -37,7 +37,6 @@
     created() {
       this.fetchLeagueData();
       this.fetchPlayerData();
-
     },
 
     methods: {

@@ -6,7 +6,7 @@
  */
 
 require('./bootstrap');
-require('jquery');
+window.$ = require('jquery');
 window.Tether = require('tether');
 require('bootstrap');
 
@@ -21,8 +21,6 @@ import '../sass/app.scss';
 import App from './components/App.vue';
 import Standings from './components/Standings.vue';
 import Scores from './components/Scores.vue';
-
-
 
 const router = new VueRouter({
     mode: 'history',

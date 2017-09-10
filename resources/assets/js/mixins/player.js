@@ -1,29 +1,23 @@
 export default {
     methods: {
-        getPlayerName: function(players, id) {
-          let player = players.player.filter( function(p) {
-            return p.id == id;
-          });
-
-          return player[0].name;
-        },
-
-        getShortPlayerName: function(players, id) {
-          let player = players.player.filter( function(p) {
-            return p.id == id;
-          });
-
-          let name = player[0].name.split(', ');
-          let last = name[0];
-          let first = name[1].charAt(0);
+        getShortPlayerName: function(name) {
+          let name_arr = name.split(', ');
+          let last = name_arr[0];
+          let first = name_arr[1].charAt(0);
 
           return `${first}. ${last}`;
         },
 
         getPlayerStarters: function(players) {
-            return players.filter( function(p) {
+            let starters = players.filter( function(p) {
                 return p.status == "starter"
             });
+
+            return starters.sort(this.sortPlayers);
+        },
+
+        sortPlayers: function(a, b) {
+            return this.positionCompare(a.position, b.position);
         },
 
         getPlayersBench: function(players) {
@@ -32,28 +26,66 @@ export default {
             })
         },
 
-        getPlayerTeam: function(players, id) {
-            let player = players.player.filter( function(p) {
-                return p.id == id;
+        injectPlayerData: function(liveScoring, players) {
+            let scores = liveScoring;
+
+            _.each(scores.matchup, function(matchup) {
+                _.each(matchup.franchise, function(franchise) {
+                    _.each(franchise.players.player, function(franchisePlayer) {
+                        let playerData = players.player.find(function(player) {
+                            return player.id == franchisePlayer.id;
+                        });
+
+                        franchisePlayer.name = playerData.name;
+                        franchisePlayer.team = playerData.team;
+                        franchisePlayer.position = playerData.position.toUpperCase();
+                    });
+                });
             });
 
-            return player[0].team;
+            return scores;
         },
 
-        getPlayerPos: function(players, id) {
-            let player = players.player.filter( function(p) {
-                return p.id == id;
-            });
+        positionCompare: function(pos1, pos2) {
+            if(pos1 == "QB") {
+                return -1;
+            }
 
-            return player[0].position;
-        },
+            if(pos1 == "DEF") {
+                return 1;
+            }
 
-        getScoringTotal: function(players) {
-            let score = _.reduce(this.getPlayerStarters(players), function(sum, player) {
-                return parseFloat(sum) + parseFloat(player.score);
-            }, 0);
+            if(pos1 == "RB") {
+                if(pos2 != "QB") {
+                    return -1;
+                } else if(pos2 == "RB") {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
 
-            return score.toFixed(2);
+            if(pos1 == "WR") {
+                if (pos2 == "DEF" || pos2 == "TE") {
+                    return -1;
+                } else if(pos2 == "WR") {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+
+            if(pos1 == "TE") {
+                if(pos2 == "DEF") {
+                    return -1;
+                } else if(pos2 == "TE") {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+
+            return 0;
         }
     }
 }

@@ -44,6 +44,7 @@
 <script>
     import Matchup from './Matchup.vue';
     import league from '../mixins/league.js';
+    import player from '../mixins/player.js';
     import VueLoading from 'vue-simple-loading';
 
 
@@ -51,7 +52,7 @@
         name: 'Scores',
         props: ['league', 'players'],
         components: {Matchup, VueLoading},
-        mixins: [league],
+        mixins: [league, player],
 
         data: () => ({
           scores: null,
@@ -65,14 +66,18 @@
           if (this.$route.params.week) {
             this.week = this.$route.params.week;
           }
-          this.fetchScoreData();
+          this.loadInitialData();
+
+          setInterval(function () {
+            console.log('updating');
+            this.fetchScoreData();
+          }.bind(this), 30000);
         },
 
         methods: {
-          fetchScoreData: function() {
+          loadInitialData: function() {
             this.error = this.scores = null;
             this.loading = true;
-
             let weekString = '';
             if(this.week) {
               weekString = `/${this.week}`;
@@ -82,7 +87,27 @@
               .then(response => {
                 this.loading = false;
                 if(response.data.success) {
-                  this.scores = response.data.payload.liveScoring;
+                  this.scores = this.injectPlayerData(response.data.payload.liveScoring, this.players);
+                  this.week = this.scores.week;
+                } else {
+                  this.error = response.data.error;
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              });
+          },
+
+          fetchScoreData: function() {
+            let weekString = '';
+            if(this.week) {
+              weekString = `/${this.week}`;
+            }
+
+            axios.get('/api/scores' + weekString)
+              .then(response => {
+                if(response.data.success) {
+                  this.scores = this.injectPlayerData(response.data.payload.liveScoring, this.players);
                   this.week = this.scores.week;
                 } else {
                   this.error = response.data.error;
@@ -105,7 +130,8 @@
         },
 
         watch: {
-          '$route': 'fetchScoreData'
+          '$route': 'loadInitialData',
+
         },
     }
 </script>

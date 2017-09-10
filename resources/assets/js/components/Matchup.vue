@@ -3,36 +3,24 @@
         <div class="d-flex flex-row header">
             <div class="franchise-header">
                 <h1>{{ getFranchiseName(league, awayFranchise.id) }}</h1>
-                <h2>{{ awayFranchise.score }}</h2>
+                <h2 class="mb-0">{{ awayFranchise.score }}</h2>
             </div>
             <div class="franchise-seperator">@</div>
             <div class="franchise-header">
                 <h1>{{ getFranchiseName(league, homeFranchise.id) }}</h1>
-                <h2>{{ homeFranchise.score }}</h2>
+                <h2 class="mb-0">{{ homeFranchise.score }}</h2>
             </div>
         </div>
         <div class="d-flex flex-row scores" v-bind:style="{ paddingTop: topPadding + 'px' }">
             <div class="franchise-scores">
                 <template v-for="player in getPlayerStarters(awayFranchise.players.player)">
-                    <PlayerScore :player="player" :players="players"></PlayerScore>
+                    <PlayerScore :player="player"></PlayerScore>
                 </template>
-            </div>
-
-            <div class="position-seperator">
-                <div class="qb">QB</div>
-                <div class="rb">RB</div>
-                <div class="rb">RB</div>
-                <div class="wr">WR</div>
-                <div class="wr">WR</div>
-                <div class="wr">WR</div>
-                <div class="te">TE</div>
-                <div class="flex">FLX</div>
-                <div class="dst">DST</div>
             </div>
 
             <div class="franchise-scores">
                 <template v-for="player in getPlayerStarters(homeFranchise.players.player)">
-                    <PlayerScore :player="player" :players="players"></PlayerScore>
+                    <PlayerScore :player="player"></PlayerScore>
                 </template>
             </div>
         </div>
@@ -69,7 +57,9 @@
                 });
 
                 return franchise;
-            }
+            },
+        },
+        methods: {
         }
     }
 </script>

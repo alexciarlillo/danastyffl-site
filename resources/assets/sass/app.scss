@@ -87,7 +87,6 @@ h1.title {
     justify-content: space-evenly;
     background-color: $black;
     color: $gray;
-    padding-top: 1rem;
 
     @include media-breakpoint-down(sm) {
       position: fixed;
@@ -106,6 +105,11 @@ h1.title {
 .franchise-header {
     text-align: center;
     width: 100%;
+    padding: .5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     h1 {
       font-size: 1.25rem;
@@ -114,37 +118,31 @@ h1.title {
     h2 {
       font-size: 1rem;
     }
-  }
-.position-seperator {
-  background-color: darken($gray, 10%);
-  div {
-    font-size: 0.8rem;
-    padding: 1.25rem .5rem;
-
-    border-top: 1px solid darken($gray, 20%);
-
-    &:first-child, &:last-child {
-      border-bottom: 1 px solid darken($gray, 20%);
-    }
-  }
 }
 
 .franchise-seperator {
   font-size: 20px;
   font-family: Graduate, cursive;
-  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .franchise-scores {
   width: 100%;
 
   .player {
-    padding: 1.25rem .5rem;
+    padding: 1.125rem .5rem;
+    transition: background-color 0.5s ease;
 
     border-top: 1px solid darken($gray, 20%);
 
     &:first-child, &:last-child {
       border-bottom: 1 px solid darken($gray, 20%);
+    }
+
+    &.changed {
+      background-color: $aqua1;
     }
   }
 

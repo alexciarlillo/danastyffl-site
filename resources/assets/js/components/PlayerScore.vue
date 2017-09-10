@@ -1,8 +1,8 @@
 <template>
-    <div class="player d-flex justify-content-between">
+    <div class="player d-flex justify-content-between" v-bind:class="{changed: didChange}">
         <div class="info">
-            <span class="name">{{ getShortPlayerName(players, player.id) }}</span>
-            <span class="team">{{ getPlayerTeam(players, player.id) }}</span>
+            <span class="name">{{ getShortPlayerName(player.name) }}</span>
+            <span class="team">{{ player.team }}</span>
         </div>
         <div class="score">{{ player.score }}</div>
     </div>
@@ -14,7 +14,21 @@ import player from '../mixins/player.js';
 export default {
     name: 'PlayerScore',
     mixins: [player],
-    props: ['player', 'players']
+    props: ['player'],
+    data: () => ({
+        didChange: false
+    }),
+    watch: {
+        'player': {
+            handler(newValue, oldValue) {
+                if(oldValue.score != newValue.score) {
+                    console.log('Score change for ' + this.getShortPlayerName(oldValue.name) + ' From: ' + oldValue.score + ' To: ' + newValue.score);
+                    this.didChange = true;
+                    setTimeout(() => { this.didChange = false; }, 1000);
+                }
+            }
+        }
+    }
 
 }
 </script>
