@@ -22,9 +22,8 @@ export default {
         'player': {
             handler(newValue, oldValue) {
                 if(oldValue.score != newValue.score) {
-                    console.log('Score change for ' + this.getShortPlayerName(oldValue.name) + ' From: ' + oldValue.score + ' To: ' + newValue.score);
                     this.didChange = true;
-                    setTimeout(() => { this.didChange = false; }, 1000);
+                    setTimeout(() => { this.didChange = false; }, 500);
                 }
             }
         }
