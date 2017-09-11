@@ -16,8 +16,8 @@ A Laravel & VueJS application that acts as a landing page for a fantasy league h
 
 ## TODO
 
-* Add year selector
 * Link to player rosters
 * Ability to initiate trades
-* Team profiles
-  * Some information only viewable by logged in users of the league
+* Scoring
+  * Swipe to change matchup
+  * Game Info (opposing team, final, score, remaining mins)
