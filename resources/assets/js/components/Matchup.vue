@@ -14,13 +14,13 @@
         <div class="d-flex flex-row scores" v-bind:style="{ paddingTop: topPadding + 'px' }">
             <div class="franchise-scores">
                 <template v-for="player in getPlayerStarters(awayFranchise.players.player)">
-                    <PlayerScore :player="player"></PlayerScore>
+                    <PlayerScore :player="player" :home="true"></PlayerScore>
                 </template>
             </div>
 
             <div class="franchise-scores">
                 <template v-for="player in getPlayerStarters(homeFranchise.players.player)">
-                    <PlayerScore :player="player"></PlayerScore>
+                    <PlayerScore :player="player" :home="false"></PlayerScore>
                 </template>
             </div>
         </div>

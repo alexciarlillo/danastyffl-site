@@ -132,10 +132,12 @@ h1.title {
   width: 100%;
 
   .player {
-    padding: 1.125rem .5rem;
     transition: background-color 0.5s ease;
-
+    color: $black;
     border-top: 1px solid darken($gray, 20%);
+    border-left: 1px solid darken($gray, 20%);
+    border-right: 1px solid darken($gray, 20%);
+
 
     &:first-child, &:last-child {
       border-bottom: 1 px solid darken($gray, 20%);
@@ -148,6 +150,7 @@ h1.title {
 
   .info {
     font-size: 0.8rem;
+    padding: 1.125rem .5rem;
 
     .name {
       font-weight: 700;
@@ -155,10 +158,29 @@ h1.title {
 
     .team {
       font-size: 0.75rem;
+      margin-left: .125rem;
     }
   }
 
   .score {
+    padding: 1.125rem .25rem;
     font-size: 0.8rem;
+  }
+
+  .position {
+    font-size: 12px;
+    padding: 1.125rem 0;
+    min-width: 30px;
+    text-align: center;
+    background-color: darken($gray, 10%);
+
+    &.left {
+      border-right: 1px solid darken($gray, 20%);
+      margin-right: .25rem;
+    }
+    &.right {
+      border-left: 1px solid darken($gray, 20%);
+      margin-left: .25rem;
+    }
   }
 }
