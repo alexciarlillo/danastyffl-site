@@ -7,42 +7,13 @@
       <h5 class="text-center">Loading Scoring Data</h5>
     </div>
     <div class="scoring" v-if="scores">
-<!--         <div class="row">
-          <div class="col-12">
-            <form class="form-inline justify-content-between">
-                <div class="form-group">
-                  <label class="mr-2">Matchup:</label>
-                  <select class="custom-select matchup-select form-control" v-model="selected">
-                    <template v-for="(matchup, index) in scores.matchup">
-                      <option :value="index">
-                        {{ getFranchiseName(league, matchup.franchise[0].id) }} @ {{ getFranchiseName(league, matchup.franchise[1].id) }}
-                      </option>
-                    </template>
-                  </select>
-                </div>
-
-
-                <div class="form-group">
-                  <label class="mr-2">Week:</label>
-                  <select class="custom-select week-select" v-model="week" @change="changeWeek()">
-                    <template v-for="week in weeks">
-                      <option :value="week">
-                        {{ week }}
-                      </option>
-                    </template>
-                  </select>
-                </div>
-              </form>
-          </div>
-        </div>
- -->
-        <Matchup :teams="scores.matchup[selected].franchise" :league="league" :players="players"></Matchup>
+        <Matchups :matchups="scores.matchup" :league="league" :players="players"></Matchups>
     </div>
   </div>
 </template>
 
 <script>
-    import Matchup from './Matchup.vue';
+    import Matchups from './Matchups.vue';
     import league from '../mixins/league.js';
     import player from '../mixins/player.js';
     import VueLoading from 'vue-simple-loading';
@@ -51,7 +22,7 @@
     export default {
         name: 'Scores',
         props: ['league', 'players'],
-        components: {Matchup, VueLoading},
+        components: {Matchups, VueLoading},
         mixins: [league, player],
 
         data: () => ({
@@ -88,6 +59,7 @@
                 this.loading = false;
                 if(response.data.success) {
                   this.scores = this.injectPlayerData(response.data.payload.liveScoring, this.players);
+                  console.log(this.scores.matchup);
                   this.week = this.scores.week;
                 } else {
                   this.error = response.data.error;
@@ -120,7 +92,9 @@
 
           changeWeek: function() {
             this.$router.push({ path: `/scores/${this.week}`});
-          }
+          },
+
+
         },
 
         computed: {

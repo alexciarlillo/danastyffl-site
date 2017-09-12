@@ -11,10 +11,13 @@ window.Tether = require('tether');
 require('bootstrap');
 
 import VueRouter from 'vue-router';
+var VueTouch = require('vue-touch')
+
 
 window.Vue = require('vue');
 
 Vue.use(VueRouter);
+Vue.use(VueTouch, {name: 'v-touch'})
 
 import '../sass/app.scss';
 

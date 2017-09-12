@@ -88,6 +88,12 @@ h1.title {
     background-color: $black;
     color: $gray;
 
+    .indicator {
+      background-color: darken($gray, 10%);
+      color: $black-eye;
+      font-size: .75rem;
+    }
+
     @include media-breakpoint-down(sm) {
       position: fixed;
       top: 55px;
@@ -112,6 +118,7 @@ h1.title {
     justify-content: space-between;
 
     h1 {
+      word-break: break-word;
       font-size: 1.25rem;
     }
 
@@ -143,14 +150,14 @@ h1.title {
       border-bottom: 1 px solid darken($gray, 20%);
     }
 
-    &.changed {
+    &.updated {
       background-color: $aqua1;
     }
   }
 
   .info {
     font-size: 0.8rem;
-    padding: 1.125rem .5rem;
+    padding: 1.125rem .125rem;
 
     .name {
       font-weight: 700;
@@ -174,11 +181,11 @@ h1.title {
     text-align: center;
     background-color: darken($gray, 10%);
 
-    &.left {
+    &.right {
       border-right: 1px solid darken($gray, 20%);
       margin-right: .25rem;
     }
-    &.right {
+    &.left {
       border-left: 1px solid darken($gray, 20%);
       margin-left: .25rem;
     }
