@@ -19,7 +19,7 @@ window.Vue = require('vue');
 Vue.use(VueRouter);
 Vue.use(VueTouch, {name: 'v-touch'})
 
-import '../sass/app.scss';
+// import '../sass/app.scss';
 
 import App from './components/App.vue';
 import Standings from './components/Standings.vue';
