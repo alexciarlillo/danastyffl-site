@@ -25,7 +25,7 @@ export default {
     watch: {
         'player': {
             handler(newValue, oldValue) {
-                if(oldValue.score != newValue.score) {
+                if(oldValue.score != newValue.score && oldValue.name == newValue.name) {
                     this.updated = true;
                     setTimeout(() => { this.updated = false; }, 500);
                 }

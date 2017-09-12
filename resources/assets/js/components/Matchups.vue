@@ -54,7 +54,6 @@
             selected: 0
         }),
         mounted() {
-            console.log(this.matchups);
             this.updateScorePadding();
         },
         updated() {
@@ -78,7 +77,6 @@
         },
         methods: {
             updateScorePadding: function() {
-                console.log($('.header').height());
                 this.topPadding = $('.header').height();
             },
             nextMatchup: function() {
