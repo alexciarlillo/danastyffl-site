@@ -12,6 +12,24 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
-   .browserSync('danastyffl.app')
-   .copyDirectory('resources/assets/images', 'public/images');
+   .browserSync('danastyffl.test')
+   .copyDirectory('resources/assets/images', 'public/images')
+   .extract([
+    'jquery',
+    'bootstrap',
+    'axios',
+    'vue',
+    'lodash',
+    'popper.js'
+  ])
+  .autoload({
+    jquery: ['$', 'window.jQuery', 'jQuery'],
+    lodash: ['_', 'window._'],
+    vue: ['Vue', 'window.Vue'],
+    axios: ['axios', 'window.axios'],
+    tether: ['Tether', 'window.Tether']
+  });
+
+if (mix.inProduction()) {
+    mix.version();
+}

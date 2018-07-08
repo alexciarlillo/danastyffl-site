@@ -6,20 +6,15 @@
  */
 
 require('./bootstrap');
-window.$ = require('jquery');
-window.Tether = require('tether');
-require('bootstrap');
 
+import Vue from 'vue';
 import VueRouter from 'vue-router';
-var VueTouch = require('vue-touch')
-
-
-window.Vue = require('vue');
+import VueTouch from 'vue-touch';
 
 Vue.use(VueRouter);
 Vue.use(VueTouch, {name: 'v-touch'})
 
-// import '../sass/app.scss';
+import '../sass/app.scss';
 
 import App from './components/App.vue';
 import Standings from './components/Standings.vue';
