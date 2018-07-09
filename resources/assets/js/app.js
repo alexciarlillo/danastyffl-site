@@ -14,8 +14,6 @@ import VueTouch from 'vue-touch';
 Vue.use(VueRouter);
 Vue.use(VueTouch, {name: 'v-touch'})
 
-import '../sass/app.scss';
-
 import App from './components/App.vue';
 import Standings from './components/Standings.vue';
 import Scores from './components/Scores.vue';

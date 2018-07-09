@@ -1,12 +1,16 @@
 <template>
-  <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <router-link to="/standings" class="navbar-brand">DaNasty FFL</router-link>
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+    <router-link to="/standings" class="navbar-brand">
+      <img src="images/team-logo.png" class="d-inline-block align-top" height="40" width="40">
+      <span class="title ml-2">DaNasty FFL</span>
+    </router-link>
 
-    <div class="collapse navbar-collapse" id="navbarToggler">
-      <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>    
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mx-auto">
         <li class="nav-item">
           <router-link to="/standings" class="nav-link">Standings</router-link>
         </li>
@@ -15,7 +19,7 @@
         </li>
       </ul>
 
-      <ul class="navbar-nav mt-2 mt-md-0">
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a href="/mfl" class="nav-link">MFL</a>
         </li>

@@ -21,9 +21,6 @@
         </script>
     </head>
     <body>
-        <div class="hero-banner"></div>
-        {{-- <div class="hero-cover"></div> --}}
-
         @yield('content')
 
         <!-- Scripts -->

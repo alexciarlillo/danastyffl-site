@@ -11,23 +11,29 @@
 body {
   font-family: Lato, sans-serif;
   font-weight: 400;
-  color: $gray;
+  color: $blue;
+  padding-top: 4.5rem;
 }
 
-.container {
-  padding-top: 55px;
-  @include media-breakpoint-down(sm) {
-    padding-left: 0;
-    padding-right: 0;
+.navbar {
+ .title {
+    font-family: 'Trade Winds', cursive;
+    font-weight: 400;
+    color: $mfl-orange;
+    font-size: 1.5rem;
+  }
+
+  .logo {
+    height: 3rem;
   }
 }
 
 input, select, .custom-select, .custom-select:focus {
-  color: $black-eye;
+  color: $blue;
 }
 
 .scores .card {
-  color: $black-eye;
+  color: $blue;
 }
 
 .custom-select {
@@ -39,48 +45,8 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: 400;
 }
 
-h1.title, .navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand.active, .navbar-inverse .navbar-brand:active {
-  font-family: 'Trade Winds', cursive;
-  font-weight: 400;
-  color: $mfl-orange;
-}
-
-h1.title {
-  font-size: 3rem;
-
-  @include media-breakpoint-up(md) {
-    font-size: 5rem;
-  }
-}
-
-.hero-banner {
-  height: 100%;
-  width: 100%;
-  background: url('/images/qb.jpg') no-repeat;
-  background-size: cover;
-  background-position: 0% center;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  filter: grayscale(100%);
-  opacity: 0.1;
-}
-
-.nav-wrapper {
-    @include media-breakpoint-down(sm) {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      z-index: 1030;
-    }
-}
-
 .matchup {
-  color: $black-eye;
+  color: $black;
   background-color: $red;
 
   .header {
@@ -90,7 +56,7 @@ h1.title {
 
     .indicator {
       background-color: darken($gray, 10%);
-      color: $black-eye;
+      color: $black;
       font-size: .75rem;
     }
 
@@ -151,7 +117,7 @@ h1.title {
     }
 
     &.updated {
-      background-color: $aqua1;
+      background-color: $blue;
     }
   }
 
