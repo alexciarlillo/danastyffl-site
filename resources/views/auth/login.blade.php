@@ -13,23 +13,21 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="card card-primary card-inverse">
-                                <div class="card-block">
-                                    <form method="POST" action="/login">
-                                        {{ csrf_field() }}
-                                        <div class="form-group">
-                                            <label for="username">MFL Username</label>
-                                            <input type="text" class="form-control" id="username" name="username" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">MFL Password</label>
-                                            <input type="password" class="form-control" id="password" name="password" required>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-secondary">Submit</button>
-                                    </form>
+                            <form method="POST" action="/login">
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="username">MFL Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label for="password">MFL Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-secondary">Submit</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
