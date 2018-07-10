@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return redirect('standings');
-});
+})->name('home');
 
 Route::get('/standings', function () {
     return view('index');
