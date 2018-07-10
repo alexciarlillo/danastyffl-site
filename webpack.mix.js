@@ -20,6 +20,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
     'bootstrap',
     'axios',
     'vue',
+    'vue-router',
+    'vue-touch',
+    'vue2-filters',
     'lodash',
     'popper.js'
   ])

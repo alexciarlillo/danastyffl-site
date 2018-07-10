@@ -26,6 +26,7 @@
     "popper.js": "^1.14",
     "vue-router": "^3.0",
     "vue-simple-loading": "^1.1.5",
-    "vue-touch": "next"
+    "vue-touch": "next",
+    "vue2-filters": "^0.3.0"
   }
 }

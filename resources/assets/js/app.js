@@ -10,7 +10,9 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueTouch from 'vue-touch';
+import Vue2Filters from 'vue2-filters'
 
+Vue.use(Vue2Filters)
 Vue.use(VueRouter);
 Vue.use(VueTouch, {name: 'v-touch'})
 

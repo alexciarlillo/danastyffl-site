@@ -8,7 +8,7 @@
     </div>
 
     <div class="standings" v-if="standings">
-      <h3 class="text-center">2017 Standings</h3>
+      <h3 class="text-center">2018 Standings</h3>
       <div class="table-responsive">
         <table class="table table-sm" v-if="standings">
           <thead>
@@ -24,7 +24,7 @@
             <tr v-for="team in standings.franchise">
               <td>{{ getFranchiseName(league, team.id) }}</td>
               <td>{{ team.h2hw }}-{{ team.h2hl }}-{{ team.h2ht }}</td>
-              <td>{{ team.h2hw / (team.h2hw + team.h2hl) }}</td>
+              <td>{{ winPercentage(team) }}</td>
               <td>{{ team.pf }}</td>
             </tr>
           </tbody>
@@ -56,6 +56,19 @@
         },
 
         methods: {
+          winPercentage: function(team) {
+            let wins = parseInt(team.h2hw);
+            let losses = parseInt(team.h2hl);
+
+            if (wins + losses == 0) {
+              return '-';
+            }
+
+            let percentage = wins / (wins + losses);
+
+            return percentage.toFixed(3).replace('0.', '.');
+          },
+
           fetchStandingsData: function() {
             this.error = this.standings = null;
             this.loading = true;
