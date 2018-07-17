@@ -1,5 +1,5 @@
 let mix = require('laravel-mix');
-
+let tailwindcss = require('tailwindcss');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -13,25 +13,24 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
+   .options({
+     processCssUrls: false,
+     postCss: [tailwindcss('resources/assets/tailwind.js')],
+   })
    .browserSync('danastyffl.test')
    .copyDirectory('resources/assets/images', 'public/images')
    .extract([
-    'jquery',
-    'bootstrap',
     'axios',
     'vue',
     'vue-router',
     'vue-touch',
     'vue2-filters',
-    'lodash',
-    'popper.js'
+    'lodash'
   ])
   .autoload({
-    jquery: ['$', 'window.jQuery', 'jQuery'],
     lodash: ['_', 'window._'],
     vue: ['Vue', 'window.Vue'],
     axios: ['axios', 'window.axios'],
-    tether: ['Tether', 'window.Tether']
   });
 
 if (mix.inProduction()) {

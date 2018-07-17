@@ -2,7 +2,7 @@
   <div>
     <div v-if="loading">
       <div class="d-flex justify-content-center mt-4">
-        <vue-loading spinner="wave"></vue-loading>
+        <!-- <vue-loading spinner="wave"></vue-loading> -->
       </div>
       <h5 class="text-center">Loading Scoring Data</h5>
     </div>
@@ -16,13 +16,12 @@
     import Matchups from './Matchups.vue';
     import league from '../mixins/league.js';
     import player from '../mixins/player.js';
-    import VueLoading from 'vue-simple-loading';
 
 
     export default {
         name: 'Scores',
         props: ['league', 'players'],
-        components: {Matchups, VueLoading},
+        components: {Matchups},
         mixins: [league, player],
 
         data: () => ({

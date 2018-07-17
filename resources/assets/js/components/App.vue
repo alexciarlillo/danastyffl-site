@@ -1,10 +1,10 @@
 <template>
   <div class="app">
     <NavBar></NavBar>
-    <div class="container">
+    <div class="container mx-auto pt-16">
       <div v-if="loading">
-        <div class="d-flex justify-content-center mt-4">
-          <vue-loading spinner="wave"></vue-loading>
+        <div class="d-flex justify-content-center mt-">
+          <!-- <vue-loading spinner="wave"></vue-loading> -->
         </div>
         <h5 class="text-center">Loading League & Player Data</h5>
       </div>
@@ -17,7 +17,6 @@
 
 <script>
   import NavBar from './NavBar.vue';
-  import VueLoading from 'vue-simple-loading';
 
   export default {
     name: 'App',
@@ -29,7 +28,7 @@
       players: null,
     }),
 
-    components: {NavBar, VueLoading},
+    components: {NavBar},
 
     created() {
       this.fetchLeagueData();
@@ -75,3 +74,4 @@
     }
   }
 </script>
+

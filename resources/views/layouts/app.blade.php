@@ -20,7 +20,7 @@
             ]) !!};
         </script>
     </head>
-    <body>
+    <body class="bg-grey-lighter">
         @yield('content')
 
         <!-- Scripts -->

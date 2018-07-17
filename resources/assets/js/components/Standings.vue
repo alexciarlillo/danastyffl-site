@@ -1,48 +1,55 @@
 <template>
   <div>
     <div v-if="loading">
-      <div class="d-flex justify-content-center mt-4">
-        <vue-loading spinner="wave"></vue-loading>
+      <div class="flex justify-center my-4">
+        <looping-rhombuses-spinner
+          :animation-duration="2000"
+          :rhombus-size="20"
+          :color="'#ff6d24'"
+        />
       </div>
       <h5 class="text-center">Loading Standings Data</h5>
     </div>
 
     <div class="standings" v-if="standings">
-      <h3 class="text-center">2018 Standings</h3>
-      <div class="table-responsive">
-        <table class="table table-sm" v-if="standings">
-          <thead>
-            <tr>
-              <th>Team</th>
-              <th>W-L-T</th>
-              <th>PCT</th>
-              <th>PF</th>
-            </tr>
-          </thead>
+      <h3 class="text-center font-header color-mfl-blue my-4">2018 STANDINGS</h3>
+      <table class="w-full text-center border-collapse" v-if="standings">
+        <thead>
+          <tr>
+            <th class="text-sm font-header text-grey-darkest bg-grey py-2 text-left pl-2">Team</th>
 
-          <tbody>
-            <tr v-for="team in standings.franchise">
-              <td>{{ getFranchiseName(league, team.id) }}</td>
-              <td>{{ team.h2hw }}-{{ team.h2hl }}-{{ team.h2ht }}</td>
-              <td>{{ winPercentage(team) }}</td>
-              <td>{{ team.pf }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <th class="text-sm font-header text-grey-darkest bg-grey py-2 hidden md:table-cell">W-L-T</th>
+            <th class="text-sm font-header text-grey-darkest bg-grey py-2 md:hidden">W/L/T</th>
+
+            <th class="text-sm font-header text-grey-darkest bg-grey py-2 hidden md:table-cell">PCT</th>
+            <th class="text-sm font-header text-grey-darkest bg-grey py-2 md:hidden">%</th>
+
+            <th class="text-sm font-header text-grey-darkest bg-grey py-2">PF</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="team in standings.franchise" class="h-12">
+            <td class="text-xs md:text-sm border-t border-grey-light p-2 text-left">{{ getFranchiseName(league, team.id) }}</td>
+            <td class="text-xs md:text-sm border-t border-grey-light p-2">{{ team.h2hw }}-{{ team.h2hl }}-{{ team.h2ht }}</td>
+            <td class="text-xs md:text-sm border-t border-grey-light p-2">{{ winPercentage(team) }}</td>
+            <td class="text-xs border-t border-grey-light p-2">{{ team.pf }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
     import league from '../mixins/league.js';
-    import VueLoading from 'vue-simple-loading';
+    import { LoopingRhombusesSpinner } from 'epic-spinners'
 
     export default {
         name: 'Standings',
 
         props: ['league', 'year'],
-        components: {VueLoading},
+        components: {LoopingRhombusesSpinner},
         mixins: [league],
 
         data: () => ({

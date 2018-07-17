@@ -12,20 +12,17 @@
   "devDependencies": {
     "axios": "^0.18",
     "cross-env": "^5.2",
-    "jquery": "^3.3",
     "laravel-mix": "^2.1",
     "lodash": "^4.17",
+    "tailwindcss": "^0.6.4",
     "vue": "^2.5",
     "webpack": "^3.11"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0",
     "browser-sync": "^2.24.0",
     "browser-sync-webpack-plugin": "^2.2.0",
-    "font-awesome": "^4.7.0",
-    "popper.js": "^1.14",
+    "epic-spinners": "^1.0.3",
     "vue-router": "^3.0",
-    "vue-simple-loading": "^1.1.5",
     "vue-touch": "next",
     "vue2-filters": "^0.3.0"
   }
