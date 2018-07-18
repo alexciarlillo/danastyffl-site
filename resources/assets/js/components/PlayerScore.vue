@@ -1,10 +1,10 @@
 <template>
-<div class="player flex border-b-2 border-grey-light items-stretch h-12" :class="{updated: updated, 'flex-row-reverse': !home}">
-        <div class="info flex-1 py-2 px-1 flex items-center flex-col justify-center">
-            <span class="name mr-2 mb-1 text-xs lg:text-sm font-semibold text-grey-darker text-center">{{ getShortPlayerName(player.name) }}</span>
-            <span class="team text-xs text-grey font-semibold">{{ player.team }}</span>
+<div class="player flex border-b-2 border-grey-lighter items-stretch h-12" :class="{updated: updated, 'flex-row-reverse': !home}">
+        <div class="info flex-1 py-2 px-1 flex flex-col justify-center min-w-0" :class="{'items-start': home, 'items-end': !home}">
+            <span class="name mb-1 text-2xs lg:text-sm text-grey-darker text-center truncated font-semibold">{{ getShortPlayerName(player.name) }}</span>
+            <span class="team text-2xs text-grey font-semibold">{{ player.team }}</span>
         </div>
-        <div class="score text-xs py-2 px-1 text-grey-darkest font-semibold w-12 flex items-center justify-center">
+        <div class="score text-xs py-2 px-1 text-grey-darkest font-semibold w-12 flex flex-no-shrink items-center justify-center">
             <span>{{ getScore(player) }}</span>
         </div>
     </div>
