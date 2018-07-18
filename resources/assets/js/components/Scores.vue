@@ -1,12 +1,12 @@
 <template>
   <div>
     <div v-if="loading">
-      <div class="d-flex justify-content-center mt-4">
+      <div class="flex justify-center mt-4">
         <!-- <vue-loading spinner="wave"></vue-loading> -->
       </div>
       <h5 class="text-center">Loading Scoring Data</h5>
     </div>
-    <div class="scoring" v-if="scores">
+    <div class="scoring w-full lg:mt-4 lg:rounded lg:shadow-lg overflow-hidden lg:max-w-lg lg:mx-auto" v-if="scores">
         <Matchups :matchups="scores.matchup" :league="league" :players="players"></Matchups>
     </div>
   </div>

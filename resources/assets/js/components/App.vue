@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <NavBar></NavBar>
-    <div class="container mx-auto pt-16">
+    <div class="container mx-auto" style="padding-top: 56px;">
       <div v-if="loading">
         <div class="d-flex justify-content-center mt-">
           <!-- <vue-loading spinner="wave"></vue-loading> -->

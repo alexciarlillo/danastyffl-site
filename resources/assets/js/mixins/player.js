@@ -8,8 +8,8 @@ export default {
           return `${first}. ${last}`;
         },
 
-        getPlayerStarters: function(players) {
-            let starters = players.filter( function(p) {
+        getPlayerStarters: function(player) {
+            let starters = player.filter( function(p) {
                 return p.status == "starter"
             });
 
