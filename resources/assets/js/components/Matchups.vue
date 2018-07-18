@@ -19,10 +19,15 @@
                 </div>
             </div>
 
-            <div class="indicator">
-                <div class="circles flex content-between w-50 mr-auto ml-auto">
-                    <div v-for="(matchup, index) in matchups" :key="index">
-                        <i class="fa" v-bind:class="{ 'fa-circle': index == selected, 'fa-circle-o': index != selected }"></i>
+            <div class="indicator bg-grey-light">
+                <div class="circles flex justify-between w-1/2 mx-auto text-xs py-1 items-center text-mfl-blue">
+                    <div v-for="(matchup, index) in matchups" :key="index" class="flex items-center">
+                        <svg v-if="index == selected" class="h-3 w-3" viewBox="0 0 24 24">
+                            <path fill="#000000" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
+                        <svg v-if="index != selected" class="h-3 w-3" viewBox="0 0 24 24">
+                            <path fill="#000000" d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
                     </div>
                 </div>
             </div>
