@@ -25,9 +25,11 @@ mix.js('resources/assets/js/app.js', 'public/js')
     'vue-router',
     'vue-touch',
     'vue2-filters',
-    'lodash'
+    'lodash',
+    'jquery'
   ])
   .autoload({
+    jquery: ['$', 'window.jQuery', 'jQuery'],
     lodash: ['_', 'window._'],
     vue: ['Vue', 'window.Vue'],
     axios: ['axios', 'window.axios'],
