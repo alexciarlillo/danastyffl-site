@@ -10,11 +10,13 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueTouch from 'vue-touch';
-import Vue2Filters from 'vue2-filters'
+import Vue2Filters from 'vue2-filters';
+import PortalVue from 'portal-vue';
 
 Vue.use(Vue2Filters)
 Vue.use(VueRouter);
 Vue.use(VueTouch, {name: 'v-touch'})
+Vue.use(PortalVue);
 
 import App from './components/App.vue';
 import Standings from './components/Standings.vue';
