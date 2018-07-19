@@ -6,7 +6,7 @@
       </div>
       <h5 class="text-center">Loading Scoring Data</h5>
     </div>
-    <div class="scoring w-full lg:mt-4 lg:rounded lg:shadow-lg overflow-hidden lg:max-w-lg lg:mx-auto" v-if="scores">
+    <div class="scoring w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="scores">
         <Matchups :matchups="scores.matchup" :league="league" :players="players"></Matchups>
     </div>
   </div>

@@ -1,13 +1,13 @@
 <template>
-<div class="player flex border-b-2 border-grey-lighter items-stretch h-12" :class="{updated: updated, 'flex-row-reverse': !home}">
-        <div class="info flex-1 py-2 px-1 flex flex-col justify-center min-w-0" :class="{'items-start': home, 'items-end': !home}">
-            <span class="name mb-1 text-2xs lg:text-sm text-grey-darker text-center truncated font-semibold">{{ getShortPlayerName(player.name) }}</span>
-            <span class="team text-2xs text-grey font-semibold">{{ player.team }}</span>
-        </div>
-        <div class="score text-xs py-2 px-1 text-grey-darkest font-semibold w-12 flex flex-no-shrink items-center justify-center">
-            <span>{{ getScore(player) }}</span>
-        </div>
+<div class="player flex border-b-2 border-grey-lighter items-stretch h-12 md:h-16" :class="{updated: updated, 'flex-row-reverse': !home}">
+    <div class="info flex-1 py-2 px-1 md:px-2 flex flex-col justify-center min-w-0" :class="{'items-start': home, 'items-end': !home}">
+        <span class="name mb-1 text-2xs lg:text-sm text-grey-darkest truncated font-semibold" :class="{'text-left': home, 'text-right': !home}">{{ getShortPlayerName(player.name) }}</span>
+        <span class="team text-2xs text-grey-dark font-semibold">{{ player.team }}</span>
     </div>
+    <div class="score text-xs py-2 px-1 text-mfl-blue font-semibold w-12 flex flex-no-shrink items-center justify-center md:text-lg md:w-16 md:px-4">
+        <span>{{ getScore(player) }}</span>
+    </div>
+</div>
 </template>
 
 <script>

@@ -46,14 +46,14 @@ View the full documentation at https://tailwindcss.com.
 let colors = {
   'transparent': 'transparent',
 
-  'black': '#22292f',
-  'grey-darkest': '#3d4852',
-  'grey-darker': '#606f7b',
-  'grey-dark': '#8795a1',
-  'grey': '#b8c2cc',
-  'grey-light': '#dae1e7',
-  'grey-lighter': '#f1f5f8',
-  'grey-lightest': '#f8fafc',
+  'black': '#191D23',
+  'grey-darkest': '#3F4349',
+  'grey-darker': '#666A70',
+  'grey-dark': '#999DA3',
+  'grey': '#B2B6BC',
+  'grey-light': '#cfd5de',
+  'grey-lighter': '#dfe2e7',
+  'grey-lightest': '#f3f4f6',
   'white': '#ffffff',
 
   'red-darkest': '#3b0d0c',
@@ -130,6 +130,7 @@ let colors = {
 
   'mfl-orange': '#ff6d24',
   'mfl-blue': '#0b162a',
+  'mfl-blue-light': '#253044'
 }
 
 module.exports = {

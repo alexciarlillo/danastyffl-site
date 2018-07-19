@@ -1,7 +1,7 @@
 <template>
   <div class="app">
-    <NavBar></NavBar>
-    <div class="container mx-auto" style="padding-top: 56px;">
+    <NavBar @toggle-collapse="setOverflow"></NavBar>
+    <div class="container mx-auto pt-12">
       <div v-if="loading">
         <div class="d-flex justify-content-center mt-">
           <!-- <vue-loading spinner="wave"></vue-loading> -->
@@ -36,6 +36,13 @@
     },
 
     methods: {
+      setOverflow: function(collapsed) {
+        if (collapsed) {
+          document.body.classList.remove('overflow-hidden');
+        } else {
+          document.body.classList.add('overflow-hidden');
+        }
+      },
       fetchLeagueData: function() {
         this.error = this.league = null;
         this.loading = true;
