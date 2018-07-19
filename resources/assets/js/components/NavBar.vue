@@ -12,25 +12,33 @@
         </button>
       </div>
       
-      <portal class="flex-grow bg-grey-lightest w-full hidden md:bg-transparent md:flex md:items-center md:w-auto" to="nav-menu" :disabled="portalDisabled">
+      <portal class="flex-grow bg-grey-lightest w-full md:bg-transparent md:flex md:items-center md:w-auto" to="nav-menu" :disabled="portalDisabled">
         <div class="text-sm md:flex-grow">
             <router-link to="/standings" class="nav-link">Standings</router-link>
             <router-link to="/scores" class="nav-link">Scores</router-link>
         </div>
 
-        <div class="text-sm">
+        <div class="text-sm mt-6 md:mt-0">
             <a href="/mfl" class="nav-link">MFL</a>
             <a href="/login" class="nav-link">Login</a>
         </div>
       </portal>
     </nav>
-
-    <div class="off-canvas w-full absolute pin z-10 md:hidden" :class="{hidden: collapsed}">
-      <div class="flex h-full">
-        <portal-target name="nav-menu" class="w-3/5 bg-white pt-12 shadow-lg"/>
-        <div class="overlay w-2/5 pt-12" @click="toggle"></div>
-      </div>
+    
+    <div class="off-canvas w-full absolute pin z-20 md:hidden overlay mt-12" :class="{hidden: collapsed && !collapsing}">
+      <transition
+        name="slide"
+        v-on:before-enter="setCollapsing(false)"
+        v-on:before-leave="setCollapsing(true)"
+        v-on:after-leave="setCollapsing(false)"
+      >
+        <div class="flex h-full" v-if="!collapsed">
+          <portal-target name="nav-menu" class="w-3/5 bg-white shadow-lg"/>
+          <div class="w-2/5 pt-12" @click="toggle"></div>
+        </div>
+      </transition>
     </div>
+
   </div>
 </template>
 
@@ -39,6 +47,7 @@
         name: 'NavBar',
         data: () => ({
             collapsed: true,
+            collapsing: false,
             windowWidth: window.innerWidth
         }),
         computed: {
@@ -55,6 +64,9 @@
           handleWindowResize: function(event) {
             this.windowWidth = event.currentTarget.innerWidth;
           },
+          setCollapsing: function (collapsing) {
+            this.collapsing = collapsing;
+          }
         },
         watch: {
           '$route' (to, from) {
@@ -103,5 +115,21 @@
         @apply bg-transparent font-bold;
       }
     }
+  }
+
+  .slide-enter-active {
+    transition: all .25s ease;
+  }
+
+  .slide-leave-active {
+    transition: all .25s ease;
+  }
+
+  .slide-enter {
+    transform: translateX(-100vw);
+  }
+
+  .slide-leave-to {
+    transform: translateX(-100vw);
   }
 </style>
