@@ -2,7 +2,7 @@
   <div>
     <Loader v-if="loading" text="Loading Standings Data"></Loader>
 
-    <div class="standings w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="standings">
+    <div class="standings bg-grey-lightest w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="standings">
       <div class="header text-center p-5 container bg-mfl-blue-light text-grey-light ">
         <span class="font-header text-2xl color-mfl-blue">2018 STANDINGS</span>
       </div>
