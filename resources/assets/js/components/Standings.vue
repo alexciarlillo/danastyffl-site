@@ -1,15 +1,6 @@
 <template>
   <div>
-    <div v-if="loading" class="mt-8">
-      <div class="flex justify-center my-4">
-        <looping-rhombuses-spinner
-          :animation-duration="2000"
-          :rhombus-size="20"
-          :color="'#ff6d24'"
-        />
-      </div>
-      <div class="text-center mt-2">Loading Standings Data</div>
-    </div>
+    <Loader v-if="loading" text="Loading Standings Data"></Loader>
 
     <div class="standings w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="standings">
       <div class="header text-center p-5 container bg-mfl-blue-light text-grey-light ">
@@ -44,14 +35,14 @@
 </template>
 
 <script>
+  import Loader from './Loader.vue';
     import league from '../mixins/league.js';
-    import { LoopingRhombusesSpinner } from 'epic-spinners';
 
     export default {
         name: 'Standings',
 
         props: ['league', 'year'],
-        components: {LoopingRhombusesSpinner},
+        components: {Loader},
         mixins: [league],
 
         data: () => ({

@@ -2,16 +2,7 @@
   <div class="app">
     <NavBar @toggle-collapse="setOverflow"></NavBar>
     <div class="container mx-auto pt-12">
-      <div v-if="loading" class="mt-8">
-        <div class="flex justify-center my-4">
-          <looping-rhombuses-spinner
-            :animation-duration="2000"
-            :rhombus-size="20"
-            :color="'#ff6d24'"
-          />
-        </div>
-        <div class="text-center mt-2">Loading League & Player Data</div>
-      </div>
+      <Loader v-if="loading" text="Loading League & Player Data"></Loader>
       <div v-if="league && players">
         <router-view :league="league" :players="players"></router-view>
       </div>
@@ -21,8 +12,7 @@
 
 <script>
   import NavBar from './NavBar.vue';
-
-  import { LoopingRhombusesSpinner } from 'epic-spinners';
+  import Loader from './Loader.vue';
 
   export default {
     name: 'App',
@@ -34,7 +24,7 @@
       players: null,
     }),
 
-    components: {NavBar, LoopingRhombusesSpinner},
+    components: {NavBar, Loader},
 
     created() {
       this.fetchLeagueData();
@@ -49,7 +39,7 @@
           document.body.classList.add('overflow-hidden');
         }
       },
-      
+
       fetchLeagueData: function() {
         this.error = this.league = null;
         this.loading = true;
