@@ -49,6 +49,7 @@
           document.body.classList.add('overflow-hidden');
         }
       },
+      
       fetchLeagueData: function() {
         this.error = this.league = null;
         this.loading = true;

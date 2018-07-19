@@ -73,7 +73,6 @@
             if (!this.collapsed) {
               this.collapsed = true;
               this.$emit('toggle-collapse', this.collapsed);
-              next();
             }
           }
         },

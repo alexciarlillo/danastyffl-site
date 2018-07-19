@@ -44,7 +44,6 @@
           this.loadInitialData();
 
           setInterval(function () {
-            console.log('updating');
             this.fetchScoreData();
           }.bind(this), 30000);
         },
@@ -63,7 +62,6 @@
                 this.loading = false;
                 if(response.data.success) {
                   this.scores = this.injectPlayerData(response.data.payload.liveScoring, this.players);
-                  console.log(this.scores.matchup);
                   this.week = this.scores.week;
                 } else {
                   this.error = response.data.error;
