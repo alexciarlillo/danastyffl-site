@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loading">
+    <div v-if="loading" class="mt-8">
       <div class="flex justify-center my-4">
         <looping-rhombuses-spinner
           :animation-duration="2000"
@@ -8,23 +8,25 @@
           :color="'#ff6d24'"
         />
       </div>
-      <h5 class="text-center">Loading Standings Data</h5>
+      <div class="text-center mt-2">Loading Standings Data</div>
     </div>
 
-    <div class="standings" v-if="standings">
-      <h3 class="text-center font-header color-mfl-blue my-4">2018 STANDINGS</h3>
+    <div class="standings w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="standings">
+      <div class="header text-center p-5 container bg-mfl-blue-light text-grey-light ">
+        <span class="font-header text-2xl color-mfl-blue">2018 STANDINGS</span>
+      </div>
       <table class="w-full text-center border-collapse" v-if="standings">
         <thead>
           <tr>
-            <th class="text-sm font-header text-grey-darkest bg-grey py-2 text-left pl-2">Team</th>
+            <th class="text-sm font-header text-grey-darkest bg-grey-light py-2 text-left pl-2">Team</th>
 
-            <th class="text-sm font-header text-grey-darkest bg-grey py-2 hidden md:table-cell">W-L-T</th>
-            <th class="text-sm font-header text-grey-darkest bg-grey py-2 md:hidden">W/L/T</th>
+            <th class="text-sm font-header text-grey-darkest bg-grey-light py-2 hidden md:table-cell">W-L-T</th>
+            <th class="text-sm font-header text-grey-darkest bg-grey-light py-2 md:hidden">W/L/T</th>
 
-            <th class="text-sm font-header text-grey-darkest bg-grey py-2 hidden md:table-cell">PCT</th>
-            <th class="text-sm font-header text-grey-darkest bg-grey py-2 md:hidden">%</th>
+            <th class="text-sm font-header text-grey-darkest bg-grey-light py-2 hidden md:table-cell">PCT</th>
+            <th class="text-sm font-header text-grey-darkest bg-grey-light py-2 md:hidden">%</th>
 
-            <th class="text-sm font-header text-grey-darkest bg-grey py-2">PF</th>
+            <th class="text-sm font-header text-grey-darkest bg-grey-light py-2">PF</th>
           </tr>
         </thead>
 
@@ -43,7 +45,7 @@
 
 <script>
     import league from '../mixins/league.js';
-    import { LoopingRhombusesSpinner } from 'epic-spinners'
+    import { LoopingRhombusesSpinner } from 'epic-spinners';
 
     export default {
         name: 'Standings',

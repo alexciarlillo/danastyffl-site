@@ -1,10 +1,14 @@
 <template>
   <div>
-    <div v-if="loading">
-      <div class="flex justify-center mt-4">
-        <!-- <vue-loading spinner="wave"></vue-loading> -->
+    <div v-if="loading" class="mt-8">
+      <div class="flex justify-center my-4">
+        <looping-rhombuses-spinner
+          :animation-duration="2000"
+          :rhombus-size="20"
+          :color="'#ff6d24'"
+        />
       </div>
-      <h5 class="text-center">Loading Scoring Data</h5>
+      <div class="text-center mt-2">Loading Scoring Data</div>
     </div>
     <div class="scoring w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="scores">
         <Matchups :matchups="scores.matchup" :league="league" :players="players"></Matchups>
@@ -17,11 +21,12 @@
     import league from '../mixins/league.js';
     import player from '../mixins/player.js';
 
+    import { LoopingRhombusesSpinner } from 'epic-spinners';
 
     export default {
         name: 'Scores',
         props: ['league', 'players'],
-        components: {Matchups},
+        components: {Matchups, LoopingRhombusesSpinner},
         mixins: [league, player],
 
         data: () => ({

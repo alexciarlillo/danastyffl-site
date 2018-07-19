@@ -2,11 +2,15 @@
   <div class="app">
     <NavBar @toggle-collapse="setOverflow"></NavBar>
     <div class="container mx-auto pt-12">
-      <div v-if="loading">
-        <div class="d-flex justify-content-center mt-">
-          <!-- <vue-loading spinner="wave"></vue-loading> -->
+      <div v-if="loading" class="mt-8">
+        <div class="flex justify-center my-4">
+          <looping-rhombuses-spinner
+            :animation-duration="2000"
+            :rhombus-size="20"
+            :color="'#ff6d24'"
+          />
         </div>
-        <h5 class="text-center">Loading League & Player Data</h5>
+        <div class="text-center mt-2">Loading League & Player Data</div>
       </div>
       <div v-if="league && players">
         <router-view :league="league" :players="players"></router-view>
@@ -18,6 +22,8 @@
 <script>
   import NavBar from './NavBar.vue';
 
+  import { LoopingRhombusesSpinner } from 'epic-spinners';
+
   export default {
     name: 'App',
 
@@ -28,7 +34,7 @@
       players: null,
     }),
 
-    components: {NavBar},
+    components: {NavBar, LoopingRhombusesSpinner},
 
     created() {
       this.fetchLeagueData();
