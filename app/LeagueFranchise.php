@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Franchise
+class LeagueFranchise
 {
     /**
      * @var string

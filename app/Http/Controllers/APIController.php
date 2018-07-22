@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 use App\Repositories\Api\LeagueRepository;
+use App\Repositories\Api\PlayerRepository;
+use App\Repositories\Api\StandingsRepository;
 
 class APIController extends Controller
 {
@@ -27,32 +29,18 @@ class APIController extends Controller
         return json_encode($league);
     }
 
-    public function standings()
+    public function players(PlayerRepository $players)
     {
-        $standings = null;
+        $players = $players->all();
 
-        if (Cache::has('mfl.standings')) {
-            $standings = Cache::get('mfl.standings');
-        } else {
-            $response = $this->getStandings();
+        return $players->toJson();
+    }
 
-            if ($response->getStatusCode() == 200) {
-                $standings = $response->getBody()->getContents();
-                Cache::put('mfl.standings', $standings, 60);
-            }
-        }
+    public function standings(StandingsRepository $standings)
+    {
+        $standings = $standings->all();
 
-        if ($standings) {
-            return response()->json([
-                'success' => true,
-                'payload' => json_decode($standings)
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'error' => 'Unable to fetch MFL standings data.'
-            ]);
-        }
+        return $standings->toJson();
     }
 
     public function scores($week = null)
@@ -92,43 +80,7 @@ class APIController extends Controller
         }
     }
 
-    public function players()
-    {
-        $players = null;
 
-        if (Cache::has('mfl.players')) {
-            $players = Cache::get('mfl.players');
-        } else {
-            $response = $this->getPlayers();
-
-            if ($response->getStatusCode() == 200) {
-                $players = $response->getBody()->getContents();
-                Cache::put('mfl.players', $players, 1);
-            }
-        }
-
-        if ($players) {
-            return response()->json([
-                'success' => true,
-                'payload' => json_decode($players)
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'error' => 'Unable to fetch MFL players data.'
-            ]);
-        }
-    }
-
-    private function getLeague()
-    {
-        return $this->client->get('export', ['query' => [
-            'L' => $this->leagueId,
-            'APIKEY' => $this->apiKey,
-            'JSON' => 1,
-            'TYPE' => 'league'
-        ]]);
-    }
 
     private function getStandings()
     {
@@ -157,17 +109,5 @@ class APIController extends Controller
         }
 
         return $this->client->get('export', ['query' => $query]);
-    }
-
-    private function getPlayers()
-    {
-        return $this->client->get('export', ['query' =>
-            [
-                'L' => $this->leagueId,
-                'APIKEY' => $this->apiKey,
-                'JSON' => 1,
-                'TYPE' => 'players'
-            ]
-        ]);
     }
 }

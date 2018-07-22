@@ -10,10 +10,13 @@ use App\League;
 use App\Repositories\Contracts\ApiRepositoryContract;
 
 use Illuminate\Support\Facades\Cache;
+use App\Repositories\Contracts\LeagueRepositoryContract;
 
-class LeagueRepository implements ApiRepositoryContract
+class LeagueRepository implements ApiRepositoryContract, LeagueRepositoryContract
 {
     use UsesApi;
+
+    protected $cacheKeyBase = 'league';
 
     public function __construct(MFLApiService $api)
     {
@@ -21,16 +24,22 @@ class LeagueRepository implements ApiRepositoryContract
         $this->mapper = new JsonMapper();
     }
 
-    public function fetch()
+    public function fetch($year = null)
     {
-        if (Cache::has('league')) {
-            $league = Cache::get('league');
+        if ($year) {
+            $cacheKey = $this->cacheKeyBase . $year;
         } else {
-            $leagueJSON = $this->api()->getLeague();
-            $league = $this->mapper->map($leagueJSON, new League());
-            Cache::put('league', $league, 60);
+            $cacheKey = $this->cacheKeyBase;
         }
-        
+
+        if (Cache::has($cacheKey)) {
+            $league = Cache::get($cacheKey);
+        } else {
+            $leagueJSON = $this->api()->getLeague($year);
+            $league = $this->mapper->map($leagueJSON, new League());
+            Cache::put($cacheKey, $league, 60);
+        }
+
         return $league;
     }
 }

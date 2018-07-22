@@ -50,4 +50,33 @@ class MFLApiService
 
         return $object->league;
     }
+
+    public function getPlayers($ids = null)
+    {
+        $params = [
+            'TYPE' => 'players',
+            'DETAILS' => 1,
+        ];
+
+        if ($ids) {
+            $params['PLAYERS'] = collect($ids)->implode(',');
+        }
+
+        $response = $this->export($params);
+        $object = json_decode($response->getBody()->getContents());
+
+        return $object->players->player;
+    }
+
+    public function getStandings($year = null)
+    {
+        $params = [
+            'TYPE' => 'leagueStandings'
+        ];
+
+        $response = $this->export($params, $year);
+        $object = json_decode($response->getBody()->getContents());
+
+        return $object->leagueStandings->franchise;
+    }
 }

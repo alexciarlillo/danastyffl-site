@@ -88,7 +88,7 @@ class League
     public function setFranchises(object $franchises)
     {
         $mapper = new JsonMapper();
-        $this->franchises = $mapper->mapArray($franchises->franchise, [], Franchise::class);
+        $this->franchises = $mapper->mapArray($franchises->franchise, [], LeagueFranchise::class);
     }
 
     public function setRosterLimits(object $rosterLimits)
