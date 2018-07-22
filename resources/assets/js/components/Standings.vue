@@ -36,57 +36,57 @@
 
 <script>
   import Loader from './Loader.vue';
-    import league from '../mixins/league.js';
+  import league from '../mixins/league.js';
 
-    export default {
-        name: 'Standings',
+  export default {
+      name: 'Standings',
 
-        props: ['league', 'year'],
-        components: {Loader},
-        mixins: [league],
+      props: ['league', 'year'],
+      components: {Loader},
+      mixins: [league],
 
-        data: () => ({
-          standings: null,
-          error: null,
-          loading: false
-        }),
+      data: () => ({
+        standings: null,
+        error: null,
+        loading: false
+      }),
 
-        created() {
-          this.fetchStandingsData();
+      created() {
+        this.fetchStandingsData();
+      },
+
+      methods: {
+        winPercentage: function(team) {
+          let wins = parseInt(team.h2hw);
+          let losses = parseInt(team.h2hl);
+
+          if (wins + losses == 0) {
+            return '-';
+          }
+
+          let percentage = wins / (wins + losses);
+
+          return percentage.toFixed(3).replace('0.', '.');
         },
 
-        methods: {
-          winPercentage: function(team) {
-            let wins = parseInt(team.h2hw);
-            let losses = parseInt(team.h2hl);
+        fetchStandingsData: function() {
+          this.error = this.standings = null;
+          this.loading = true;
 
-            if (wins + losses == 0) {
-              return '-';
-            }
+          axios.get('/api/standings')
+            .then(response => {
+              this.loading = false;
+              if(response.data.success) {
+                this.standings = response.data.payload.leagueStandings;
+              } else {
+                this.error = response.data.error;
+              }
 
-            let percentage = wins / (wins + losses);
-
-            return percentage.toFixed(3).replace('0.', '.');
-          },
-
-          fetchStandingsData: function() {
-            this.error = this.standings = null;
-            this.loading = true;
-
-            axios.get('/api/standings')
-              .then(response => {
-                this.loading = false;
-                if(response.data.success) {
-                  this.standings = response.data.payload.leagueStandings;
-                } else {
-                  this.error = response.data.error;
-                }
-
-              })
-              .catch(e => {
-                console.log(e);
-              });
-          }
+            })
+            .catch(e => {
+              console.log(e);
+            });
         }
-    }
+      }
+  }
 </script>

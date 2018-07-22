@@ -11,6 +11,7 @@ use App\Repositories\Contracts\ApiRepositoryContract;
 use App\Repositories\Contracts\StandingsRepositoryContract;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Collection;
 
 class StandingsRepository implements ApiRepositoryContract, StandingsRepositoryContract
 {
@@ -24,7 +25,7 @@ class StandingsRepository implements ApiRepositoryContract, StandingsRepositoryC
         $this->mapper = new JsonMapper();
     }
 
-    public function all($year = null)
+    public function all($year = null) : Collection
     {
         if ($year) {
             $cacheKey =  $this->cacheKeyBase . $year;

@@ -4,5 +4,5 @@ namespace App\Repositories\Contracts;
 
 interface LeagueRepositoryContract
 {
-    public function fetch();
+    public function fetch($year = null);
 }

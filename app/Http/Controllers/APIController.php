@@ -10,7 +10,15 @@ use App\Repositories\Api\StandingsRepository;
 
 class APIController extends Controller
 {
-    public function __construct()
+    private $leagues;
+    private $players;
+    private $standings;
+
+    public function __construct(
+        LeagueRepository $leagues,
+        PlayerRepository $players,
+        StandingsRepository $standings
+    )
     {
         $this->host = config('mfl.league_host');
         $this->year = config('mfl.league_year');
@@ -20,25 +28,29 @@ class APIController extends Controller
         $this->client = new Client([
             'base_uri' => "https://$this->host/$this->year/"
         ]);
+
+        $this->leagues = $leagues;
+        $this->players = $players;
+        $this->standings = $standings;
     }
 
-    public function league(LeagueRepository $leagues)
+    public function league()
     {
-        $league = $leagues->fetch();
+        $league = $this->leagues->fetch();
 
         return json_encode($league);
     }
 
-    public function players(PlayerRepository $players)
+    public function players()
     {
-        $players = $players->all();
+        $players = $this->players->all();
 
         return $players->toJson();
     }
 
-    public function standings(StandingsRepository $standings)
+    public function standings($year = null)
     {
-        $standings = $standings->all();
+        $standings = $standings->all($year);
 
         return $standings->toJson();
     }

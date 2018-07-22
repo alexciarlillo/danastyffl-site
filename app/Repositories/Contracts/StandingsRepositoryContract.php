@@ -6,5 +6,5 @@ use Illuminate\Support\Collection;
 
 interface StandingsRepositoryContract
 {
-    public function all() : Collection;
+    public function all($year = null) : Collection;
 }
