@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\MFLApiException;
 use GuzzleHttp\Client;
 
 class MFLApiService
@@ -29,7 +30,13 @@ class MFLApiService
             'JSON' => 1,
         ], $params);
 
-        return $this->client->get("$year/export", ['query' => $query]);
+        $response = $this->client->get("$year/export", ['query' => $query]);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new MFLApiException($query, $response->getStatusCode());
+        }
+
+        return $response;
     }
 
     public function getLeague($year = null)

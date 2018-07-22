@@ -23,10 +23,14 @@ class LeagueRepository implements ApiRepositoryContract
 
     public function fetch()
     {
-        $league = Cache::remember('league', 60, function() {
+        if (Cache::has('league')) {
+            $league = Cache::get('league');
+        } else {
             $leagueJSON = $this->api()->getLeague();
-            return $this->mapper->map($leagueJSON, new League());
-        });
+            $league = $this->mapper->map($leagueJSON, new League());
+            Cache::put('league', $league, 60);
+        }
+        
+        return $league;
     }
-
 }

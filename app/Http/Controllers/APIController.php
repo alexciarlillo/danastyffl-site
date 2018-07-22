@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
+use App\Repositories\Api\LeagueRepository;
 
 class APIController extends Controller
 {
@@ -19,32 +20,11 @@ class APIController extends Controller
         ]);
     }
 
-    public function league()
+    public function league(LeagueRepository $leagues)
     {
-        $league = null;
+        $league = $leagues->fetch();
 
-        if (Cache::has('mfl.league')) {
-            $league = Cache::get('mfl.league');
-        } else {
-            $response = $this->getLeague();
-
-            if ($response->getStatusCode() == 200) {
-                $league = $response->getBody()->getContents();
-                Cache::put('mfl.league', $league, 60);
-            }
-        }
-
-        if ($league) {
-            return response()->json([
-                'success' => true,
-                'payload' => json_decode($league)
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'error' => 'Unable to fetch MFL league data.'
-            ]);
-        }
+        return json_encode($league);
     }
 
     public function standings()
