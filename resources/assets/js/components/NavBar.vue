@@ -19,8 +19,8 @@
         </div>
 
         <div class="text-sm mt-6 md:mt-0">
-            <a href="/mfl" class="nav-link">MFL</a>
-            <a href="/login" class="nav-link">Login</a>
+            <a href="/mfl" class="nav-link">MFL Homepage</a>
+            <!-- <a href="/login" class="nav-link">Login</a> -->
         </div>
       </portal>
     </nav>
