@@ -79,4 +79,21 @@ class MFLApiService
 
         return $object->leagueStandings->franchise;
     }
+
+    public function getScores($year = null, $week = null)
+    {
+        $params = [
+            'TYPE' => 'liveScoring',
+            'DETAILS' => 1
+        ];
+
+        if ($week) {
+            $params['W'] = $week;
+        }
+
+        $response = $this->export($params, $year);
+        $object = json_decode($response->getBody()->getContents());
+
+        return $object->liveScoring->matchup;
+    }
 }

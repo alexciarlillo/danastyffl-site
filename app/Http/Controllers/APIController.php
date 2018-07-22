@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
 use App\Repositories\Api\LeagueRepository;
 use App\Repositories\Api\PlayerRepository;
+use App\Repositories\Api\ScoresRepository;
 use App\Repositories\Api\StandingsRepository;
 
 class APIController extends Controller
@@ -13,13 +13,14 @@ class APIController extends Controller
     private $leagues;
     private $players;
     private $standings;
+    private $scores;
 
     public function __construct(
         LeagueRepository $leagues,
         PlayerRepository $players,
-        StandingsRepository $standings
-    )
-    {
+        StandingsRepository $standings,
+        ScoresRepository $scores
+    ) {
         $this->host = config('mfl.league_host');
         $this->year = config('mfl.league_year');
         $this->leagueId = config('mfl.league_id');
@@ -32,6 +33,7 @@ class APIController extends Controller
         $this->leagues = $leagues;
         $this->players = $players;
         $this->standings = $standings;
+        $this->scores = $scores;
     }
 
     public function league()
@@ -50,76 +52,17 @@ class APIController extends Controller
 
     public function standings($year = null)
     {
-        $standings = $standings->all($year);
+        $standings = $this->standings->all($year);
 
         return $standings->toJson();
     }
 
-    public function scores($week = null)
+    public function scores($year = null)
     {
-        $scores = null;
-        $error = 'Unable to fetch MFL scores data.';
+        $week = request()->input('week', null);
 
-        if ($week) {
-            $cacheKey = "mfl.scores.${week}";
-        } else {
-            $cacheKey = "mfl.scores.current";
-        }
+        $scores = $this->scores->all($year, $week);
 
-        if (Cache::has($cacheKey)) {
-            $scores = Cache::get($cacheKey);
-        } else {
-            $response = $this->getScores($week);
-
-            if ($response->getStatusCode() == 200) {
-                $scores = $response->getBody()->getContents();
-                Cache::put($cacheKey, $scores, 1);
-            } else {
-                $error = $response->getReasonPhrase();
-            }
-        }
-
-        if ($scores) {
-            return response()->json([
-                'success' => true,
-                'payload' => json_decode($scores)
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'error' => $error
-            ]);
-        }
-    }
-
-
-
-    private function getStandings()
-    {
-        return $this->client->get('export', ['query' =>
-            [
-                'L' => $this->leagueId,
-                'APIKEY' => $this->apiKey,
-                'JSON' => 1,
-                'TYPE' => 'leagueStandings'
-            ]
-        ]);
-    }
-
-    private function getScores($week)
-    {
-        $query = [
-            'L' => $this->leagueId,
-            'APIKEY' => $this->apiKey,
-            'JSON' => 1,
-            'TYPE' => 'liveScoring',
-            'DETAILS' => 1
-        ];
-
-        if ($week) {
-            $query['W'] = $week;
-        }
-
-        return $this->client->get('export', ['query' => $query]);
+        return $scores->toJson();
     }
 }

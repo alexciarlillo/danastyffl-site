@@ -27,7 +27,7 @@ class LeagueRepository implements ApiRepositoryContract, LeagueRepositoryContrac
     public function fetch($year = null)
     {
         if ($year) {
-            $cacheKey = $this->cacheKeyBase . $year;
+            $cacheKey = "$this->cacheKeyBase.$year";
         } else {
             $cacheKey = $this->cacheKeyBase;
         }

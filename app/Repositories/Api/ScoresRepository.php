@@ -4,20 +4,20 @@ namespace App\Repositories\Api;
 
 use JsonMapper;
 
-use App\StandingsFranchise;
 use App\Services\MFLApiService;
 use App\Repositories\Traits\UsesApi;
 use App\Repositories\Contracts\ApiRepositoryContract;
-use App\Repositories\Contracts\StandingsRepositoryContract;
+use App\Repositories\Contracts\ScoresRepositoryContract;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Collection;
+use App\Matchup;
 
-class StandingsRepository implements ApiRepositoryContract, StandingsRepositoryContract
+class ScoresRepository implements ApiRepositoryContract, ScoresRepositoryContract
 {
     use UsesApi;
 
-    protected $cacheKeyBase = 'standings';
+    protected $cacheKeyBase = 'scores';
 
     public function __construct(MFLApiService $api)
     {
@@ -25,7 +25,7 @@ class StandingsRepository implements ApiRepositoryContract, StandingsRepositoryC
         $this->mapper = new JsonMapper();
     }
 
-    public function all($year = null) : Collection
+    public function all($year = null, $week = null) : Collection
     {
         if ($year) {
             $cacheKey =  "$this->cacheKeyBase.$year";
@@ -33,14 +33,18 @@ class StandingsRepository implements ApiRepositoryContract, StandingsRepositoryC
             $cacheKey = $this->cacheKeyBase;
         }
 
+        if ($week) {
+            $cacheKey = "$cacheKey.$week";
+        }
+
         if (Cache::has($cacheKey)) {
-            $standings = Cache::get($cacheKey);
+            $scores = Cache::get($cacheKey);
         } else {
-            $standingsJSON = $this->api()->getStandings($year);
-            $standings = $this->mapper->mapArray($standingsJSON, [], StandingsFranchise::class);
-            Cache::put($cacheKey, $standings, 1440); // one day
+            $scoresJSON = $this->api()->getScores($year);
+            $scores = $this->mapper->mapArray($scoresJSON, [], Matchup::class);
+            Cache::put($cacheKey, $scores, 5); // 5 mins
         }
         
-        return collect($standings);
+        return collect($scores);
     }
 }

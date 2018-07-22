@@ -47,11 +47,7 @@
         axios.get('/api/league')
           .then(response => {
             this.loading = false;
-            if(response.data.success) {
-              this.league = response.data.payload.league;
-            } else {
-              this.error = response.data.error;
-            }
+            this.league = response.data;
           })
           .catch(e => {
             console.log(e);
@@ -65,11 +61,7 @@
         axios.get('/api/players')
           .then(response => {
             this.loading = false;
-            if(response.data.success) {
-              this.players = response.data.payload.players;
-            } else {
-              this.error = response.data.error;
-            }
+            this.players = response.data;
           })
           .catch(e => {
             console.log(e);

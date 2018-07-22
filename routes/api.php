@@ -14,5 +14,5 @@
 
 Route::middleware('api')->get('/league/{year?}', 'APIController@league');
 Route::middleware('api')->get('/standings/{year?}', 'APIController@standings');
-Route::middleware('api')->get('/scores/{week?}', 'APIController@scores');
+Route::middleware('api')->get('/scores/{year?}', 'APIController@scores');
 Route::middleware('api')->get('/players', 'APIController@players');

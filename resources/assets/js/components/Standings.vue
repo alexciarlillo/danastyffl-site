@@ -22,7 +22,7 @@
         </thead>
 
         <tbody>
-          <tr v-for="team in standings.franchise" class="h-12">
+          <tr v-for="team in standings" class="h-12">
             <td class="text-xs md:text-sm border-t border-grey-light p-2 text-left">{{ getFranchiseName(league, team.id) }}</td>
             <td class="text-xs md:text-sm border-t border-grey-light p-2">{{ team.h2hw }}-{{ team.h2hl }}-{{ team.h2ht }}</td>
             <td class="text-xs md:text-sm border-t border-grey-light p-2">{{ winPercentage(team) }}</td>
@@ -76,12 +76,7 @@
           axios.get('/api/standings')
             .then(response => {
               this.loading = false;
-              if(response.data.success) {
-                this.standings = response.data.payload.leagueStandings;
-              } else {
-                this.error = response.data.error;
-              }
-
+              this.standings = response.data;
             })
             .catch(e => {
               console.log(e);
