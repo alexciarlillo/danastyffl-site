@@ -18,9 +18,11 @@
             <router-link to="/scores" class="nav-link">Scores</router-link>
         </div>
 
-        <div class="text-sm mt-6 md:mt-0">
+        <div class="text-sm">
             <YearSelector v-if="league" :history="league.history" />
-            <a href="/mfl" class="nav-link">MFL Homepage</a>
+            <div class="mt-6 md:mt-0 md:inline-block">
+              <a href="/mfl" class="nav-link">MFL Homepage</a>
+            </div>
             <!-- <a href="/login" class="nav-link">Login</a> -->
         </div>
       </portal>
