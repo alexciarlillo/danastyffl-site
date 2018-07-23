@@ -25,6 +25,8 @@ class League
     public $rosterLimits;
     public $franchises;
 
+    public $history;
+
     public function setId(int $id)
     {
         $this->id = $id;
@@ -101,6 +103,12 @@ class League
     {
         $mapper = new JsonMapper();
         $this->starters = $mapper->mapArray($starters->position, [], Position::class);
+    }
+
+    public function setHistory(object $history)
+    {
+        $mapper = new JsonMapper();
+        $this->history = $mapper->mapArray($history->league, [], LeagueHistory::class);
     }
 
     // mostly unused?
