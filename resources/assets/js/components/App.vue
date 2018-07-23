@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <NavBar @toggle-collapse="setOverflow"></NavBar>
+    <NavBar @toggle-collapse="setOverflow" :league="league"></NavBar>
     <div class="container mx-auto pt-12">
       <Loader v-if="loading" text="Loading League & Player Data"></Loader>
       <div v-if="league && players">
@@ -21,7 +21,7 @@
       loading: false,
       error: null,
       league: null,
-      players: null,
+      players: null
     }),
 
     components: {NavBar, Loader},

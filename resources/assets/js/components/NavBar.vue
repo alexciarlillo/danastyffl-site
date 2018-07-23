@@ -19,6 +19,7 @@
         </div>
 
         <div class="text-sm mt-6 md:mt-0">
+            <YearSelector v-if="league" :history="league.history" />
             <a href="/mfl" class="nav-link">MFL Homepage</a>
             <!-- <a href="/login" class="nav-link">Login</a> -->
         </div>
@@ -43,8 +44,12 @@
 </template>
 
 <script>
+  import YearSelector from './YearSelector.vue';
+
     export default {
         name: 'NavBar',
+        props: ['league'],
+        components: {YearSelector},
         data: () => ({
             collapsed: true,
             collapsing: false,
