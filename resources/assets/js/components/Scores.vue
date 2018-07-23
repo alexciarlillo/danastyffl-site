@@ -1,8 +1,8 @@
 <template>
   <div>
     <Loader v-if="loading" text="Loading Scoring Data"></Loader>
-    <div class="scoring w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="scores">
-        <Matchups :matchups="scores.matchup" :league="league" :players="players"></Matchups>
+    <div class="scoring w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="matchups">
+        <Matchups :matchups="matchups" :league="league" :players="players"></Matchups>
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@
         mixins: [league, player],
 
         data: () => ({
-          scores: null,
+          matchups: null,
           selected: 0,
           error: null,
           loading: false,
@@ -40,22 +40,17 @@
 
         methods: {
           loadInitialData: function() {
-            this.error = this.scores = null;
+            this.error = this.matchups = null;
             this.loading = true;
             let weekString = '';
             if(this.week) {
               weekString = `/${this.week}`;
             }
 
-            axios.get('/api/scores' + weekString)
+            axios.get('/api/scores/2017?week=8')
               .then(response => {
                 this.loading = false;
-                if(response.data.success) {
-                  this.scores = this.injectPlayerData(response.data.payload.liveScoring, this.players);
-                  this.week = this.scores.week;
-                } else {
-                  this.error = response.data.error;
-                }
+                this.matchups = this.injectPlayerData(response.data, this.players);
               })
               .catch(e => {
                 console.log(e);
@@ -68,14 +63,9 @@
               weekString = `/${this.week}`;
             }
 
-            axios.get('/api/scores' + weekString)
+            axios.get('/api/scores/2017?week=8')
               .then(response => {
-                if(response.data.success) {
-                  this.scores = this.injectPlayerData(response.data.payload.liveScoring, this.players);
-                  this.week = this.scores.week;
-                } else {
-                  this.error = response.data.error;
-                }
+                this.matchups = this.injectPlayerData(response.data, this.players);
               })
               .catch(e => {
                 console.log(e);
@@ -85,8 +75,6 @@
           changeWeek: function() {
             this.$router.push({ path: `/scores/${this.week}`});
           },
-
-
         },
 
         computed: {
@@ -97,7 +85,6 @@
 
         watch: {
           '$route': 'loadInitialData',
-
         },
     }
 </script>

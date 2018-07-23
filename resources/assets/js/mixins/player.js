@@ -8,8 +8,8 @@ export default {
           return `${first}. ${last}`;
         },
 
-        getPlayerStarters: function(player) {
-            let starters = player.filter( function(p) {
+        getPlayerStarters: function(players) {
+            let starters = players.filter( function(p) {
                 return p.status == "starter"
             });
 
@@ -26,13 +26,11 @@ export default {
             })
         },
 
-        injectPlayerData: function(liveScoring, players) {
-            let scores = liveScoring;
-
-            _.each(scores.matchup, function(matchup) {
-                _.each(matchup.franchise, function(franchise) {
-                    _.each(franchise.players.player, function(franchisePlayer) {
-                        let playerData = players.player.find(function(player) {
+        injectPlayerData: function(matchups, players) {
+            _.each(matchups, function (matchup) {
+                _.each(matchup.franchises, function(franchise) {
+                    _.each(franchise.players, function(franchisePlayer) {
+                        let playerData = players.find(function(player) {
                             return player.id == franchisePlayer.id;
                         });
 
@@ -43,7 +41,7 @@ export default {
                 });
             });
 
-            return scores;
+            return matchups;
         },
 
         positionCompare: function(pos1, pos2) {

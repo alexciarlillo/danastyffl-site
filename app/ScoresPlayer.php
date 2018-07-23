@@ -5,7 +5,7 @@ namespace App;
 class ScoresPlayer
 {
     /**
-     * @var dloat
+     * @var float
      */
     public $score;
 

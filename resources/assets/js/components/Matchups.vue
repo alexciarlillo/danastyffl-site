@@ -35,7 +35,7 @@
 
         <div class="flex scores bg-grey-lightest">
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in getPlayerStarters(awayFranchise.players.player)">
+                <template v-for="player in getPlayerStarters(awayFranchise.players)">
                     <PlayerScore :player="player" :home="true"  :key="player.id"></PlayerScore>
                 </template>
             </div>
@@ -47,7 +47,7 @@
             </div>
 
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in getPlayerStarters(homeFranchise.players.player)">
+                <template v-for="player in getPlayerStarters(homeFranchise.players)">
                     <PlayerScore :player="player" :home="false" :key="player.id"></PlayerScore>
                 </template>
             </div>
@@ -78,14 +78,14 @@
         },
         computed: {
             homeFranchise: function() {
-                let franchise = this.matchups[this.selected].franchise.find(function(team) {
+                let franchise = this.matchups[this.selected].franchises.find(function(team) {
                     return team.isHome == "1";
                 });
                 return franchise;
             },
 
             awayFranchise: function() {
-                let franchise = this.matchups[this.selected].franchise.find(function(team) {
+                let franchise = this.matchups[this.selected].franchises.find(function(team) {
                     return team.isHome == "0";
                 });
 
