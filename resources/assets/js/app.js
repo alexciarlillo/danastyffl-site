@@ -22,6 +22,8 @@ import App from './components/App.vue';
 import Standings from './components/Standings.vue';
 import Scores from './components/Scores.vue';
 
+let year = moment().format('YYYY');
+
 const router = new VueRouter({
     mode: 'history',
     linkActiveClass: 'active',
@@ -32,7 +34,7 @@ const router = new VueRouter({
             name: 'standings'
         },
         {
-            path: '/scores/:year/:week?',
+            path: '/scores/:year?/:week?',
             component: Scores,
             name: 'scores'
         }

@@ -32,7 +32,14 @@
           if (this.$route.params.week) {
             this.week = this.$route.params.week;
           }
-          this.year = this.$route.params.year;
+
+          if (this.$route.params.year) {
+            this.year = this.$route.params.year;
+          } else {
+            this.year = moment().format('YYYY');
+          }
+          console.log(this.$route.params.week);
+          console.log(this.$route.params.year);
           this.loadInitialData();
 
           setInterval(function () {
@@ -48,7 +55,7 @@
             if(this.week) {
               weekString = `?week=${this.week}`;
             }
-
+            
             axios.get('/api/scores/' + this.year + weekString)
               .then(response => {
                 this.loading = false;

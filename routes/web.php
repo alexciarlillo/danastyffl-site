@@ -19,7 +19,7 @@ Route::get('/standings/{year?}', function () {
     return view('index');
 })->name('standings');
 
-Route::get('/scores/{year}/{week?}', function () {
+Route::get('/scores/{year?}', function () {
     return view('index');
 })->name('scores');
 
