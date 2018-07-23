@@ -8,9 +8,7 @@ use Tests\TestCase;
 class LeagueTest extends TestCase
 {
     /**
-     * A basic test example.
-     *
-     * @return void
+     * @group integration
      */
     public function testJsonMappingForLeague()
     {

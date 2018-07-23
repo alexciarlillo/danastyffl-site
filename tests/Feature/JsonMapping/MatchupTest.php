@@ -9,9 +9,7 @@ use App\Matchup;
 class MatchupTest extends TestCase
 {
     /**
-     * A basic test example.
-     *
-     * @return void
+     * @group integration
      */
     public function testJsonMappingForMatchup()
     {

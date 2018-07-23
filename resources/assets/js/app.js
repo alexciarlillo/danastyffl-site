@@ -27,12 +27,12 @@ const router = new VueRouter({
     linkActiveClass: 'active',
     routes: [
         {
-            path: '/standings',
+            path: '/standings/:year?',
             component: Standings,
             name: 'standings'
         },
         {
-            path: '/scores/:week?',
+            path: '/scores/:year/:week?',
             component: Scores,
             name: 'scores'
         }

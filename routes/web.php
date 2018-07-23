@@ -15,11 +15,11 @@ Route::get('/', function () {
     return redirect('standings');
 })->name('home');
 
-Route::get('/standings', function () {
+Route::get('/standings/{year?}', function () {
     return view('index');
 })->name('standings');
 
-Route::get('/scores/{week?}', function () {
+Route::get('/scores/{year}/{week?}', function () {
     return view('index');
 })->name('scores');
 

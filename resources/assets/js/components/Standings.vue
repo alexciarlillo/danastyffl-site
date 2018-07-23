@@ -4,7 +4,7 @@
 
     <div class="standings bg-grey-lightest w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="standings">
       <div class="header text-center p-5 container bg-mfl-blue-light text-grey-light ">
-        <span class="font-header text-2xl color-mfl-blue">2018 STANDINGS</span>
+        <span class="font-header text-2xl color-mfl-blue">{{year}} STANDINGS</span>
       </div>
       <table class="w-full text-center border-collapse" v-if="standings">
         <thead>
@@ -41,17 +41,24 @@
   export default {
       name: 'Standings',
 
-      props: ['league', 'year'],
+      props: ['league'],
       components: {Loader},
       mixins: [league],
 
       data: () => ({
         standings: null,
         error: null,
-        loading: false
+        loading: false,
+        year: null
       }),
 
       created() {
+        if (this.$route.params.year) {
+          this.year = this.$route.params.year;
+        } else {
+          this.year = moment().format('YYYY');
+        }
+
         this.fetchStandingsData();
       },
 
@@ -73,7 +80,7 @@
           this.error = this.standings = null;
           this.loading = true;
 
-          axios.get('/api/standings')
+          axios.get('/api/standings/' + this.year)
             .then(response => {
               this.loading = false;
               this.standings = response.data;

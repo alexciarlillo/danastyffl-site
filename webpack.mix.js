@@ -25,13 +25,15 @@ mix.js('resources/assets/js/app.js', 'public/js')
     'vue-touch',
     'vue2-filters',
     'lodash',
-    'jquery'
+    'jquery',
+    'moment'
   ])
   .autoload({
     jquery: ['$', 'window.jQuery', 'jQuery'],
     lodash: ['_', 'window._'],
     vue: ['Vue', 'window.Vue'],
     axios: ['axios', 'window.axios'],
+    moment: ['moment', 'windows.moment']
   });
 
 if (mix.inProduction()) {

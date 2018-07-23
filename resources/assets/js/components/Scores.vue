@@ -24,6 +24,7 @@
           selected: 0,
           error: null,
           loading: false,
+          year: null,
           week: null
         }),
 
@@ -31,6 +32,7 @@
           if (this.$route.params.week) {
             this.week = this.$route.params.week;
           }
+          this.year = this.$route.params.year;
           this.loadInitialData();
 
           setInterval(function () {
@@ -44,10 +46,10 @@
             this.loading = true;
             let weekString = '';
             if(this.week) {
-              weekString = `/${this.week}`;
+              weekString = `?week=${this.week}`;
             }
 
-            axios.get('/api/scores/2017?week=8')
+            axios.get('/api/scores/' + this.year + weekString)
               .then(response => {
                 this.loading = false;
                 this.matchups = this.injectPlayerData(response.data, this.players);
@@ -60,10 +62,10 @@
           fetchScoreData: function() {
             let weekString = '';
             if(this.week) {
-              weekString = `/${this.week}`;
+              weekString = `?week=${this.week}`;
             }
 
-            axios.get('/api/scores/2017?week=8')
+            axios.get('/api/scores/' + this.year + weekString)
               .then(response => {
                 this.matchups = this.injectPlayerData(response.data, this.players);
               })
