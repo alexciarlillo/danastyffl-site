@@ -1,5 +1,5 @@
 <template>
-    <div class="inline-block relative w-full px-4 md:px-2 md:inline-block md:w-32">
+    <div class="inline-block relative w-full px-2 md:px-2 md:inline-block md:w-32">
         <select v-model="selected" v-on:change="updateRoute()" class="appearance-none w-full bg-white border border-grey-light text-grey-darker font-semibold hover:text-mfl-blue hover:border-grey px-4 py-1 pr-8 rounded leading-tight">
             <option v-for="entry in history" v-bind:value="entry.year">{{entry.year}}</option>
         </select>
