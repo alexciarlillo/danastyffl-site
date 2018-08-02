@@ -19,6 +19,7 @@
         </div>
 
         <div class="text-sm">
+            <portal-target name="matchup-select" class="inline-block"/>
             <YearSelector v-if="league" :history="league.history" />
             <div class="mt-6 md:mt-0 md:inline-block">
               <a href="/mfl" class="nav-link">MFL Homepage</a>

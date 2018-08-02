@@ -4,7 +4,7 @@ const state = {
 
 const getters = {
     selectedYear: (state, getters, rootState) => {
-        if (rootState.route.params.year) {
+        if (!!rootState.route.params.year) {
             return rootState.route.params.year;
         }
 

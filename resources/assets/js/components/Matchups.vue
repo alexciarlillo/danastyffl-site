@@ -4,18 +4,18 @@
             <div class="flex justify-between items-stretch h-16 py-1">
                 <div class="franchise-header flex-1 text-center flex flex-col justify-between px-2">
                     <div class="h-full flex items-center justify-center">
-                        <span class="text-sm lg:text-lg font-header">{{ getFranchiseName(league, awayFranchise.id) }}</span>
+                        <span class="text-sm lg:text-lg font-header">{{ getFranchiseName(league, selectedAway.id) }}</span>
                     </div>
-                    <div class="text-base lg:text-xl mt-1 font-header font-semibold">{{ awayFranchise.score }}</div>
+                    <div class="text-base lg:text-xl mt-1 font-header font-semibold">{{ selectedAway.score }}</div>
                 </div>
                 <div class="franchise-seperator flex items-center text-center px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current h-4 w-4"><path d="M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
                 </div>
                 <div class="franchise-header flex-1 text-center flex flex-col justify-between px-2">
                     <div class="h-full flex items-center justify-center">
-                        <span class="text-sm lg:text-lg font-header">{{ getFranchiseName(league, homeFranchise.id) }}</span>
+                        <span class="text-sm lg:text-lg font-header">{{ getFranchiseName(league, selectedHome.id) }}</span>
                     </div>
-                    <div class="text-base lg:text-xl mt-1 font-header font-semibold">{{ homeFranchise.score }}</div>
+                    <div class="text-base lg:text-xl mt-1 font-header font-semibold">{{ selectedHome.score }}</div>
                 </div>
             </div>
 
@@ -35,7 +35,7 @@
 
         <div class="flex scores bg-grey-lightest">
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in getPlayerStarters(awayFranchise.players)">
+                <template v-for="player in getPlayerStarters(selectedAway.players)">
                     <PlayerScore :player="player" :home="true"  :key="player.id"></PlayerScore>
                 </template>
             </div>
@@ -47,11 +47,22 @@
             </div>
 
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in getPlayerStarters(homeFranchise.players)">
+                <template v-for="player in getPlayerStarters(selectedHome.players)">
                     <PlayerScore :player="player" :home="false" :key="player.id"></PlayerScore>
                 </template>
             </div>
         </div>
+
+        <portal to="matchup-select">
+            <div class="relative">
+                <select v-model="selected" class="text-sm appearance-none w-full bg-white border border-grey-light text-grey-darker hover:text-mfl-blue hover:border-grey px-4 py-1 pr-8 rounded leading-tight md:w-64">
+                    <option v-for="(matchup, index) in matchups" :key="index" v-bind:value="index">{{ getFranchiseName(league, awayFranchise(matchup).id) }} @ {{ getFranchiseName(league, homeFranchise(matchup).id) }}</option>
+                </select>
+                <div class="pointer-events-none absolute pin-y pin-r flex items-center px-4 text-grey hover:text-grey-darkest">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+            </div>
+        </portal>
     </div>
 </template>
 
@@ -77,19 +88,14 @@
             this.updateScorePadding();
         },
         computed: {
-            homeFranchise: function() {
-                let franchise = this.matchups[this.selected].franchises.find(function(team) {
-                    return team.isHome == "1";
-                });
-                return franchise;
+            selectedMatchup: function() {
+                return this.matchups[this.selected];
             },
-
-            awayFranchise: function() {
-                let franchise = this.matchups[this.selected].franchises.find(function(team) {
-                    return team.isHome == "0";
-                });
-
-                return franchise;
+            selectedAway: function() {
+                return this.awayFranchise(this.selectedMatchup);
+            },
+            selectedHome: function() {
+                return this.homeFranchise(this.selectedMatchup);
             }
         },
         methods: {
@@ -107,6 +113,21 @@
                 if(this.selected > 0) {
                     this.selected -= 1;
                 }
+            },
+
+            homeFranchise: function(matchup) {
+                let franchise = matchup.franchises.find(function(team) {
+                    return team.isHome == "1";
+                });
+                return franchise;
+            },
+
+            awayFranchise: function(matchup) {
+                let franchise = matchup.franchises.find(function(team) {
+                    return team.isHome == "0";
+                });
+
+                return franchise;
             }
         },
         watcher: {

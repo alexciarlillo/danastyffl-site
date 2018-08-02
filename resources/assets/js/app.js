@@ -40,7 +40,7 @@ const router = new VueRouter({
         },
         {
             path: '/scores',
-            component: Scores
+            component: Scores,
         }
     ]
 });
