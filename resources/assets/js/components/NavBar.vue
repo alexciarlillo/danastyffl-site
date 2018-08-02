@@ -46,96 +46,100 @@
 </template>
 
 <script>
-  import YearSelector from './YearSelector.vue';
+import YearSelector from "./YearSelector.vue";
 
-    export default {
-        name: 'NavBar',
-        props: ['league'],
-        components: {YearSelector},
-        data: () => ({
-            collapsed: true,
-            collapsing: false,
-            windowWidth: window.innerWidth
-        }),
-        computed: {
-          portalDisabled: function () {
-            return this.windowWidth > 768;
-          }
-        },
-        methods: {
-          toggle: function (e) {
-            e.preventDefault();
-            this.collapsed = !this.collapsed;
-            this.$emit('toggle-collapse', this.collapsed);
-          },
-          handleWindowResize: function(event) {
-            this.windowWidth = event.currentTarget.innerWidth;
-          },
-          setCollapsing: function (collapsing) {
-            this.collapsing = collapsing;
-          }
-        },
-        watch: {
-          '$route' (to, from) {
-            if (!this.collapsed) {
-              this.collapsed = true;
-              this.$emit('toggle-collapse', this.collapsed);
-            }
-          }
-        },
-        beforeDestroy: function () {
-          window.removeEventListener('resize', this. handleWindowResize)
-        },
-        mounted() {
-          window.addEventListener('resize', this.handleWindowResize);
-        },
+import { mapState, mapGetters } from 'vuex';
+
+export default {
+  name: "NavBar",
+  props: ["league"],
+  components: { YearSelector },
+  data: () => ({
+    collapsed: true,
+    collapsing: false,
+    windowWidth: window.innerWidth
+  }),
+  computed: {
+    portalDisabled: function() {
+      return this.windowWidth > 768;
+    },
+    ...mapState(['app']),
+    ...mapGetters(['selectedYear'])
+  },
+  methods: {
+    toggle: function(e) {
+      e.preventDefault();
+      this.collapsed = !this.collapsed;
+      this.$emit("toggle-collapse", this.collapsed);
+    },
+    handleWindowResize: function(event) {
+      this.windowWidth = event.currentTarget.innerWidth;
+    },
+    setCollapsing: function(collapsing) {
+      this.collapsing = collapsing;
     }
+  },
+  watch: {
+    $route(to, from) {
+      if (!this.collapsed) {
+        this.collapsed = true;
+        this.$emit("toggle-collapse", this.collapsed);
+      }
+    }
+  },
+  beforeDestroy: function() {
+    window.removeEventListener("resize", this.handleWindowResize);
+  },
+  mounted() {
+    window.addEventListener("resize", this.handleWindowResize);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .overlay {
-    background-color: rgba(0,0,0,.2);
+.overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.nav-link {
+  @apply block my-1 text-grey-darker no-underline px-4 py-3 text-base;
+
+  &:hover {
+    @apply text-grey-darkest;
   }
 
+  &.active {
+    @apply bg-grey-lighter;
+  }
+}
+
+@screen md {
   .nav-link {
-    @apply block my-1 text-grey-darker no-underline px-4 py-3 text-base;
+    @apply inline-block mt-0 text-grey-light text-base no-underline;
 
     &:hover {
-      @apply text-grey-darkest;
+      @apply text-white;
     }
 
     &.active {
-      @apply bg-grey-lighter;
+      @apply bg-transparent font-bold;
     }
   }
+}
 
-  @screen md {
-    .nav-link {
-      @apply inline-block mt-0 text-grey-light text-base no-underline;
+.slide-enter-active {
+  transition: all 0.25s ease;
+}
 
-      &:hover {
-        @apply text-white;
-      }
+.slide-leave-active {
+  transition: all 0.25s ease;
+}
 
-      &.active {
-        @apply bg-transparent font-bold;
-      }
-    }
-  }
+.slide-enter {
+  transform: translateX(-100vw);
+}
 
-  .slide-enter-active {
-    transition: all .25s ease;
-  }
-
-  .slide-leave-active {
-    transition: all .25s ease;
-  }
-
-  .slide-enter {
-    transform: translateX(-100vw);
-  }
-
-  .slide-leave-to {
-    transform: translateX(-100vw);
-  }
+.slide-leave-to {
+  transform: translateX(-100vw);
+}
 </style>

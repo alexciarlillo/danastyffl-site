@@ -13,9 +13,11 @@
     import league from '../mixins/league.js';
     import player from '../mixins/player.js';
 
+    import { mapMutations, mapGetters } from 'vuex';
+
     export default {
         name: 'Scores',
-        props: ['league', 'players', 'year', 'week'],
+        props: ['league', 'players', 'week'],
         components: {Matchups, Loader},
         mixins: [league, player],
 
@@ -39,8 +41,8 @@
             this.error = this.matchups = null;
             this.loading = true;
             let weekString = this.week ? `?week=${this.week}` : '';
-            
-            axios.get('/api/scores/' + this.year + weekString)
+
+            axios.get('/api/scores/' + this.selectedYear() + weekString)
               .then(response => {
                 this.loading = false;
                 this.matchups = this.injectPlayerData(response.data, this.players);
@@ -68,6 +70,8 @@
           changeWeek: function() {
             this.$router.push({ path: `/scores/${this.week}`});
           },
+
+          ...mapGetters(['selectedYear'])
         },
 
         computed: {

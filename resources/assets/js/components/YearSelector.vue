@@ -10,15 +10,17 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex';
 
 export default {
+    
     name: 'YearSelector',
     props: ['history'],
     data: () => ({
         selected: null
     }),
     created() {
-        this.setSelectedYear();
+        this.selected = this.selectedYear();
     },
     methods: {
         updateRoute: function () {
@@ -33,14 +35,8 @@ export default {
             
             this.$router.push(newRoute);
         },
-        setSelectedYear: function () {
-            if (this.$route.params.year) {
-                this.selected = this.$route.params.year;
-            } else {
-                this.selected = moment().format('YYYY');
-            }
-            console.log(this.selected);
-        },
+        ...mapGetters(['selectedYear']),
+        ...mapMutations(['setSelectedYear'])
     },
     watch: {
         '$route': 'setSelectedYear',

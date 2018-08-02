@@ -13,16 +13,16 @@ import VueTouch from 'vue-touch';
 import Vue2Filters from 'vue2-filters';
 import PortalVue from 'portal-vue';
 
-Vue.use(Vue2Filters)
+import { sync } from 'vuex-router-sync';
+
 Vue.use(VueRouter);
 Vue.use(VueTouch, {name: 'v-touch'})
+Vue.use(Vue2Filters)
 Vue.use(PortalVue);
 
 import App from './components/App.vue';
 import Standings from './components/Standings.vue';
 import Scores from './components/Scores.vue';
-
-let year = moment().format('YYYY');
 
 const router = new VueRouter({
     mode: 'history',
@@ -40,15 +40,19 @@ const router = new VueRouter({
         },
         {
             path: '/scores',
-            component: Scores,
-            props: { year: 2018, week: null }
+            component: Scores
         }
     ]
 });
 
+import store from './store';
+
+const unsync = sync(store, router);
+
 const app = new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 });

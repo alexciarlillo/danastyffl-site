@@ -4,7 +4,7 @@
 
     <div class="standings bg-grey-lightest w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="standings">
       <div class="header text-center p-5 container bg-mfl-blue-light text-grey-light ">
-        <span class="font-header text-2xl color-mfl-blue">{{selectedYear}} STANDINGS</span>
+        <span class="font-header text-2xl color-mfl-blue">{{selectedYear()}} STANDINGS</span>
       </div>
       <table class="w-full text-center border-collapse" v-if="standings">
         <thead>
@@ -38,10 +38,12 @@
   import Loader from './Loader.vue';
   import league from '../mixins/league.js';
 
+  import { mapGetters } from 'vuex';
+
   export default {
       name: 'Standings',
 
-      props: ['league', 'year'],
+      props: ['league'],
       components: {Loader},
       mixins: [league],
 
@@ -53,12 +55,6 @@
 
       created() {
         this.fetchStandingsData();
-      },
-
-      computed: {
-        selectedYear: function () {
-          return this.year ? this.year : moment().format('YYYY');
-        }
       },
 
       methods: {
@@ -79,7 +75,7 @@
           this.error = this.standings = null;
           this.loading = true;
 
-          axios.get('/api/standings/' + this.selectedYear)
+          axios.get('/api/standings/' + this.selectedYear())
             .then(response => {
               this.loading = false;
               this.standings = response.data;
@@ -87,7 +83,9 @@
             .catch(e => {
               console.log(e);
             });
-        }
+        },
+
+        ...mapGetters(['selectedYear'])
       },
 
       watch: {
