@@ -15,7 +15,7 @@
 
     export default {
         name: 'Scores',
-        props: ['league', 'players'],
+        props: ['league', 'players', 'year', 'week'],
         components: {Matchups, Loader},
         mixins: [league, player],
 
@@ -24,22 +24,9 @@
           selected: 0,
           error: null,
           loading: false,
-          year: null,
-          week: null
         }),
 
         created() {
-          if (this.$route.params.week) {
-            this.week = this.$route.params.week;
-          }
-
-          if (this.$route.params.year) {
-            this.year = this.$route.params.year;
-          } else {
-            this.year = moment().format('YYYY');
-          }
-          console.log(this.$route.params.week);
-          console.log(this.$route.params.year);
           this.loadInitialData();
 
           setInterval(function () {
@@ -51,10 +38,7 @@
           loadInitialData: function() {
             this.error = this.matchups = null;
             this.loading = true;
-            let weekString = '';
-            if(this.week) {
-              weekString = `?week=${this.week}`;
-            }
+            let weekString = this.week ? `?week=${this.week}` : '';
             
             axios.get('/api/scores/' + this.year + weekString)
               .then(response => {

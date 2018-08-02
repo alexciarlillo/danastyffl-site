@@ -18,11 +18,7 @@ export default {
         selected: null
     }),
     created() {
-        if (this.$route.params.year) {
-            this.selected = this.$route.params.year;
-        } else {
-            this.selected = moment().format('YYYY');
-        }
+        this.setSelectedYear();
     },
     methods: {
         updateRoute: function () {
@@ -36,7 +32,18 @@ export default {
             }
             
             this.$router.push(newRoute);
-        }
+        },
+        setSelectedYear: function () {
+            if (this.$route.params.year) {
+                this.selected = this.$route.params.year;
+            } else {
+                this.selected = moment().format('YYYY');
+            }
+            console.log(this.selected);
+        },
     },
+    watch: {
+        '$route': 'setSelectedYear',
+    }
 }
 </script>

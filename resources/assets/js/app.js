@@ -31,12 +31,17 @@ const router = new VueRouter({
         {
             path: '/standings/:year?',
             component: Standings,
-            name: 'standings'
+            props: true,
         },
         {
-            path: '/scores/:year?/:week?',
+            path: '/scores/:year/:week?',
             component: Scores,
-            name: 'scores'
+            props: true
+        },
+        {
+            path: '/scores',
+            component: Scores,
+            props: { year: 2018, week: null }
         }
     ]
 });
