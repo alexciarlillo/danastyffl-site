@@ -58,7 +58,7 @@
               weekString = `?week=${this.week}`;
             }
 
-            axios.get('/api/scores/' + this.year + weekString)
+            axios.get('/api/scores/' + this.selectedYear() + weekString)
               .then(response => {
                 this.matchups = this.injectPlayerData(response.data, this.players);
               })

@@ -7,7 +7,6 @@ const getters = {
         if (!!rootState.route.params.year) {
             return rootState.route.params.year;
         }
-
         return moment().format('YYYY');
     }
 }

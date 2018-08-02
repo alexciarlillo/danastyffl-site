@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
     
@@ -35,8 +35,10 @@ export default {
             
             this.$router.push(newRoute);
         },
+        setSelectedYear: function () {
+            this.selected = this.selectedYear();
+        },
         ...mapGetters(['selectedYear']),
-        ...mapMutations(['setSelectedYear'])
     },
     watch: {
         '$route': 'setSelectedYear',
