@@ -65,4 +65,11 @@ class APIController extends Controller
 
         return $scores->toJson();
     }
+
+    public function currentWeek()
+    {
+        $currentWeek = $this->scores->currentWeek();
+
+        return $currentWeek;
+    }
 }

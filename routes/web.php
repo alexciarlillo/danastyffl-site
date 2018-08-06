@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/', function () {
+    return redirect('/standings');
+});
+
 Route::get('/mfl', function () {
     return redirect('https://' . config('mfl.league_host') . '/' . config('mfl.league_year') . '/home/' . config('mfl.league_id'));
 });

@@ -37,15 +37,19 @@ class ScoresRepository implements ApiRepositoryContract, ScoresRepositoryContrac
             $cacheKey = "$cacheKey.$week";
         }
 
-        \Log::debug('Cache key: ' . $cacheKey);
-        if (Cache::has($cacheKey)) {
-            $scores = Cache::get($cacheKey);
-        } else {
+        $scores = Cache::remember($cacheKey, 2, function () use ($year, $week) {
             $scoresJSON = $this->api()->getScores($year, $week);
             $scores = $this->mapper->mapArray($scoresJSON, [], Matchup::class);
-            Cache::put($cacheKey, $scores, 5); // 5 mins
-        }
+            return $scores;
+        });
         
         return collect($scores);
+    }
+
+    public function currentWeek()
+    {
+        return Cache::remember('current-week', 60, function () {
+            return $this->api()->getCurrentWeek();
+        });
     }
 }

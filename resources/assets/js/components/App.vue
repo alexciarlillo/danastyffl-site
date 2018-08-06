@@ -14,6 +14,8 @@
   import NavBar from './NavBar.vue';
   import Loader from './Loader.vue';
 
+  import { mapMutations } from 'vuex';
+
   export default {
     name: 'App',
 
@@ -29,6 +31,7 @@
     created() {
       this.fetchLeagueData();
       this.fetchPlayerData();
+      this.fetchCurrentWeek();
     },
 
     methods: {
@@ -66,7 +69,22 @@
           .catch(e => {
             console.log(e);
           });
-      }
+      },
+
+      fetchCurrentWeek: function() {
+        this.loading = true;
+
+        axios.get('/api/currentweek')
+          .then(response => {
+            this.loading = false;
+            this.setCurrentWeek(parseInt(response.data));
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      },
+
+      ...mapMutations(['setCurrentWeek'])
     }
   }
 </script>

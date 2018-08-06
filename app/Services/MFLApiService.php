@@ -96,4 +96,16 @@ class MFLApiService
 
         return $object->liveScoring->matchup;
     }
+
+    public function getCurrentWeek()
+    {
+        $params = [
+            'TYPE' => 'liveScoring'
+        ];
+
+        $response = $this->export($params);
+        $object = json_decode($response->getBody()->getContents());
+
+        return $object->liveScoring->week;
+    }
 }
