@@ -64,15 +64,9 @@
         mixins: [league, player],
         components: {PlayerScore, MatchupHeader},
         data: () => ({
-            topPadding: 0,
             selected: 0,
             positions: ['QB', 'RB', 'RB', 'FLX', 'WR', 'WR', 'WR', 'TE', 'DST']
         }),
-        mounted() {
-        },
-        updated() {
-            this.updateScorePadding();
-        },
         computed: {
             selectedMatchup: function () {
                 return this.matchups[this.selected];
@@ -89,10 +83,6 @@
             }
         },
         methods: {
-            updateScorePadding: function () {
-                this.topPadding = $('.header').height();
-            },
-
             nextMatchup: function () {
                 if(this.selected < this.matchups.length - 1) {
                     this.selected += 1;
