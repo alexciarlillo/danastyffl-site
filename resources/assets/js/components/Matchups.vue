@@ -1,41 +1,27 @@
 <template>
     <div class="matchup">
         <v-touch class="header container bg-mfl-blue-light text-grey-light flex flex-col fixed md:relative " v-on:swipeleft="nextMatchup" v-on:swiperight="prevMatchup">
-            <div class="flex justify-between items-stretch h-16 py-1">
-                <div class="franchise-header flex-1 flex-no-shrink min-w-0 text-center flex flex-col justify-between px-2">
-                    <div class="flex items-center justify-center h-full">
-                        <span class="text-sm lg:text-lg font-header franchise-name">{{ getFranchiseName(league, selectedAway.id) }}</span>
-                    </div>
-                    <div class="text-base lg:text-xl mt-1 font-header font-semibold">{{ selectedAway.score }}</div>
-                </div>
-                <div class="franchise-seperator flex items-center text-center px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current h-4 w-4"><path d="M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
-                </div>
-                <div class="franchise-header flex-1 flex-no-shrink min-w-0 text-center flex flex-col justify-between px-2">
-                    <div class="flex items-center justify-center h-full">
-                        <span class="text-sm lg:text-lg font-header franchise-name">{{ getFranchiseName(league, selectedHome.id) }}</span>
-                    </div>
-                    <div class="text-base lg:text-xl mt-1 font-header font-semibold">{{ selectedHome.score }}</div>
-                </div>
-            </div>
-
-            <div class="indicator bg-grey-light h-5 shadow">
-                <div class="circles flex justify-between w-1/2 mx-auto text-xs py-1 items-center text-mfl-blue">
-                    <div v-for="(matchup, index) in matchups" :key="index" class="flex items-center text-grey-darkest">
-                        <svg v-if="index == selected" class="h-3 w-3" viewBox="0 0 24 24">
-                            <path class="fill-current" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
-                        </svg>
-                        <svg v-if="index != selected" class="h-3 w-3" viewBox="0 0 24 24">
-                            <path class="fill-current" d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
+            <transition name="fade">
+                <MatchupHeader :home="homeFranchise(selectedMatchup)" :away="awayFranchise(selectedMatchup)" />
+            </transition>
         </v-touch>
+
+        <div class="indicator bg-grey-light h-5 shadow">
+            <div class="circles flex justify-between w-1/2 mx-auto text-xs py-1 items-center text-mfl-blue">
+                <div v-for="(matchup, index) in matchups" :key="index" class="flex items-center text-grey-darkest">
+                    <svg v-if="index == selected" class="h-3 w-3" viewBox="0 0 24 24">
+                        <path class="fill-current" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                    </svg>
+                    <svg v-if="index != selected" class="h-3 w-3" viewBox="0 0 24 24">
+                        <path class="fill-current" d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
 
         <div class="flex scores bg-grey-lightest">
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in getPlayerStarters(selectedAway.players)">
+                <template v-for="player in awayStarters">
                     <PlayerScore :player="player" :home="true"  :key="player.id"></PlayerScore>
                 </template>
             </div>
@@ -47,7 +33,7 @@
             </div>
 
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in getPlayerStarters(selectedHome.players)">
+                <template v-for="player in homeStarters">
                     <PlayerScore :player="player" :home="false" :key="player.id"></PlayerScore>
                 </template>
             </div>
@@ -56,7 +42,7 @@
         <portal to="matchup-select">
             <div class="relative">
                 <select v-model="selected" class="text-sm appearance-none w-full bg-white border border-grey-light text-grey-darker hover:text-mfl-blue hover:border-grey px-4 py-1 pr-8 rounded leading-tight md:w-64">
-                    <option v-for="(matchup, index) in matchups" :key="index" v-bind:value="index">{{ getFranchiseName(league, awayFranchise(matchup).id) }} @ {{ getFranchiseName(league, homeFranchise(matchup).id) }}</option>
+                    <option v-for="(matchup, index) in matchups" :key="index" v-bind:value="index">{{ getFranchiseName(league, awayFranchise(matchups[index]).id) }} @ {{ getFranchiseName(league, homeFranchise(matchups[index]).id) }}</option>
                 </select>
                 <div class="pointer-events-none absolute pin-y pin-r flex items-center px-4 text-grey hover:text-grey-darkest">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -70,32 +56,36 @@
     import league from '../mixins/league.js';
     import player from '../mixins/player.js';
     import PlayerScore from './PlayerScore.vue';
+    import MatchupHeader from './MatchupHeader';
 
     export default {
         name: 'Matchups',
         props: ['matchups', 'league', 'players'],
         mixins: [league, player],
-        components: {PlayerScore},
+        components: {PlayerScore, MatchupHeader},
         data: () => ({
             topPadding: 0,
             selected: 0,
             positions: ['QB', 'RB', 'RB', 'FLX', 'WR', 'WR', 'WR', 'TE', 'DST']
         }),
         mounted() {
-            this.updateScorePadding();
         },
         updated() {
             this.updateScorePadding();
         },
         computed: {
-            selectedMatchup: function() {
+            selectedMatchup: function () {
                 return this.matchups[this.selected];
             },
-            selectedAway: function() {
-                return this.awayFranchise(this.selectedMatchup);
+            homeStarters: function () {
+                let matchup = this.matchups[this.selected];
+                let home = this.homeFranchise(matchup);
+                return this.getPlayerStarters(home.players);
             },
-            selectedHome: function() {
-                return this.homeFranchise(this.selectedMatchup);
+            awayStarters: function() {
+                let matchup = this.matchups[this.selected];
+                let away = this.awayFranchise(matchup);
+                return this.getPlayerStarters(away.players);
             }
         },
         methods: {
@@ -119,6 +109,7 @@
                 let franchise = matchup.franchises.find(function(team) {
                     return team.isHome == "1";
                 });
+                franchise.name = this.getFranchiseName(this.league, franchise.id);
                 return franchise;
             },
 
@@ -126,9 +117,11 @@
                 let franchise = matchup.franchises.find(function(team) {
                     return team.isHome == "0";
                 });
-
+                franchise.name = this.getFranchiseName(this.league, franchise.id);
                 return franchise;
-            }
+            },
+
+            
         },
         watcher: {
             'teams': 'updateScorePadding',
@@ -155,4 +148,11 @@
             padding-top: 0;
         }
     }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>
