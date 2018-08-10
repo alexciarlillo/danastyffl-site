@@ -8,7 +8,7 @@
 
         <div class="flex scores bg-grey-lightest">
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in matchup.franchises.away.starters">
+                <template v-for="player in awayStarters">
                     <PlayerScore :player="player" :home="true"  :key="player.id"></PlayerScore>
                 </template>
             </div>
@@ -20,7 +20,7 @@
             </div>
 
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in matchup.franchises.home.starters">
+                <template v-for="player in homeStarters">
                     <PlayerScore :player="player" :home="false" :key="player.id"></PlayerScore>
                 </template>
             </div>
@@ -50,8 +50,14 @@
                 this.$emit('previous');
             },
         },
-        computed: { }
-        
+        computed: {
+            awayStarters() {
+                return this.matchup.franchises.away.starters.sort(this.sortPlayers);
+            },
+            homeStarters() {
+                return this.matchup.franchises.home.starters.sort(this.sortPlayers)
+            }
+        }
     }
 </script>
 
@@ -78,6 +84,7 @@
     .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
     }
+
     .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
     }

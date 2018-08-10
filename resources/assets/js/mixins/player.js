@@ -8,22 +8,8 @@ export default {
           return `${first}. ${last}`;
         },
 
-        getPlayerStarters: function(players) {
-            let starters = players.filter( function(p) {
-                return p.status == "starter"
-            });
-
-            return starters.sort(this.sortPlayers);
-        },
-
         sortPlayers: function(a, b) {
             return this.positionCompare(a.position, b.position);
-        },
-
-        getPlayersBench: function(players) {
-            return players.filter( function(p) {
-                return p.status == "nonstarter";
-            })
         },
 
         positionCompare: function(pos1, pos2) {

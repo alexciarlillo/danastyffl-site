@@ -43,12 +43,19 @@ export default {
 function injectPlayerData(matchups, players) {
     _.each(matchups, function (matchup) {
         _.each(matchup.franchises, function (franchise) {
+            franchise.starters = [];
+            franchise.bench = [];
             _.each(franchise.players, function (franchisePlayer) {
                 let playerData = players[franchisePlayer.id];
-
                 franchisePlayer.name = playerData.name;
                 franchisePlayer.team = playerData.team;
                 franchisePlayer.position = playerData.position.toUpperCase();
+
+                if (franchisePlayer.status == 'starter') {
+                    franchise.starters.push(franchisePlayer);
+                } else {
+                    franchise.bench.push(franchisePlayer);
+                }
             });
         });
     });
