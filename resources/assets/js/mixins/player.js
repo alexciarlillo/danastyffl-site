@@ -26,24 +26,6 @@ export default {
             })
         },
 
-        injectPlayerData: function(matchups, players) {
-            _.each(matchups, function (matchup) {
-                _.each(matchup.franchises, function(franchise) {
-                    _.each(franchise.players, function(franchisePlayer) {
-                        let playerData = players.find(function(player) {
-                            return player.id == franchisePlayer.id;
-                        });
-
-                        franchisePlayer.name = playerData.name;
-                        franchisePlayer.team = playerData.team;
-                        franchisePlayer.position = playerData.position.toUpperCase();
-                    });
-                });
-            });
-
-            return matchups;
-        },
-
         positionCompare: function(pos1, pos2) {
             if(pos1 == "QB") {
                 return -1;

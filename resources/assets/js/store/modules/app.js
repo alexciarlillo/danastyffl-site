@@ -2,7 +2,6 @@ const state = {
     year: null,
     week: null,
     currentWeek: 1,
-    test: 1
 }
 
 const getters = {
@@ -26,7 +25,15 @@ const getters = {
 }
 
 const actions = {
-    
+    fetchCurrentWeek({ commit }) {
+        axios.get('/api/currentweek')
+            .then(response => {
+                commit('setCurrentWeek', parseInt(response.data));
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    },
 }
 
 const mutations = {

@@ -1,9 +1,9 @@
 <template>
   <div class="app">
-    <NavBar @toggle-collapse="setOverflow" :league="league"></NavBar>
+    <NavBar @toggle-collapse="setOverflow"></NavBar>
     <div class="container mx-auto pt-12">
       <Loader v-if="loading" text="Loading League & Player Data"></Loader>
-      <div v-if="league && players">
+      <div v-if="!league.loading && !players.loading">
         <router-view :league="league" :players="players"></router-view>
       </div>
     </div>
@@ -14,23 +14,21 @@
   import NavBar from './NavBar.vue';
   import Loader from './Loader.vue';
 
-  import { mapMutations } from 'vuex';
+  import  { mapState, mapActions } from 'vuex';
 
   export default {
     name: 'App',
 
     data: () => ({
       loading: false,
-      error: null,
-      league: null,
-      players: null
+      error: null
     }),
 
     components: {NavBar, Loader},
 
     created() {
-      this.fetchLeagueData();
-      this.fetchPlayerData();
+      this.fetchLeague();
+      this.fetchPlayers();
       this.fetchCurrentWeek();
     },
 
@@ -42,50 +40,13 @@
           document.body.classList.add('overflow-hidden');
         }
       },
+      ...mapActions(['fetchLeague', 'fetchPlayers', 'fetchCurrentWeek'])
+    },
 
-      fetchLeagueData: function() {
-        this.error = this.league = null;
-        this.loading = true;
-
-        axios.get('/api/league')
-          .then(response => {
-            this.loading = false;
-            this.league = response.data;
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      },
-
-      fetchPlayerData: function() {
-        this.error = this.players = null;
-        this.loading = true;
-
-        axios.get('/api/players')
-          .then(response => {
-            this.loading = false;
-            this.players = response.data;
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      },
-
-      fetchCurrentWeek: function() {
-        this.loading = true;
-
-        axios.get('/api/currentweek')
-          .then(response => {
-            this.loading = false;
-            this.setCurrentWeek(parseInt(response.data));
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      },
-
-      ...mapMutations(['setCurrentWeek'])
-    }
+    computed: mapState({
+      league: state => state.league,
+      players: state => state.players
+    }),
   }
 </script>
 

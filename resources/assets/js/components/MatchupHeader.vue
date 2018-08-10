@@ -23,7 +23,6 @@
         name: 'MatchupHeader',
         props: ['home', 'away'],
         created() {
-            console.log(this.home.score, this.away.score);
         }
     }
 </script>

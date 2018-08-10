@@ -2,13 +2,13 @@
     <div class="matchup">
         <v-touch class="header container bg-mfl-blue-light text-grey-light flex flex-col fixed md:relative " v-on:swipeleft="nextMatchup" v-on:swiperight="prevMatchup">
             <transition name="fade">
-                <MatchupHeader :home="home" :away="away" />
+                <MatchupHeader :home="matchup.franchises.home" :away="matchup.franchises.away" />
             </transition>
         </v-touch>
 
         <div class="flex scores bg-grey-lightest">
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in away.starters">
+                <template v-for="player in matchup.franchises.away.starters">
                     <PlayerScore :player="player" :home="true"  :key="player.id"></PlayerScore>
                 </template>
             </div>
@@ -20,7 +20,7 @@
             </div>
 
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
-                <template v-for="player in home.starters">
+                <template v-for="player in matchup.franchises.home.starters">
                     <PlayerScore :player="player" :home="false" :key="player.id"></PlayerScore>
                 </template>
             </div>
@@ -29,20 +29,29 @@
 </template>
 
 <script>
-    import league from '../mixins/league.js';
     import player from '../mixins/player.js';
     import PlayerScore from './PlayerScore.vue';
     import MatchupHeader from './MatchupHeader';
 
     export default {
         name: 'Matchups',
-        props: ['home', 'away'],
-        mixins: [league, player],
+        props: ['matchup'],
+        mixins: [player],
         components: {PlayerScore, MatchupHeader},
         data: () => ({
-            selected: 0,
             positions: ['QB', 'RB', 'RB', 'FLX', 'WR', 'WR', 'WR', 'TE', 'DST']
         }),
+        methods: {
+            nextMatchup: function () {
+                this.$emit('next');
+            },
+
+            prevMatchup: function () {
+                this.$emit('previous');
+            },
+        },
+        computed: { }
+        
     }
 </script>
 
@@ -66,10 +75,10 @@
         }
     }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
+    .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    }
 </style>

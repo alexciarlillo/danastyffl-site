@@ -22,8 +22,8 @@
         </thead>
 
         <tbody>
-          <tr v-for="team in standings" class="h-12">
-            <td class="text-xs md:text-sm border-t border-grey-light p-2 text-left">{{ getFranchiseName(league, team.id) }}</td>
+          <tr v-for="(team, index) in standings" :key="index" class="h-12">
+            <td class="text-xs md:text-sm border-t border-grey-light p-2 text-left">{{ team.id }}</td>
             <td class="text-xs md:text-sm border-t border-grey-light p-2">{{ team.h2hw }}-{{ team.h2hl }}-{{ team.h2ht }}</td>
             <td class="text-xs md:text-sm border-t border-grey-light p-2">{{ winPercentage(team) }}</td>
             <td class="text-xs border-t border-grey-light p-2">{{ team.pf }}</td>
@@ -36,7 +36,6 @@
 
 <script>
   import Loader from './Loader.vue';
-  import league from '../mixins/league.js';
 
   import { mapGetters } from 'vuex';
 
@@ -45,7 +44,6 @@
 
       props: ['league'],
       components: {Loader},
-      mixins: [league],
 
       data: () => ({
         standings: null,
