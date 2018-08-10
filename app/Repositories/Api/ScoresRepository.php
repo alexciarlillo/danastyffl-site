@@ -40,6 +40,20 @@ class ScoresRepository implements ApiRepositoryContract, ScoresRepositoryContrac
         $scores = Cache::remember($cacheKey, 2, function () use ($year, $week) {
             $scoresJSON = $this->api()->getScores($year, $week);
             $scores = $this->mapper->mapArray($scoresJSON, [], Matchup::class);
+
+            // re-map so that matchup franchises can be directly accessed by home/away
+            $scores = collect($scores)->map(function ($matchup) {
+                $matchup->franchises = collect($matchup->franchises)->mapWithKeys(function ($franchise) {
+                    if ($franchise->isHome) {
+                        return ['home' => $franchise];
+                    } else {
+                        return ['away' => $franchise];
+                    }
+                });
+
+                return $matchup;
+            });
+
             return $scores;
         });
         

@@ -30,6 +30,9 @@ class PlayerRepository implements ApiRepositoryContract, PlayerRepositoryContrac
         } else {
             $playersJSON = $this->api()->getPlayers();
             $players = $this->mapper->mapArray($playersJSON, [], Player::class);
+            $players = collect($players)->mapWithKeys(function ($player) {
+                return [$player->id => $player];
+            });
             Cache::put('players', $players, 1440); // one day
         }
         
