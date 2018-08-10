@@ -40,21 +40,21 @@ class APIController extends Controller
     {
         $league = $this->leagues->fetch();
 
-        return json_encode($league);
+        return response()->json($league);
     }
 
     public function players()
     {
         $players = $this->players->all();
 
-        return $players->toJson();
+        return response()->json($players);
     }
 
     public function standings($year = null)
     {
         $standings = $this->standings->all($year);
 
-        return $standings->toJson();
+        return response()->json($standings);
     }
 
     public function scores($year = null)
@@ -63,13 +63,13 @@ class APIController extends Controller
 
         $scores = $this->scores->all($year, $week);
 
-        return $scores->toJson();
+        return response()->json($scores);
     }
 
     public function currentWeek()
     {
         $currentWeek = $this->scores->currentWeek();
 
-        return $currentWeek;
+        return response()->json($currentWeek);
     }
 }
