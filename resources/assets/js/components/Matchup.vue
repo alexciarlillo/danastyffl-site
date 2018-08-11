@@ -1,7 +1,7 @@
 <template>
     <div class="matchup lg:w-lg lg:shadow-md" v-bind:class="classObject">
-        <v-touch class="header w-full overflow-hidden bg-mfl-blue-light text-grey-light flex flex-col fixed md:relative lg:rounded lg:rounded-b-none" v-on:swipeleft="nextMatchup" v-on:swiperight="prevMatchup">
-            <MatchupHeader :home="matchup.franchises.home" :away="matchup.franchises.away" />
+        <v-touch class="header w-full overflow-hidden bg-mfl-blue-light text-grey-light flex flex-col fixed md:relative lg:rounded lg:rounded-b-none shadow" v-on:swipeleft="nextMatchup" v-on:swiperight="prevMatchup">
+            <MatchupHeader :home="matchup.franchises.home" :away="matchup.franchises.away" :numMatchups="numMatchups" :selected="selected" />
         </v-touch>
 
         <div class="flex scores bg-grey-lightest">
