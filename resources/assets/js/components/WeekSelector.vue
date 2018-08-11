@@ -53,7 +53,7 @@ export default {
         })
     },
     watch: {
-        '$route': 'setSelectedYear',
+        '$route': 'setSelectedWeek',
     }
 }
 </script>
