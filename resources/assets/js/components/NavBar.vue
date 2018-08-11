@@ -75,6 +75,8 @@ export default {
     },
     handleWindowResize: function(event) {
       this.windowWidth = event.currentTarget.innerWidth;
+      this.collapsed = true;
+      this.$emit("toggle-collapse", this.collapsed);
     },
     setCollapsing: function(collapsing) {
       this.collapsing = collapsing;

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="wrap w-full overflow-hidden">
-            <div class="carousel flex" v-bind:class="carouselClass">
+            <div class="carousel flex md:flex md:flex-wrap md:justify-around" v-bind:class="carouselClass">
                 <Matchup v-for="(matchup, index) in matchups" :key="index" :matchup="matchup" v-on:set="setCarousel" v-on:next="nextMatchup" v-on:previous="prevMatchup" :index="index" :selected="selected" :numMatchups="matchups.length"/>
             </div>            
         </div>
@@ -78,9 +78,12 @@
     .carousel {
         position: relative;        
         
-
         &.push-previous {
             left: -100%;
+
+            @screen md {
+                left: 0;
+            }
         }
 
         &.is-set {
