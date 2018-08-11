@@ -20,7 +20,7 @@
 
         <div class="text-sm">
             <portal-target name="matchup-select" class="block md:inline-block px-2 mb-2"/>
-            <YearSelector v-if="league" :history="league.history" />
+            <YearSelector v-if="!league.loading" :history="league.info.history" />
             <div class="mt-6 md:mt-0 md:inline-block">
               <a href="/mfl" class="nav-link">MFL Homepage</a>
             </div>
@@ -53,7 +53,6 @@ import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: "NavBar",
-  props: ["league"],
   components: { YearSelector },
   data: () => ({
     collapsed: true,
@@ -64,7 +63,7 @@ export default {
     portalDisabled: function() {
       return this.windowWidth > 768;
     },
-    ...mapState(['app']),
+    ...mapState(['app','league']),
     ...mapGetters(['selectedYear'])
   },
   methods: {
