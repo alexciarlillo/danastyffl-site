@@ -7,8 +7,8 @@
         </div>
 
         <portal to="matchup-select">
-            <div class="relative">
-                <select v-model="selected" class="text-sm appearance-none w-full bg-white border border-grey-light text-grey-darker hover:text-mfl-blue hover:border-grey px-4 py-1 pr-8 rounded leading-tight md:w-64">
+            <div class="inline-block relative w-full px-2 md:px-2 md:inline-block md:w-48">
+                <select v-model="selected" class="text-sm appearance-none w-full bg-white border border-grey-light text-grey-darker hove:text-mfl-blue hover:border-grey px-2 py-1 pr-8 rounded leading-tight md:w-64">
                     <option v-for="(matchup, index) in matchups" :key="index" v-bind:value="index">
                         {{ matchup.franchises.away.name }} @ {{ matchup.franchises.home.name }}
                     </option>

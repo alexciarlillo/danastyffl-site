@@ -19,8 +19,9 @@
         </div>
 
         <div class="text-sm">
-            <portal-target name="matchup-select" class="block md:inline-block px-2 mb-2"/>
+            <portal-target name="matchup-select" class="block sm:hidden mb-2"/>
             <YearSelector v-if="!league.loading" :history="league.info.history" />
+            <WeekSelector v-if="!league.loading" />
             <div class="mt-6 md:mt-0 md:inline-block">
               <a href="/mfl" class="nav-link">MFL Homepage</a>
             </div>
@@ -48,12 +49,13 @@
 
 <script>
 import YearSelector from "./YearSelector.vue";
+import WeekSelector from "./WeekSelector.vue";
 
 import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: "NavBar",
-  components: { YearSelector },
+  components: { YearSelector, WeekSelector },
   data: () => ({
     collapsed: true,
     collapsing: false,
