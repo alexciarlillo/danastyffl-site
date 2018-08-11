@@ -1,9 +1,7 @@
 <template>
-    <div class="matchup">
-        <v-touch class="header container bg-mfl-blue-light text-grey-light flex flex-col fixed md:relative " v-on:swipeleft="nextMatchup" v-on:swiperight="prevMatchup">
-            <transition name="fade">
-                <MatchupHeader :home="matchup.franchises.home" :away="matchup.franchises.away" />
-            </transition>
+    <div class="matchup lg:w-lg lg:shadow-md" v-bind:class="classObject">
+        <v-touch class="header w-full overflow-hidden bg-mfl-blue-light text-grey-light flex flex-col fixed md:relative lg:rounded lg:rounded-b-none" v-on:swipeleft="nextMatchup" v-on:swiperight="prevMatchup">
+            <MatchupHeader :home="matchup.franchises.home" :away="matchup.franchises.away" />
         </v-touch>
 
         <div class="flex scores bg-grey-lightest">
@@ -35,7 +33,7 @@
 
     export default {
         name: 'Matchups',
-        props: ['matchup'],
+        props: ['matchup', 'index', 'selected', 'numMatchups'],
         mixins: [player],
         components: {PlayerScore, MatchupHeader},
         data: () => ({
@@ -44,48 +42,55 @@
         methods: {
             nextMatchup: function () {
                 this.$emit('next');
+                setTimeout(() => {
+                    this.$emit('set');
+                }, 100);
             },
 
             prevMatchup: function () {
                 this.$emit('previous');
+                setTimeout(() => {
+                    this.$emit('set');
+                }, 100);
             },
         },
         computed: {
-            awayStarters() {
+            awayStarters () {
                 return this.matchup.franchises.away.starters.sort(this.sortPlayers);
             },
-            homeStarters() {
+            homeStarters () {
                 return this.matchup.franchises.home.starters.sort(this.sortPlayers)
+            },
+            classObject: function () {
+                return {
+                    previous: this.selected > 0 && this.index == this.selected-1,
+                    next: this.selected < this.numMatchups && this.index == this.selected+1,
+                    selected: this.index == this.selected
+                }
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    .matchup {
+        flex: 1 0 100%;
+        order: 4;
+    }
+
+    .previous {
+        order: 1;
+    }
+
+    .selected {
+        order: 2;
+    }
+
+    .next {
+        order: 3;
+    }
+
     .scores { 
         padding-top: 5.25rem;
-    }
-
-    .player:last-child {
-        border: 0;
-    }
-
-    .franchise-name {
-        overflow-wrap: break-word;
-        width: 100%;
-    }
-
-    @screen md {
-        .scores {
-            padding-top: 0;
-        }
-    }
-
-    .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-    }
-
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
     }
 </style>

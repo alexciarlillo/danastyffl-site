@@ -1,6 +1,10 @@
 <template>
-    <div class="matchups">
-        <Matchup v-for="(matchup, index) in matchups" :key="index" :matchup="matchup" v-on:next="nextMatchup" v-on:previous="prevMatchup" />
+    <div>
+        <div class="wrap w-full overflow-hidden">
+            <div class="carousel flex" v-bind:class="carouselClass">
+                <Matchup v-for="(matchup, index) in matchups" :key="index" :matchup="matchup" v-on:set="setCarousel" v-on:next="nextMatchup" v-on:previous="prevMatchup" :index="index" :selected="selected" :numMatchups="matchups.length"/>
+            </div>            
+        </div>
 
         <portal to="matchup-select">
             <div class="relative">
@@ -15,6 +19,7 @@
             </div>
         </portal>
     </div>
+    
 </template>
 
 <script>
@@ -27,28 +32,69 @@
         components: {PlayerScore, Matchup},
         data: () => ({
             selected: 0,
+            transitionPrevious: false,
+            transitionNext: false,
+            isSet: true
         }),
         computed: {
             selectedMatchup: function () {
                 return this.matchups[this.selected];
-            }            
+            },
+            carouselClass: function () {
+                return {
+                    'push-previous': this.selected > 0,
+                    'is-set': this.isSet,
+                    'transition-previous': this.transitionPrevious,
+                    'transition-next': this.transitionNext
+                }
+            }
         },
         methods: {
-            nextMatchup: function () {
+            nextMatchup: function () {                
                 if(this.selected < this.matchups.length - 1) {
+                    this.isSet = false;
+                    this.transitionNext = true; 
                     this.selected += 1;
                 }
             },
 
             prevMatchup: function () {
                 if(this.selected > 0) {
+                    this.isSet = false;
+                    this.transitionPrevious = true;
                     this.selected -= 1;
                 }
-            },            
+            },
+
+            setCarousel: function () {
+                this.transitionPrevious = this.transitionNext = false;
+                this.isSet = true;
+            }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    .carousel {
+        position: relative;        
+        
 
+        &.push-previous {
+            left: -100%;
+        }
+
+        &.is-set {
+            transform: none;
+        }
+
+        &.transition-previous {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        &.transition-next {
+            transform: translateX(-100%);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+    }
 </style>

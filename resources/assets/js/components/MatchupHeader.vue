@@ -2,7 +2,7 @@
     <div class="flex justify-between items-stretch h-16 py-1">
         <div class="franchise-header flex-1 flex-no-shrink min-w-0 text-center flex flex-col justify-between px-2">
             <div class="flex items-center justify-center h-full">
-                <span class="text-sm lg:text-lg font-header franchise-name">{{ away.name }}</span>
+                <span class="text-sm lg:text-lg w-full font-header franchise-name">{{ away.name }}</span>
             </div>
             <div class="text-base lg:text-xl mt-1 font-header font-semibold">{{ away.score }}</div>
         </div>
@@ -28,5 +28,8 @@
 </script>
 
 <style lang="scss" scoped>
-
+    .franchise-name {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
 </style>

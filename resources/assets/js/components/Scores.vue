@@ -1,9 +1,7 @@
 <template>
   <div>
     <Loader v-if="scores.loading" text="Loading Scoring Data"></Loader>
-    <div class="scoring w-full lg:mt-4 lg:rounded lg:shadow-md overflow-hidden lg:max-w-lg lg:mx-auto" v-if="!scores.loading">
-        <Matchups :matchups="scores.matchups" :league="league" :players="players"></Matchups>
-    </div>
+    <Matchups v-if="!scores.loading" :matchups="scores.matchups" :league="league" :players="players"></Matchups>
   </div>
 </template>
 
