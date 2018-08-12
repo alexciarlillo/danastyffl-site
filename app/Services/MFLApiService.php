@@ -97,6 +97,22 @@ class MFLApiService
         return $object->liveScoring->matchup;
     }
 
+    public function getRosters($id = null)
+    {
+        $params = [
+            'TYPE' => 'rosters'
+        ];
+
+        if ($id) {
+            $params['FRANCHISE'] = $id;
+        }
+
+        $response = $this->export($params);
+        $object = json_decode($response->getBody()->getContents());
+
+        return $object;
+    }
+
     public function getCurrentWeek()
     {
         $params = [

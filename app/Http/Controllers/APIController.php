@@ -66,6 +66,15 @@ class APIController extends Controller
         return response()->json($scores);
     }
 
+    public function rosters($id = null)
+    {
+        if ($id) {
+            return response()->json($this->rosters->franchise($id));
+        } else {
+            return response()->json($this->rosters->all());
+        }
+    }
+
     public function currentWeek()
     {
         $currentWeek = $this->scores->currentWeek();
