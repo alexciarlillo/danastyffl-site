@@ -15,6 +15,11 @@ export default {
     data: () => ({
         open: false
     }),
+    watch: {
+    $route(to, from) {
+        this.open = false;
+    }
+  },
 }
 </script>
 

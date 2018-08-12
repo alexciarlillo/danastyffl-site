@@ -31,7 +31,7 @@
 
         <div class="text-sm">
             <portal-target name="matchup-select" class="block sm:hidden mb-2"/>
-            <YearSelector v-if="!league.loading" :history="league.info.history" />
+            <YearSelector v-if="!league.loading && showYearSelector" :history="league.info.history" />
             <WeekSelector v-if="!league.loading && showWeekSelector" />
             <div class="mt-6 md:mt-0 md:inline-block">
               <a href="/mfl" class="nav-link">MFL Homepage</a>
@@ -73,6 +73,7 @@ export default {
     collapsing: false,
     windowWidth: window.innerWidth,
     showWeekSelector: false,
+    showYearSelector: false
   }),
   computed: {
     portalDisabled: function() {
@@ -105,6 +106,7 @@ export default {
 
       let routeName = this.$router.currentRoute.name;
       this.showWeekSelector = (routeName == 'scoped-scores' || routeName == 'current-scores');
+      this.showYearSelector = (routeName !== 'franchise');
     }
   },
   beforeDestroy: function() {
