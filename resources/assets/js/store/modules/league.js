@@ -5,7 +5,11 @@ const state = {
 }
 
 const getters = {
-
+    getFranchise: (state) => (id) => {
+        let f = state.franchises.find(franchise => franchise.id === id);
+        console.log(f);
+        return f;
+    }
 }
 
 const actions = {

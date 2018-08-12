@@ -16,6 +16,17 @@
         <div class="text-sm md:flex-grow">
             <router-link to="/standings" class="nav-link">Standings</router-link>
             <router-link to="/scores" class="nav-link">Scores</router-link>
+            <dropdown-link v-if="!league.loading" class="inline-block">
+              <span slot="link" class="flex items-end my-1 px-4 py-2 inline-block mt-0 text-grey-darker hover:text-grey-darkest md:text-grey-light text-base no-underline md:hover:text-white">
+                <span class="mr-1">Teams</span>
+                <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </span>
+              <div slot="dropdown" class="md:bg-white md:shadow-lg rounded rounded-t-none md:overflow-hidden">
+                <router-link v-for="franchise in league.franchises" :key="franchise.id" :to="{ name: 'franchise', params: { id: franchise.id} }" class="no-underline border-grey-lighter block pl-6 pr-4 md:px-4 py-3 border-b text-grey-darker md:text-grey-light md:bg-mfl-blue md:hover:text-white md:hover:bg-mfl-blue-light md:whitespace-no-wrap md:font-semibold">{{ franchise.name }}</router-link>
+              </div>
+            </dropdown-link>
         </div>
 
         <div class="text-sm">
@@ -38,7 +49,7 @@
         v-on:after-leave="setCollapsing(false)"
       >
         <div class="flex h-full" v-if="!collapsed">
-          <portal-target name="nav-menu" class="w-3/5 bg-white shadow-lg"/>
+          <portal-target name="nav-menu" class="w-3/5 bg-white shadow-lg overflow-scroll"/>
           <div class="w-2/5 pt-12" @click="toggle"></div>
         </div>
       </transition>
@@ -50,12 +61,13 @@
 <script>
 import YearSelector from "./YearSelector.vue";
 import WeekSelector from "./WeekSelector.vue";
+import DropdownLink from "./DropdownLink.vue";
 
 import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: "NavBar",
-  components: { YearSelector, WeekSelector },
+  components: { YearSelector, WeekSelector, DropdownLink },
   data: () => ({
     collapsed: true,
     collapsing: false,

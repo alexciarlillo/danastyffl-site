@@ -23,6 +23,7 @@ Vue.use(PortalVue);
 import App from './components/App.vue';
 import Standings from './components/Standings.vue';
 import Scores from './components/Scores.vue';
+import Franchise from './components/Franchise.vue';
 
 const router = new VueRouter({
     mode: 'history',
@@ -44,6 +45,12 @@ const router = new VueRouter({
             path: '/scores',
             component: Scores,
             name: 'current-scores'
+        },
+        {
+            path: '/franchise/:id',
+            component: Franchise,
+            props: true,
+            name: 'franchise'
         }
     ]
 });
