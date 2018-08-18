@@ -47,9 +47,15 @@ function injectPlayerData(matchups, players) {
             franchise.bench = [];
             _.each(franchise.players, function (franchisePlayer) {
                 let playerData = players[franchisePlayer.id];
-                franchisePlayer.name = playerData.name;
-                franchisePlayer.team = playerData.team;
-                franchisePlayer.position = playerData.position.toUpperCase();
+                if (typeof playerData == 'undefined') { // MFL does not have this player - custom league addition?
+                    franchisePlayer.name = 'Unknown Player'
+                    franchisePlayer.team = 'NONE';
+                    franchisePlayer.position = 'QB';
+                } else {
+                    franchisePlayer.name = playerData.name;
+                    franchisePlayer.team = playerData.team;
+                    franchisePlayer.position = playerData.position.toUpperCase();
+                }
 
                 if (franchisePlayer.status == 'starter') {
                     franchise.starters.push(franchisePlayer);
