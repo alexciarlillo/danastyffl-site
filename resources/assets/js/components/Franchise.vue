@@ -91,6 +91,11 @@
             return player.position === pos;
           });
         }
+      },
+      watch: {
+        '$route' (to, from) {
+          this.loadRoster();
+        }
       }
   }
 </script>
