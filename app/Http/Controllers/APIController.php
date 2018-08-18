@@ -7,6 +7,7 @@ use App\Repositories\Api\LeagueRepository;
 use App\Repositories\Api\PlayerRepository;
 use App\Repositories\Api\ScoresRepository;
 use App\Repositories\Api\StandingsRepository;
+use App\Repositories\Api\RosterRepository;
 
 class APIController extends Controller
 {
@@ -19,7 +20,8 @@ class APIController extends Controller
         LeagueRepository $leagues,
         PlayerRepository $players,
         StandingsRepository $standings,
-        ScoresRepository $scores
+        ScoresRepository $scores,
+        RosterRepository $rosters
     ) {
         $this->host = config('mfl.league_host');
         $this->year = config('mfl.league_year');
@@ -34,6 +36,7 @@ class APIController extends Controller
         $this->players = $players;
         $this->standings = $standings;
         $this->scores = $scores;
+        $this->rosters = $rosters;
     }
 
     public function league()

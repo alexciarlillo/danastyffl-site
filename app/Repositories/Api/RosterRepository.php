@@ -6,11 +6,11 @@ use JsonMapper;
 
 use App\Services\MFLApiService;
 use App\Repositories\Traits\UsesApi;
-use App\Roster;
 use App\Repositories\Contracts\ApiRepositoryContract;
 
 use Illuminate\Support\Facades\Cache;
 use App\Repositories\Contracts\RosterRepositoryContract;
+use App\RostersFranchise;
 
 class RosterRepository implements ApiRepositoryContract, RosterRepositoryContract
 {
@@ -26,11 +26,11 @@ class RosterRepository implements ApiRepositoryContract, RosterRepositoryContrac
 
     public function all()
     {
-        $rosters = Cache::remember($this->cacheKeyBase, 5, function () use ($id) {
+        $rosters = Cache::remember($this->cacheKeyBase, 5, function () {
             $rostersJSON = $this->api->getRosters();
-            $roster = $this->mapper->mapArray($rostersJSON, [], Roster::class);
+            $rosters = $this->mapper->mapArray($rostersJSON, [], RostersFranchise::class);
 
-            return $roster;
+            return $rosters;
         });
 
         return collect($rosters);
@@ -40,9 +40,9 @@ class RosterRepository implements ApiRepositoryContract, RosterRepositoryContrac
     {
         $cacheKey = "$this->cacheKeyBase.$id";
 
-        Cache::remember($cacheKey, 5, function () use ($id) {
+        $roster = Cache::remember($cacheKey, 5, function () use ($id) {
             $rosterJSON = $this->api->getRosters($id);
-            $roster = $this->mapper->map($rosterJSON, Roster::class);
+            $roster = $this->mapper->map($rosterJSON, new RostersFranchise());
 
             return $roster;
         });

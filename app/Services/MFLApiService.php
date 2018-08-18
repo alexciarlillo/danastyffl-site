@@ -106,7 +106,7 @@ class MFLApiService
 
         $response = $this->export($params);
 
-        return $response;
+        return $response->rosters->franchise;
     }
 
     public function getCurrentWeek()

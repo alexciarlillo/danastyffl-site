@@ -4,5 +4,7 @@ namespace App\Repositories\Contracts;
 
 interface RosterRepositoryContract
 {
-    public function fetch($id = null);
+    public function franchise($id);
+
+    public function all();
 }
