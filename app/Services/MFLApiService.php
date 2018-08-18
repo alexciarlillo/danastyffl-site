@@ -31,8 +31,6 @@ class MFLApiService
             'JSON' => 1,
         ], $params);
 
-        \Log::debug("Export Params: ", $params);
-
         $response = $this->client->get("$year/export", ['query' => $query]);
 
         if ($response->getStatusCode() !== 200) {
