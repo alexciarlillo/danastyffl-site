@@ -38,7 +38,7 @@ class ScoresFranchise
 
     public $players;
 
-    public function setPlayers(object $players)
+    public function setPlayers($players)
     {
         $mapper = new JsonMapper();
         
