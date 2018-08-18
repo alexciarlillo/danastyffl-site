@@ -7,8 +7,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Repositories\Contracts\ScoresRepositoryContract;
 use App\Events\ScoresUpdate;
+use App\Repositories\Api\ScoresRepository;
 
 class SendScoringUpdates implements ShouldQueue
 {
@@ -21,7 +21,7 @@ class SendScoringUpdates implements ShouldQueue
      */
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -29,7 +29,7 @@ class SendScoringUpdates implements ShouldQueue
      *
      * @return void
      */
-    public function handle(ScoresRepositoryContract $scores)
+    public function handle(ScoresRepository $scores)
     {
         event(new ScoresUpdate($scores->all()));
     }
