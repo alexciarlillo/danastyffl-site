@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\MFLApiException;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
 
 class MFLApiService
 {
@@ -25,7 +26,7 @@ class MFLApiService
         }
 
         $query = array_merge([
-            'L' => $this->league,
+            'L' => $this->getLeagueId($year),
             'APIKEY' => $this->key,
             'JSON' => 1,
         ], $params);
@@ -36,7 +37,7 @@ class MFLApiService
             throw new MFLApiException($query, $response->getStatusCode());
         }
 
-        return $response;
+        return json_decode($response->getBody()->getContents());
     }
 
     public function getLeague($year = null)
@@ -46,9 +47,8 @@ class MFLApiService
         ];
 
         $response = $this->export($params, $year);
-        $object = json_decode($response->getBody()->getContents());
 
-        return $object->league;
+        return $response->league;
     }
 
     public function getPlayers($ids = null)
@@ -63,9 +63,8 @@ class MFLApiService
         }
 
         $response = $this->export($params);
-        $object = json_decode($response->getBody()->getContents());
 
-        return $object->players->player;
+        return $response->players->player;
     }
 
     public function getStandings($year = null)
@@ -75,9 +74,8 @@ class MFLApiService
         ];
 
         $response = $this->export($params, $year);
-        $object = json_decode($response->getBody()->getContents());
 
-        return $object->leagueStandings->franchise;
+        return $response->leagueStandings->franchise;
     }
 
     public function getScores($year = null, $week = null)
@@ -92,9 +90,8 @@ class MFLApiService
         }
 
         $response = $this->export($params, $year);
-        $object = json_decode($response->getBody()->getContents());
 
-        return $object->liveScoring->matchup;
+        return $response->liveScoring->matchup;
     }
 
     public function getRosters($id = null)
@@ -108,9 +105,8 @@ class MFLApiService
         }
 
         $response = $this->export($params);
-        $object = json_decode($response->getBody()->getContents());
 
-        return $object;
+        return $response;
     }
 
     public function getCurrentWeek()
@@ -120,8 +116,49 @@ class MFLApiService
         ];
 
         $response = $this->export($params);
+
+        return $response->liveScoring->week;
+    }
+
+    private function getLeagueId($year)
+    {
+        $map = Cache::remember('keys', 1440, function () {
+            return $this->getLeagueIdsByYear();
+        });
+
+        if ($map->has($year)) {
+            return $map->get($year);
+        } else {
+            throw new \Exception("No API key in map for $year");
+        }
+    }
+
+    private function getLeagueIdsByYear()
+    {
+        $query = array_merge([
+            'L' => $this->league,
+            'APIKEY' => $this->key,
+            'JSON' => 1,
+            'TYPE' => 'league'
+        ]);
+
+        $year = now()->year;
+        $response = $this->client->get("$year/export", ['query' => $query]);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new MFLApiException($query, $response->getStatusCode());
+        }
+
         $object = json_decode($response->getBody()->getContents());
 
-        return $object->liveScoring->week;
+        $years = collect($object->league->history->league);
+
+        $map = $years->mapWithKeys(function ($year) {
+            $arr = explode('/', $year->url);
+            $id = end($arr);
+            return [$year->year => $id];
+        });
+
+        return $map;
     }
 }
