@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="wrap w-full overflow-hidden">
+        <div class="wrap w-full overflow-hidden md:pb-8">
             <div class="carousel flex md:flex md:flex-wrap md:justify-around" v-bind:class="carouselClass">
                 <Matchup v-for="(matchup, index) in matchups" :key="index" :matchup="matchup" v-on:set="setCarousel" v-on:next="nextMatchup" v-on:previous="prevMatchup" :index="index" :selected="selected" :numMatchups="matchups.length"/>
             </div>            
