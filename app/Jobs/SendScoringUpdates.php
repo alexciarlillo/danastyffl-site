@@ -19,9 +19,9 @@ class SendScoringUpdates implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(ScoresRepositoryContract $scores)
+    public function __construct()
     {
-        $this->scores = $scores;
+        
     }
 
     /**
@@ -29,10 +29,8 @@ class SendScoringUpdates implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(ScoresRepositoryContract $scores)
     {
-        $scores = $this->scores->all();
-
-        event(new ScoresUpdate($scores));
+        event(new ScoresUpdate($scores->all()));
     }
 }
