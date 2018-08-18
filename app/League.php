@@ -87,25 +87,25 @@ class League
         $this->standingsSort = $sort;
     }
 
-    public function setFranchises(object $franchises)
+    public function setFranchises($franchises)
     {
         $mapper = new JsonMapper();
         $this->franchises = $mapper->mapArray($franchises->franchise, [], LeagueFranchise::class);
     }
 
-    public function setRosterLimits(object $rosterLimits)
+    public function setRosterLimits($rosterLimits)
     {
         $mapper = new JsonMapper();
         $this->rosterLimits = $mapper->mapArray($rosterLimits->position, [], Position::class);
     }
 
-    public function setStarters(object $starters)
+    public function setStarters($starters)
     {
         $mapper = new JsonMapper();
         $this->starters = $mapper->mapArray($starters->position, [], Position::class);
     }
 
-    public function setHistory(object $history)
+    public function setHistory($history)
     {
         $mapper = new JsonMapper();
         $this->history = $mapper->mapArray($history->league, [], LeagueHistory::class);
