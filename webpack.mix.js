@@ -26,7 +26,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
     'vue2-filters',
     'lodash',
     'jquery',
-    'moment'
+    'moment',
+    'pusher-js',
+    'laravel-echo'
   ])
   .autoload({
     jquery: ['$', 'window.jQuery', 'jQuery'],
