@@ -33,13 +33,10 @@ class StandingsRepository implements ApiRepositoryContract, StandingsRepositoryC
             $cacheKey = $this->cacheKeyBase;
         }
 
-        if (Cache::has($cacheKey)) {
-            $standings = Cache::get($cacheKey);
-        } else {
+        $standings = Cache::remember($cacheKey, 1440, function () {
             $standingsJSON = $this->api()->getStandings($year);
-            $standings = $this->mapper->mapArray($standingsJSON, [], StandingsFranchise::class);
-            Cache::put($cacheKey, $standings, 1440); // one day
-        }
+            return $this->mapper->mapArray($standingsJSON, [], StandingsFranchise::class);
+        });
         
         return collect($standings);
     }

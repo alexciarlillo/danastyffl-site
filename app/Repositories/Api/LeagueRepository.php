@@ -32,13 +32,10 @@ class LeagueRepository implements ApiRepositoryContract, LeagueRepositoryContrac
             $cacheKey = $this->cacheKeyBase;
         }
 
-        if (Cache::has($cacheKey)) {
-            $league = Cache::get($cacheKey);
-        } else {
+        $league = Cache::remember($cacheKey, 60, function () {
             $leagueJSON = $this->api()->getLeague($year);
-            $league = $this->mapper->map($leagueJSON, new League());
-            Cache::put($cacheKey, $league, 60);
-        }
+            return $this->mapper->map($leagueJSON, new League());
+        });
 
         return $league;
     }

@@ -25,16 +25,15 @@ class PlayerRepository implements ApiRepositoryContract, PlayerRepositoryContrac
 
     public function all() : Collection
     {
-        if (Cache::has('players')) {
-            $players = Cache::get('players');
-        } else {
+        $players = Cache::remember('players', 1440, function () {
             $playersJSON = $this->api()->getPlayers();
             $players = $this->mapper->mapArray($playersJSON, [], Player::class);
             $players = collect($players)->mapWithKeys(function ($player) {
                 return [$player->id => $player];
             });
-            Cache::put('players', $players, 1440); // one day
-        }
+
+            return $players;
+        });
         
         return collect($players);
     }
