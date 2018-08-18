@@ -101,7 +101,7 @@ class MFLApiService
         ];
 
         if ($id) {
-            $params['FRANCHISE'] = $id;
+            $params['FRANCHISE'] = str_pad($id, 4, "0", STR_PAD_LEFT);
         }
 
         $response = $this->export($params);

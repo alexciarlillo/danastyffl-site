@@ -17,8 +17,13 @@
 
       components: {Loader},
 
+      created() {
+        this.loadRoster();
+      },
+
       data: () => ({
         loading: false,
+        roster: null
       }),
       
       computed: {
@@ -27,5 +32,21 @@
         },
         ...mapState(['league'])
       },
+
+      methods: {
+        loadRoster: function() {
+          this.loading = true;
+          axios.get('/api/rosters/' + this.id)
+            .then(response => {
+                this.roster = response.data;
+                this.loading = false;
+
+                console.log(this.roster);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+        }
+      }
   }
 </script>
