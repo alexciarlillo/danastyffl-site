@@ -31,8 +31,8 @@
 
         <div class="text-sm">
             <portal-target name="matchup-select" class="block sm:hidden mb-2"/>
-            <YearSelector v-if="!league.loading && showYearSelector" :history="league.info.history" />
-            <WeekSelector v-if="!league.loading && showWeekSelector" />
+            <YearSelector v-if="!league.loading && showYearSelector()" :history="league.info.history" />
+            <WeekSelector v-if="!league.loading && showWeekSelector()" />
             <div class="mt-6 md:mt-0 md:inline-block">
               <a href="/mfl" class="nav-link">MFL Homepage</a>
             </div>
@@ -72,15 +72,12 @@ export default {
     collapsed: true,
     collapsing: false,
     windowWidth: window.innerWidth,
-    showWeekSelector: false,
-    showYearSelector: false
   }),
   computed: {
     portalDisabled: function() {
       return this.windowWidth > 768;
     },
-    ...mapState(['app','league']),
-    ...mapGetters(['selectedYear'])
+    ...mapState(['app','league'])    
   },
   methods: {
     toggle: function(e) {
@@ -95,7 +92,8 @@ export default {
     },
     setCollapsing: function(collapsing) {
       this.collapsing = collapsing;
-    }
+    },
+    ...mapGetters(['selectedYear','showWeekSelector','showYearSelector'])
   },
   watch: {
     $route(to, from) {
@@ -103,10 +101,6 @@ export default {
         this.collapsed = true;
         this.$emit("toggle-collapse", this.collapsed);
       }
-
-      let routeName = this.$router.currentRoute.name;
-      this.showWeekSelector = (routeName == 'scoped-scores' || routeName == 'current-scores');
-      this.showYearSelector = (routeName !== 'franchise');
     }
   },
   beforeDestroy: function() {

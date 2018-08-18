@@ -21,6 +21,14 @@ const getters = {
         }
 
         return 1;
+    },
+    showWeekSelector: (state, getters, rootState) => {
+        let routeName = rootState.route.name;
+        return (routeName == 'scoped-scores' || routeName == 'current-scores');
+    },
+    showYearSelector: (state, getters, rootState) => {
+        let routeName = rootState.route.name;
+        return (routeName !== 'franchise');
     }
 }
 
