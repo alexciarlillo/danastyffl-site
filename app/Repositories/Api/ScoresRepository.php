@@ -27,6 +27,9 @@ class ScoresRepository implements ApiRepositoryContract, ScoresRepositoryContrac
 
     public function all($year = null, $week = null) : Collection
     {
+        $currentYear = now()->year;
+        $currentWeek = $this->currentWeek();
+
         if ($year) {
             $cacheKey =  "$this->cacheKeyBase.$year";
         } else {
@@ -37,7 +40,13 @@ class ScoresRepository implements ApiRepositoryContract, ScoresRepositoryContrac
             $cacheKey = "$cacheKey.$week";
         }
 
-        $scores = Cache::remember($cacheKey, 2, function () use ($year, $week) {
+        if ($cacheKey == "$this->cacheKeyBase.$currentYear.$currentWeek") {
+            $cacheTime = 1;
+        } else {
+            $cacheTime = 1440;
+        }
+
+        $scores = Cache::remember($cacheKey, $cacheTime, function () use ($year, $week) {
             $scoresJSON = $this->api()->getScores($year, $week);
             $scores = $this->mapper->mapArray($scoresJSON, [], Matchup::class);
 
