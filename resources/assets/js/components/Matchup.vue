@@ -5,19 +5,19 @@
         </v-touch>
 
         <div class="flex scores bg-grey-lightest md:rounded md:rounded-t-none">
-            <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
+            <div class="franchise-scores flex-1 flex-no-shrink min-w-0 flex flex-col">
                 <template v-for="player in awayStarters">
                     <PlayerScore :player="player" :home="true"  :key="player.id"></PlayerScore>
                 </template>
             </div>
 
-            <div class="positions flex-shrink w-6">
-                <div v-for="(position, index) in positions" class="bg-grey-light h-12 flex justify-center items-center border-b-2 border-grey-lighter md:h-16" :key="index">
+            <div class="positions flex-shrink w-6 flex flex-col">
+                <div v-for="(position, index) in positions" class="position bg-grey-light flex flex-1 justify-center items-center border-b-2 border-grey-lighter md:h-16" :key="index">
                     <span class="text-grey-darker text-2xs">{{position}}</span>
                 </div>
             </div>
 
-            <div class="franchise-scores flex-1 flex-no-shrink min-w-0">
+            <div class="franchise-scores flex-1 flex-no-shrink min-w-0 flex flex-col">
                 <template v-for="player in homeStarters">
                     <PlayerScore :player="player" :home="false" :key="player.id"></PlayerScore>
                 </template>
@@ -75,13 +75,30 @@
 <style lang="scss" scoped>
     .matchup {
         flex: 1 0 100%;
-
         @screen md {
             flex: none;
             order: inherit;
         }
 
         order: 4;
+    }
+    
+    .positions {
+        margin-top: 5.25rem;
+
+        @screen md {
+            margin-top: 0;
+        }
+
+        .position {
+            min-height: 3rem;
+            max-height: 4rem;
+            height: auto;
+
+            @screen md {
+                min-height: 4rem;
+            }
+        }
     }
 
     .previous {
@@ -109,15 +126,25 @@
     }
 
     .scores { 
-        margin-top: 5.25rem;
+        min-height: 100vh;
 
         @screen md {
             margin-top: 0;
+            height: auto;
+            min-height: 0;
         }
     }
 
     .header {
         box-shadow: 0 2px 8px 2px rgba(0, 0, 0, .2)
+    }
+
+    .franchise-scores {
+        margin-top: 5.25rem;
+
+        @screen md {
+            margin-top: 0;
+        }
     }
 
     .franchise-scores div:last-child, .positions div:last-child {
