@@ -84,12 +84,6 @@
     }
     
     .positions {
-        margin-top: 5.25rem;
-
-        @screen md {
-            margin-top: 0;
-        }
-
         .position {
             min-height: 3rem;
             max-height: 4rem;
@@ -126,7 +120,8 @@
     }
 
     .scores { 
-        min-height: 100vh;
+        min-height: calc(100vh - 8.75rem);
+        margin-top: 5.25rem;
 
         @screen md {
             margin-top: 0;
@@ -137,14 +132,6 @@
 
     .header {
         box-shadow: 0 2px 8px 2px rgba(0, 0, 0, .2)
-    }
-
-    .franchise-scores {
-        margin-top: 5.25rem;
-
-        @screen md {
-            margin-top: 0;
-        }
     }
 
     .franchise-scores div:last-child, .positions div:last-child {
