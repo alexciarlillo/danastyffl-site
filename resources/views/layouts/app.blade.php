@@ -19,6 +19,7 @@
                 'csrfToken' => csrf_token(),
             ]) !!};
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
     </head>
     <body class="bg-white">
         @yield('content')

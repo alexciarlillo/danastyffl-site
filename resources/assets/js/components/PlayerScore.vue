@@ -5,7 +5,7 @@
         <span class="team text-2xs text-grey-dark font-semibold">{{ player.team }}</span>
     </div>
     <div class="score text-xs py-2 px-1 text-mfl-blue font-semibold w-12 flex flex-no-shrink items-center justify-center md:text-lg md:w-16 md:px-4">
-        <span>{{ getScore(player) }}</span>
+        <span>{{ playerScore }}</span>
     </div>
 </div>
 </template>
@@ -17,21 +17,23 @@ export default {
     name: 'PlayerScore',
     mixins: [player],
     props: ['player', 'home'],
-    data: () => ({
-        updated: false
-    }),
-    methods: {
-        getScore: function (player) {
-            return parseFloat(player.score).toFixed(1);
+    data() {
+        return {
+            updated: false,
+            score: parseFloat(this.player.score)
+        }
+    },
+    computed: {
+        playerScore: function() {
+            return this.score.toFixed(1);
         }
     },
     watch: {
-        'player': {
-            handler(newValue, oldValue) {
-                if(oldValue.score != newValue.score && oldValue.name == newValue.name) {
-                    this.updated = true;
-                    setTimeout(() => { this.updated = false; }, 500);
-                }
+        'player': function(newValue, oldValue) {
+            if(oldValue.score != newValue.score && oldValue.name == newValue.name) {
+                this.updated = true;
+                setTimeout(() => { this.updated = false; }, 500);
+                TweenLite.to(this.$data, .5, { score: parseFloat(newValue.score).toFixed(1) })
             }
         }
     }
@@ -48,5 +50,13 @@ export default {
         @screen md {
             min-height: 4rem;
         }
+
+        &.updated {
+            background-color: #ff6d24; // mfl-orange
+        }
+
+        transition: background-color 0.5s ease;
     }
+    
+    
 </style>

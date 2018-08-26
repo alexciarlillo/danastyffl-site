@@ -82,3 +82,17 @@ function injectFranchiseNames(matchups, franchises) {
 
     return matchups;
 }
+
+function fakeUpdateScores(matchups) {
+    _.each(matchups, function (matchup) {
+        _.each(matchup.franchises, function (franchise) {
+            _.each(franchise.starters, function (player) {
+                if (Math.random() >= 0.5) {
+                    player.score += 1;
+                }
+            });
+        });
+    });
+
+    return matchups;
+}
