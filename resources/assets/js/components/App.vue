@@ -38,7 +38,7 @@
     },
 
     mounted() {
-      this.connect();
+      // this.connect();
       this.bind();
     },
 
@@ -51,30 +51,30 @@
         }
       },
       connect: function() {
-        if(!this.echo) {
-          this.echo = new Echo({
-              broadcaster: 'pusher',
-              key: '81f8d1a71375125eb735',
-              cluster: 'us2',
-              encrypted: true
-          });
-        }
+        // if(!this.echo) {
+        //   this.echo = new Echo({
+        //       broadcaster: 'pusher',
+        //       key: '81f8d1a71375125eb735',
+        //       cluster: 'us2',
+        //       encrypted: true
+        //   });
+        // }
       },
       disconnect: function() {
-        if (!this.echo) return;
-        this.echo.disconnect();
+        // if (!this.echo) return;
+        // this.echo.disconnect();
       },
       bind: function() {
-        this.echo.channel('scores')
-          .listen('ScoresUpdate', (e) => {
-            console.log(e.scores);
-          });
+        // this.echo.channel('scores')test/standings
+        //   .listen('ScoresUpdate', (e) => {
+        //     console.log(e.scores);
+        //   });
       },
       ...mapActions(['fetchLeague', 'fetchPlayers', 'fetchCurrentWeek'])
     },
 
     beforeDestroy() {
-      this.disconnect();
+      // this.disconnect();
     },
 
     computed: mapState({
