@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/mfl', function () {
-    return redirect('https://' . config('mfl.league_host') . '/' . config('mfl.league_year') . '/home/' . config('mfl.league_id'));
+    return redirect('https://' . config('mfl.league_host') . '/' . now()->year . '/home/' . config('mfl.league_id'));
 });
 
 Route::get('/login', 'Auth\AuthController@login')->name('login');
