@@ -2,7 +2,8 @@
   <div class="nav-wrapper">
     <nav class="flex items-center justify-between flex-wrap bg-mfl-blue px-2 h-12 fixed w-full z-20">
       <router-link to="/standings" class="font-display flex items-center flex-no-shrink mr-6 no-underline">
-        <img src="images/team-logo.png" class="h-8 w-8 mr-4">
+        <!-- <img src="images/team-logo.png" class="h-8 w-8 mr-4"> -->
+        <div class="logo-img h-8 w-8 mr-4"></div>
         <div class="text-mfl-orange text-lg">DaNasty FFL</div>
       </router-link>
 
@@ -157,5 +158,11 @@ export default {
 
 .slide-leave-to {
   transform: translateX(-100vw);
+}
+
+.logo-img {
+  background-image: url('../../images/team-logo.png');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 </style>

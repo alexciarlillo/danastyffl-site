@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+let ImageminPlugin = require( 'imagemin-webpack-plugin' ).default;
 
 require('laravel-mix-tailwind');
 
@@ -17,7 +18,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .tailwind('resources/assets/tailwind.js')
    .browserSync('danastyffl.test')
-   .copyDirectory('resources/assets/images', 'public/images')
    .extract([
     'axios',
     'vue',
@@ -37,6 +37,17 @@ mix.js('resources/assets/js/app.js', 'public/js')
     axios: ['axios', 'window.axios'],
     moment: ['moment', 'windows.moment']
   });
+
+mix.webpackConfig( {
+    plugins: [
+        new ImageminPlugin( {
+            pngquant: {
+                quality: '95-100',
+            },
+            test: /\.(jpe?g|png|gif|svg)$/i,
+        } ),
+    ],
+} )
 
 if (mix.inProduction()) {
     mix.version();
