@@ -42,7 +42,7 @@
       data: () => ({
         loading: false,
         roster: null,
-        positions: ['QB', 'RB', 'RB', 'WR', 'WR', 'WR', 'TE', 'DEF']
+        positions: ['QB', 'RB', 'WR', 'TE', 'DEF']
       }),
       
       computed: {
