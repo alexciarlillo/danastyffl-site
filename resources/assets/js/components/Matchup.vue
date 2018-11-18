@@ -9,17 +9,26 @@
                 <template v-for="player in awayStarters">
                     <PlayerScore :player="player" :home="true"  :key="player.id"></PlayerScore>
                 </template>
+                <template v-for="player in awayBench">
+                    <PlayerScore :player="player" :home="true"  :key="player.id" class="bench bg-grey"></PlayerScore>
+                </template>
             </div>
 
             <div class="positions flex-shrink w-6 flex flex-col">
-                <div v-for="(position, index) in positions" class="position bg-grey-light flex flex-1 justify-center items-center border-b-2 border-grey-lighter md:h-16" :key="index">
+                <div v-for="(position, index) in positions" class="position bg-grey-light flex justify-center items-center border-b-2 border-grey-lighter" :key="index">
                     <span class="text-grey-darker text-2xs">{{position}}</span>
+                </div>
+                <div v-for="index in 15" class="position bg-grey-light flex justify-center items-center border-b-2 border-grey-lighter" :key="index">
+                    <span class="text-grey-darker text-2xs">BN</span>
                 </div>
             </div>
 
             <div class="franchise-scores flex-1 flex-no-shrink min-w-0 flex flex-col">
                 <template v-for="player in homeStarters">
                     <PlayerScore :player="player" :home="false" :key="player.id"></PlayerScore>
+                </template>
+                <template v-for="player in homeBench">
+                    <PlayerScore :player="player" :home="false"  :key="player.id" class="bench bg-grey"></PlayerScore>
                 </template>
             </div>
         </div>
@@ -58,8 +67,14 @@
             awayStarters () {
                 return this.matchup.franchises.away.starters.sort(this.sortPlayers);
             },
+            awayBench () {
+                return this.matchup.franchises.away.bench.sort(this.sortPlayers);
+            },
             homeStarters () {
                 return this.matchup.franchises.home.starters.sort(this.sortPlayers)
+            },
+            homeBench () {
+                return this.matchup.franchises.home.bench.sort(this.sortPlayers);
             },
             classObject: function () {
                 return {
@@ -85,12 +100,12 @@
     
     .positions {
         .position {
-            min-height: 3rem;
-            max-height: 4rem;
-            height: auto;
+            // min-height: 3rem;
+            // max-height: 4rem;
+            height: 3.5rem;
 
             @screen md {
-                min-height: 4rem;
+                // min-height: 4rem;
             }
         }
     }

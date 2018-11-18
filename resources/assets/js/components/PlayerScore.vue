@@ -1,5 +1,5 @@
 <template>
-<div class="player flex flex-1 border-b-2 border-grey-lighter items-stretch" :class="{updated: updated, 'flex-row-reverse': !home}">
+<div class="player flex border-b-2 border-grey-lighter items-stretch" :class="{updated: updated, 'flex-row-reverse': !home}">
     <div class="info flex-1 py-2 px-1 md:px-2 flex flex-col justify-center min-w-0" :class="{'items-start': home, 'items-end': !home}">
         <span class="name mb-1 text-xs lg:text-sm text-grey-darkest truncated font-semibold" :class="{'text-left': home, 'text-right': !home}">{{ getShortPlayerName(player.name) }}</span>
         <span class="team text-2xs text-grey-dark font-semibold">{{ player.team }}</span>
@@ -43,12 +43,12 @@ export default {
 
 <style lang="scss" scoped>
     .player {
-        min-height: 3rem;
-        max-height: 4rem;
-        height: auto;
+        // min-height: 3rem;
+        // max-height: 4rem;
+        height: 3.5rem;
 
         @screen md {
-            min-height: 4rem;
+            // min-height: 4rem;
         }
 
         &.updated {
